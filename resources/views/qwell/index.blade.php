@@ -9,7 +9,6 @@
     
     <!-- custom style -->
     <link rel="stylesheet" href="{{ asset('css/qwell/section1.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/qwell/section2.css') }}">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,60 +22,50 @@
     <!-- custom js -->
     <script src="{{ asset('js/custom.js') }}" defer></script>
     <script src="{{ asset('js/qwell/section1.js') }}" defer></script>
-    <script src="{{ asset('js/qwell/section2.js') }}" defer></script>
     
     <style>
-        /* Preloader Styles */
-        #qwell-preloader {
+        /* Blur overlay for popup */
+        #qwell-blur-bg {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            width: 100vw; height: 100vh;
-            background: white;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s;
+            z-index: 998;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            backdrop-filter: blur(8px);
+            background: rgba(241,245,249,0.45); /* slight light overlay for usability */
+            opacity: 1;
+            transition: backdrop-filter 0.5s cubic-bezier(.4,0,.2,1), opacity 0.5s cubic-bezier(.4,0,.2,1); /* smooth transition */
         }
-        #qwell-preloader.hidden {
+        #qwell-blur-bg.smooth-unblur {
+            backdrop-filter: blur(0px);
             opacity: 0;
-            visibility: hidden;
+        }
+        #qwell-blur-bg.hidden {
+            display: none !important;
+        }
+
+        #qwell-password-popup {
+            z-index: 999;
+        }
+
+        #qwell-success-message {
+            display: none;
+        }
+        #qwell-success-message.active {
+            display: flex;
+            animation: fadeSuccess 0.6s;
+        }
+        @keyframes fadeSuccess {
+            from { opacity: 0; transform: translateY(10px);}
+            to { opacity: 1; transform: none;}
+        }
+
+        body.password-locked main,
+        body.password-locked .antialiased > *:not(#qwell-blur-bg):not(#qwell-password-popup){
             pointer-events: none;
-        }
-        .loader-spin {
-            border: 6px solid #E5E7EB;
-            border-top: 6px solid #06B6D4;
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg);}
-            100% { transform: rotate(360deg);}
-        }
-        .qwell-loading-text {
-            margin-top: 1.5rem;
-            font-size: 1.2rem;
-            font-family: 'Inter', sans-serif;
-            color: #2563EB;
-            letter-spacing: 0.04em;
-            text-align: center;
-            font-weight: 600;
+            user-select: none;
         }
     </style>
-
-    <script>
-        // Show preloader until page is fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hide it a bit after window load for smoothness
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    document.getElementById('qwell-preloader').classList.add('hidden');
-                }, 600); // 600 ms for feeling smooth
-            });
-        });
-    </script>
 
     <!-- 
         Palette Used: "Electric Blue & Clinical White" from "Colour Combinations" (vibrant/professional adaptation).
@@ -94,15 +83,80 @@
         7. Conclusion: The Core Question.
     -->
 </head>
-<body class="antialiased">
+<body class="antialiased password-locked">
 
-    <!-- Preloader Animation -->
-    <div id="qwell-preloader">
-        <div class="flex flex-col items-center">
-            <div class="loader-spin"></div>
-            <div class="qwell-loading-text">Loading Insights...</div>
+    <!-- Blur Background Overlay (hidden after unlock) -->
+    <div id="qwell-blur-bg"></div>
+
+    <!-- Password Popup (centered card) -->
+    <div id="qwell-password-popup" class="fixed inset-0 flex items-center justify-center z-[999]">
+        <div class="bg-white rounded-2xl shadow-xl px-7 py-8 max-w-md w-full border border-blue-100 flex flex-col items-center animate-fadeIn">
+            <img src="{{ asset('images/logo/app-logo.png') }}" class="w-16 h-16 mb-2 object-contain" style="aspect-ratio:1/1;display:block;" alt="Logo">
+            <h2 class="text-2xl font-bold text-[#0B6E99] mb-1">Masukkan Password</h2>
+            <p class="text-gray-600 mb-5 text-center text-base font-normal">Halaman ini dilindungi.<br>Silakan masukkan password untuk melanjutkan.</p>
+            <form id="qwell-password-form" autocomplete="off" class="w-full flex flex-col items-center gap-3">
+                <input type="password" id="qwell-password-input" class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#06B6D4] focus:outline-none transition" placeholder="Password..." required autofocus>
+                <span id="qwell-password-error" class="text-sm text-red-500 mt-1 mb-2 w-full hidden">Password salah. Coba lagi.</span>
+                <button type="submit" class="mt-1 w-full bg-[#0B6E99] text-white font-bold py-2 rounded-lg hover:bg-[#06B6D4] transition">Masuk</button>
+            </form>
         </div>
     </div>
+
+    <!-- Sukses Message popup -->
+    <div id="qwell-success-message" class="fixed inset-0 flex items-center justify-center z-[999] bg-transparent pointer-events-none">
+        <div class="bg-white/95 rounded-xl border border-blue-100 shadow-lg px-8 py-6 flex flex-col items-center pointer-events-auto transition">
+            <svg class="mb-2" width="40" height="40" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="12" fill="#06B6D4"/>
+                <path d="M7 13l3 3 7-7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="text-lg font-semibold text-[#0B6E99] mb-2">Berhasil!</div>
+            <div class="text-gray-600 text-base text-center">Password benar. Selamat datang di halaman Q'WELL.</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('password-locked');
+
+            var blurBg = document.getElementById('qwell-blur-bg');
+            var popup = document.getElementById('qwell-password-popup');
+            var form = document.getElementById('qwell-password-form');
+            var passInput = document.getElementById('qwell-password-input');
+            var errorText = document.getElementById('qwell-password-error');
+            var successMsg = document.getElementById('qwell-success-message');
+
+            form.addEventListener('submit', function(e){
+                e.preventDefault();
+                // Password check logic: password is "nuisel"
+                if(passInput.value.trim() === 'nuisel'){
+                    // Hide popup immediately
+                    popup.classList.add('hidden');
+                    // Show success
+                    successMsg.classList.add('active');
+                    // Animate blur to clear smoothly
+                    blurBg.classList.add('smooth-unblur');
+                    // Remove password-locked so main can be interacted after all is clear
+                    setTimeout(function() {
+                        blurBg.classList.add('hidden');
+                        blurBg.classList.remove('smooth-unblur');
+                        document.body.classList.remove('password-locked');
+                        // Hide sukses message smoothly after delay
+                        setTimeout(function(){
+                            successMsg.classList.remove('active');
+                        }, 1400); // show success for 1.4s (adjust as needed)
+                    }, 700); // Wait for the blur transition to complete (must match CSS transition duration)
+                } else {
+                    errorText.classList.remove('hidden');
+                    passInput.classList.add('border-red-500', 'ring', 'ring-red-300');
+                }
+            });
+
+            passInput.addEventListener('input', function() {
+                this.classList.remove('border-red-500','ring','ring-red-300');
+                errorText.classList.add('hidden');
+            });
+        });
+    </script>
 
     <!-- Header -->
     @include('qwell.components.header')
@@ -130,102 +184,39 @@
             </button>
         </div>
         
-        @include('qwell.contents.section1')
+        @php
+            $sections = [
+                1 => 'The Strategic Mandate',
+                2 => 'Section 2',
+                3 => 'Section 3',
+                4 => 'Section 4',
+                5 => 'Section 5',
+                6 => 'Section 6',
+            ];
+        @endphp
 
-        <div class="flex w-full">
-            <button id="qwell-fullsize-2"
-                class="flex items-center gap-2 px-4 py-4 font-semibold text-base bg-white border border-gray-300 rounded-lg
-                    shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between"
-                aria-expanded="false"
-                aria-controls="qwell-fullsize-content"
-                style="cursor: pointer; min-height: 56px;">
-                <span>Section 2</span>
-                <span class="flex-1"></span>
-                <span class="flex justify-end">
-                    <svg id="qwell-chevron-icon-2" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
-                        <path d="M7 14l5-5 5 5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-            </button>
-        </div>
-        
-        @include('qwell.contents.section2')
+        @foreach ($sections as $i => $title)
+            @if ($i > 1)
+                <div class="flex w-full">
+                    <button id="qwell-fullsize-{{ $i }}"
+                        class="flex items-center gap-2 px-4 py-4 font-semibold text-base bg-white border border-gray-300 rounded-lg
+                            shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between"
+                        aria-expanded="false"
+                        aria-controls="qwell-fullsize-content"
+                        style="cursor: pointer; min-height: 56px;">
+                        <span>{{ $title }}</span>
+                        <span class="flex-1"></span>
+                        <span class="flex justify-end">
+                            <svg id="qwell-chevron-icon-{{ $i == 1 ? '' : $i }}" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
+                                <path d="M7 14l5-5 5 5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            @endif
 
-        <div class="flex w-full">
-            <button id="qwell-fullsize-3"
-                class="flex items-center gap-2 px-4 py-4 font-semibold text-base bg-white border border-gray-300 rounded-lg
-                    shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between"
-                aria-expanded="false"
-                aria-controls="qwell-fullsize-content"
-                style="cursor: pointer; min-height: 56px;">
-                <span>Section 3</span>
-                <span class="flex-1"></span>
-                <span class="flex justify-end">
-                    <svg id="qwell-chevron-icon-3" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
-                        <path d="M7 14l5-5 5 5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-            </button>
-        </div>
-        
-        @include('qwell.contents.section3')
-
-        <div class="flex w-full">
-            <button id="qwell-fullsize-4"
-                class="flex items-center gap-2 px-4 py-4 font-semibold text-base bg-white border border-gray-300 rounded-lg
-                    shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between"
-                aria-expanded="false"
-                aria-controls="qwell-fullsize-content"
-                style="cursor: pointer; min-height: 56px;">
-                <span>Section 4</span>
-                <span class="flex-1"></span>
-                <span class="flex justify-end">
-                    <svg id="qwell-chevron-icon-4" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
-                        <path d="M7 14l5-5 5 5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-            </button>
-        </div>
-        
-        @include('qwell.contents.section4')
-
-        <div class="flex w-full">
-            <button id="qwell-fullsize-5"
-                class="flex items-center gap-2 px-4 py-4 font-semibold text-base bg-white border border-gray-300 rounded-lg
-                    shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between"
-                aria-expanded="false"
-                aria-controls="qwell-fullsize-content"
-                style="cursor: pointer; min-height: 56px;">
-                <span>Section 5</span>
-                <span class="flex-1"></span>
-                <span class="flex justify-end">
-                    <svg id="qwell-chevron-icon-5" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
-                        <path d="M7 14l5-5 5 5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-            </button>
-        </div>
-        
-        @include('qwell.contents.section5')
-
-        <div class="flex w-full">
-            <button id="qwell-fullsize-6"
-                class="flex items-center gap-2 px-4 py-4 font-semibold text-base bg-white border border-gray-300 rounded-lg
-                    shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between"
-                aria-expanded="false"
-                aria-controls="qwell-fullsize-content"
-                style="cursor: pointer; min-height: 56px;">
-                <span>Section 6</span>
-                <span class="flex-1"></span>
-                <span class="flex justify-end">
-                    <svg id="qwell-chevron-icon-6" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
-                        <path d="M7 14l5-5 5 5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-            </button>
-        </div>
-        
-        @include('qwell.contents.section6')
+            @include('qwell.contents.section'.$i)
+        @endforeach
 
     </main>
 
