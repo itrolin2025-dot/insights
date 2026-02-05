@@ -165,38 +165,20 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-5">
-
-        <!-- Full Size Accordion Toggle Button -->
-        <div class="flex w-full">
-            <button id="qwell-fullsize-1"
-                class="flex items-center gap-2 px-4 py-4 font-semibold text-base bg-white border border-gray-300 rounded-lg
-                    shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between"
-                aria-expanded="false"
-                aria-controls="qwell-fullsize-content"
-                style="cursor: pointer; min-height: 56px;">
-                <span>Section 1</span>
-                <span class="flex-1"></span>
-                <span class="flex justify-end">
-                    <svg id="qwell-chevron-icon" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
-                        <path d="M7 14l5-5 5 5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-            </button>
-        </div>
         
         @php
             $sections = [
-                1 => 'The Strategic Mandate',
-                2 => 'Section 2',
-                3 => 'Section 3',
-                4 => 'Section 4',
-                5 => 'Section 5',
-                6 => 'Section 6',
+                1 => 'Strategic Foundation: Trust & Scalp Health',
+                2 => 'Indonesia 2026: The Premium Inflection',
+                3 => 'The Urban Barrier-Repairer',
+                4 => 'Market Lens: Indonesia',
+                5 => 'The Positioning Lock Point',
+                6 => 'Essence, Core Belief & Immortalization',
             ];
         @endphp
 
         @foreach ($sections as $i => $title)
-            @if ($i > 1)
+            @if ($i > 0)
                 <div class="flex w-full">
                     <button id="qwell-fullsize-{{ $i }}"
                         class="flex items-center gap-2 px-4 py-4 font-semibold text-base bg-white border border-gray-300 rounded-lg
@@ -204,10 +186,10 @@
                         aria-expanded="false"
                         aria-controls="qwell-fullsize-content"
                         style="cursor: pointer; min-height: 56px;">
-                        <span>{{ $title }}</span>
+                        <span>{{ $i }}. {{ $title }}</span>
                         <span class="flex-1"></span>
                         <span class="flex justify-end">
-                            <svg id="qwell-chevron-icon-{{ $i == 1 ? '' : $i }}" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
+                            <svg id="qwell-chevron-icon-{{ $i == 0 ? '' : $i }}" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
                                 <path d="M7 14l5-5 5 5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </span>
