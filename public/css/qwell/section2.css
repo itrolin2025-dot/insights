@@ -1,0 +1,41 @@
+.chart-container {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: 650px; /* Constrain width on large screens */
+    height: 350px;    /* Default mobile height */
+}
+
+@media (min-width: 768px) {
+    .chart-container {
+        height: 400px; /* Taller on desktop */
+    }
+}
+
+/* Hide scrollbar for clean look */
+body::-webkit-scrollbar {
+    width: 8px;
+}
+body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+body::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+body::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Utility for timeline line */
+.timeline-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    background: #e5e7eb;
+    transform: translateX(-50%);
+    z-index: 0;
+}

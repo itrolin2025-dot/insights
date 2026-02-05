@@ -1,0 +1,71 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F0F4F8;
+    /* Light Clinical Grey */
+    color: #102A43;
+    /* Deep Navy */
+}
+
+/* Palette: Electric Blue & Clinical White
+   Primary: #0B6E99 (Deep Blue)
+   Secondary: #06B6D4 (Vibrant Cyan)
+   Accent: #F59E0B (Amber/Gold for Premium)
+   Background: #F0F4F8
+*/
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    /* Constraint for large screens */
+    margin-left: auto;
+    margin-right: auto;
+    height: 400px;
+    max-height: 500px;
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive height adjustments */
+@media (max-width: 640px) {
+    .chart-container {
+        height: 300px;
+    }
+}
+
+.section-card {
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.section-card:hover {
+    transform: translateY(-2px);
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #0B6E99, #06B6D4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.diagram-box {
+    border: 2px solid #E2E8F0;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    text-align: center;
+    position: relative;
+}
+
+.arrow-down {
+    font-size: 2rem;
+    color: #06B6D4;
+    text-align: center;
+    margin: 0.5rem 0;
+}
