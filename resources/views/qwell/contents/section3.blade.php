@@ -479,8 +479,8 @@
         });
 
         // --- CHART 4: TRUST SIGNALS (Radar) ---
-        const ctxRadar = document.getElementById('radarChart').getContext('2d');
-        new Chart(ctxRadar, {
+        const ctxRadar3 = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctxRadar3, {
             type: 'radar',
             data: {
                 labels: [

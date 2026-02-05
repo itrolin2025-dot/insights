@@ -324,7 +324,7 @@
         }
 
         // --- UTILITY: Common Tooltip Config ---
-        const commonTooltipConfig = {
+        const commonTooltipConfig2 = {
             callbacks: {
                 title: function(tooltipItems) {
                     const item = tooltipItems[0];
@@ -364,7 +364,7 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    tooltip: commonTooltipConfig,
+                    tooltip: commonTooltipConfig2,
                     legend: { position: 'bottom' },
                     annotation: {
                         annotations: {
@@ -417,7 +417,7 @@
                 maintainAspectRatio: false,
                 cutout: '70%',
                 plugins: {
-                    tooltip: commonTooltipConfig,
+                    tooltip: commonTooltipConfig2,
                     legend: { position: 'bottom', labels: { boxWidth: 12 } }
                 }
             }
@@ -449,7 +449,7 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    tooltip: commonTooltipConfig,
+                    tooltip: commonTooltipConfig2,
                     legend: { display: false }
                 },
                 scales: {
@@ -490,7 +490,7 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    tooltip: commonTooltipConfig,
+                    tooltip: commonTooltipConfig2,
                     legend: { position: 'top' }
                 },
                 scales: {

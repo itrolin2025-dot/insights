@@ -399,14 +399,14 @@
         });
 
         // CHART 3: Needs vs Reality (Radar)
-        const ctxRadar = document.getElementById('gapRadarChart').getContext('2d');
-        const radarLabels = ['Clinical Efficacy', 'Safety for Sensitive Skin', 'Luxury Scent', 'Emotional Reassurance', 'Premium Packaging', 'Value for Money'];
-        const formattedRadarLabels = radarLabels.map(l => formatLabel(l));
+        const ctxRadar4 = document.getElementById('gapRadarChart').getContext('2d');
+        const radarLabels4 = ['Clinical Efficacy', 'Safety for Sensitive Skin', 'Luxury Scent', 'Emotional Reassurance', 'Premium Packaging', 'Value for Money'];
+        const formattedRadarLabels4 = radarLabels4.map(l => formatLabel(l));
 
-        new Chart(ctxRadar, {
+        new Chart(ctxRadar4, {
             type: 'radar',
             data: {
-                labels: formattedRadarLabels,
+                labels: formattedRadarLabels4,
                 datasets: [{
                     label: 'Consumer Desire',
                     data: [90, 95, 80, 85, 70, 75],

@@ -7,9 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
             el.style.transform = 'translateY(-16px)';
         });
     }
-});
 
-document.addEventListener("DOMContentLoaded", function() {
     // Prepare toggle buttons and chevrons for 6 sections
     const toggleButtons = [];
     const chevrons = [];
@@ -47,17 +45,27 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Loop through 6 sections to bind toggle and hover
+    // Only one accordion open at a time
     for (let i = 1; i <= 6; i++) {
         if (!toggleButtons[i]) continue;
-        // Click handler
         toggleButtons[i].addEventListener("click", function() {
             const expanded = toggleButtons[i].getAttribute("aria-expanded") === "true";
             if (expanded) {
+                // Close current section
                 toggleButtons[i].setAttribute("aria-expanded", "false");
                 if (chevrons[i]) chevrons[i].style.transform = "rotate(0deg)";
                 hideSection(`.section-${i}-content`);
             } else {
+                // Tutup semua accordion selain yang ini
+                for (let j = 1; j <= 6; j++) {
+                    if (j === i) continue;
+                    if (toggleButtons[j]) {
+                        toggleButtons[j].setAttribute("aria-expanded", "false");
+                        if (chevrons[j]) chevrons[j].style.transform = "rotate(0deg)";
+                        hideSection(`.section-${j}-content`);
+                    }
+                }
+                // Buka yang ini
                 toggleButtons[i].setAttribute("aria-expanded", "true");
                 if (chevrons[i]) chevrons[i].style.transform = "rotate(180deg)";
                 showSection(`.section-${i}-content`);

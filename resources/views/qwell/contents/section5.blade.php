@@ -507,14 +507,14 @@
         });
 
         // --- CHART 4: Stress Test (Radar) ---
-        const ctxRadar = document.getElementById('stressRadar').getContext('2d');
-        const radarLabels = ['Ingredient Transparency', 'Halal Compliance', 'Clinical Proof', 'Packaging Aesthetics', 'Price Justification'];
-        const wrappedRadarLabels = radarLabels.map(l => wrapLabel(l, 16));
+        const ctxRadar5 = document.getElementById('stressRadar').getContext('2d');
+        const radarLabels5 = ['Ingredient Transparency', 'Halal Compliance', 'Clinical Proof', 'Packaging Aesthetics', 'Price Justification'];
+        const wrappedRadarLabels5 = radarLabels5.map(l => wrapLabel(l, 16));
 
-        new Chart(ctxRadar, {
+        new Chart(ctxRadar5, {
             type: 'radar',
             data: {
-                labels: wrappedRadarLabels,
+                labels: wrappedRadarLabels5,
                 datasets: [
                     {
                         label: 'Q\'WELL Strategy',

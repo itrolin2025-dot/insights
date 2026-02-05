@@ -1,24 +1,47 @@
 <!-- Header -->
-<header class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row md:justify-between md:items-center">
-        <!-- QWELL Title + Strategic Research Brief -->
-        <div class="flex flex-col md:flex-row md:items-center">
-            <div class="flex items-center">
-                <img src="{{ asset('images/logo/app-logo.png') }}" alt="Q'WELL Logo"
-                    class="w-8 h-8 mr-2 object-contain"
-                    style="aspect-ratio:1/1; display:block;" />
-                <span class="text-2xl font-bold tracking-tight text-[#0B6E99]">Q'WELL</span>
-            </div>
-            <span class="font-light text-gray-500 text-base md:ml-3 md:inline block mt-1 md:mt-0 text-left md:text-base md:font-normal">
-                Strategic Research Brief
+<header class="bg-white shadow-md sticky top-0 z-50 w-full">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between relative">
+        <!-- Mobile: Flex row, Logo-Confidential-Logo. Desktop: Cluster left, access-notice and logo right -->
+        <!-- Mobile Layout -->
+        <div class="flex w-full items-center md:hidden relative">
+            <!-- Logo Left -->
+            <img src="{{ asset('images/logo/app-logo.png') }}" alt="Q'WELL Logo Left"
+                 class="w-8 h-8 object-contain"
+                 style="aspect-ratio:1/1; display:block;"
+            />
+            <!-- Confidential Brand Insights, centered -->
+            <span class="mx-auto font-light text-gray-500 text-base truncate text-center block" style="white-space:nowrap;">
+                Confidential Brand Insights
             </span>
+            <!-- Logo Right -->
+            <img src="{{ asset('images/logo/app-logo.png') }}" alt="Q'WELL Logo Right"
+                 class="w-8 h-8 object-contain"
+                 style="aspect-ratio:1/1; display:block;"
+            />
         </div>
-        <!-- Desktop only: Access protected notice -->
-        <span class="hidden md:block text-base font-bold tracking-tight text-[#0B6E99]">
-            <span class="font-light text-gray-500 text-sm">
-                Access protected · Not for distribution
-            </span>
-        </span>
+        <!-- Desktop Layout (md+) -->
+        <div class="hidden md:flex w-full items-center justify-between">
+            <!-- Left: Logo + Text -->
+            <div class="flex items-center min-w-0">
+                <img src="{{ asset('images/logo/app-logo.png') }}" alt="Q'WELL Logo Left"
+                     class="w-12 h-12 object-contain" 
+                     style="aspect-ratio:1/1; display:block;"
+                />
+                <span class="ml-5 font-light text-gray-700 text-xl font-normal truncate text-left block" style="white-space:nowrap;">
+                    Confidential Brand Insights
+                </span>
+            </div>
+            <!-- Right: Access Notice and Logo Right -->
+            <div class="flex items-center min-w-0">
+                <span class="text-base font-semibold tracking-tight text-[#0B6E99] bg-white/95 border border-gray-200 rounded px-4 py-1 shadow mr-5" style="white-space: nowrap;">
+                    Access protected &middot; Not for distribution
+                </span>
+                <img src="{{ asset('images/logo/app-logo.png') }}" alt="Q'WELL Logo Right"
+                     class="w-12 h-12 object-contain" 
+                     style="aspect-ratio:1/1; display:block;"
+                />
+            </div>
+        </div>
     </div>
     <!-- Mobile: Floating bottom access notice -->
     <div class="md:hidden fixed bottom-3 left-0 w-full flex justify-center z-50 pointer-events-none">
@@ -28,11 +51,11 @@
     </div>
 </header>
 
-<header class="bg-yellow-300 shadow-md top-0 z-50">
+<header class="bg-yellow-300 shadow-md top-0 z-80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
-        <!-- Desktop only: Access protected notice -->
-        <span class="hidden md:block text-base font-bold tracking-tight text-[#0B6E99] text-center">
-            <span class="font-light text-gray-800 text-sm">
+        <!-- Access protected notice: Always visible & larger font, smaller for mobile -->
+        <span class="block text-lg sm:text-2xl font-extrabold tracking-tight text-[#0B6E99] text-center">
+            <span class="text-xs sm:text-base font-semibold text-gray-700">
                 Prepared exclusively for Q’WELL
             </span>
         </span>

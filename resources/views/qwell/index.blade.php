@@ -65,6 +65,22 @@
             pointer-events: none;
             user-select: none;
         }
+        /* Hide popup by default, show blur immediately */
+        #qwell-blur-bg {
+            visibility: visible;
+            opacity: 1;
+            transition: backdrop-filter 0.5s cubic-bezier(.4,0,.2,1), opacity 0.5s cubic-bezier(.4,0,.2,1);
+        }
+        #qwell-password-popup {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.45s cubic-bezier(.4,0,.2,1), visibility 0s linear 0.45s;
+        }
+        #qwell-blur-bg.qwell-show, #qwell-password-popup.qwell-show {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.45s cubic-bezier(.4,0,.2,1), visibility 0s;
+        }
     </style>
 
     <!-- 
@@ -103,7 +119,7 @@
     </div>
 
     <!-- Sukses Message popup -->
-    <div id="qwell-success-message" class="fixed inset-0 flex items-center justify-center z-[999] bg-transparent pointer-events-none">
+    <!-- <div id="qwell-success-message" class="fixed inset-0 flex items-center justify-center z-[999] bg-transparent pointer-events-none">
         <div class="bg-white/95 rounded-xl border border-blue-100 shadow-lg px-8 py-6 flex flex-col items-center pointer-events-auto transition">
             <svg class="mb-2" width="40" height="40" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="12" fill="#06B6D4"/>
@@ -112,37 +128,47 @@
             <div class="text-lg font-semibold text-[#0B6E99] mb-2">Berhasil!</div>
             <div class="text-gray-600 text-base text-center">Password benar. Selamat datang di halaman Q'WELL.</div>
         </div>
-    </div>
+    </div> -->
 
     <script>
+        // Langsung tampilkan blur saat HTML selesai parse (tanpa menunggu loading)
         document.addEventListener('DOMContentLoaded', function() {
+            // Jangan kasih .password-locked hilang sebelum login
             document.body.classList.add('password-locked');
+
+            // Tampilkan blur langsung
+            document.getElementById('qwell-blur-bg').classList.add('qwell-show');
+
+            // Popup password akan muncul sedikit terlambat biar transisinya smooth
+            setTimeout(function() {
+                document.getElementById('qwell-password-popup').classList.add('qwell-show');
+            }, 400);
 
             var blurBg = document.getElementById('qwell-blur-bg');
             var popup = document.getElementById('qwell-password-popup');
             var form = document.getElementById('qwell-password-form');
             var passInput = document.getElementById('qwell-password-input');
             var errorText = document.getElementById('qwell-password-error');
-            var successMsg = document.getElementById('qwell-success-message');
+            // var successMsg = document.getElementById('qwell-success-message');
 
             form.addEventListener('submit', function(e){
                 e.preventDefault();
                 // Password check logic: password is "nuisel"
                 if(passInput.value.trim() === 'nuisel'){
-                    // Hide popup immediately
-                    popup.classList.add('hidden');
-                    // Show success
-                    successMsg.classList.add('active');
+                    // Sembunyikan popup segera
+                    popup.classList.remove('qwell-show');
+                    // successMsg.classList.add('active');
                     // Animate blur to clear smoothly
                     blurBg.classList.add('smooth-unblur');
-                    // Remove password-locked so main can be interacted after all is clear
+                    blurBg.classList.remove('qwell-show');
+                    // Remove password-locked agar bisa diinteraksi setelah blur hilang
                     setTimeout(function() {
-                        blurBg.classList.add('hidden');
+                        blurBg.classList.add('hidden'); // pastikan hidden
                         blurBg.classList.remove('smooth-unblur');
                         document.body.classList.remove('password-locked');
                         // Hide sukses message smoothly after delay
                         setTimeout(function(){
-                            successMsg.classList.remove('active');
+                            // successMsg.classList.remove('active');
                         }, 1400); // show success for 1.4s (adjust as needed)
                     }, 700); // Wait for the blur transition to complete (must match CSS transition duration)
                 } else {
@@ -181,18 +207,29 @@
             @if ($i > 0)
                 <div class="flex w-full">
                     <button id="qwell-fullsize-{{ $i }}"
-                        class="flex items-center gap-2 px-4 py-4 font-semibold text-base bg-white border border-gray-300 rounded-lg
-                            shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between"
+                        class="flex items-stretch p-0 font-semibold text-base sm:text-lg bg-white border border-gray-300 rounded-lg
+                            shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between 
+                            min-h-[60px] sm:min-h-[86px] overflow-hidden"
                         aria-expanded="false"
                         aria-controls="qwell-fullsize-content"
-                        style="cursor: pointer; min-height: 56px;">
-                        <span>{{ $i }}. {{ $title }}</span>
-                        <span class="flex-1"></span>
-                        <span class="flex justify-end">
-                            <svg id="qwell-chevron-icon-{{ $i == 0 ? '' : $i }}" class="transform transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" style="">
-                                <path d="M7 14l5-5 5 5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
+                        style="cursor: pointer;">
+                        <!-- Full-height, full-width image at the left -->
+                        <div class="flex-shrink-0 w-20 h-full sm:w-36">
+                            <img src="{{ asset('images/accordion-logo/section-' . $i . '.jpeg') }}"
+                                 alt="Q'WELL Logo"
+                                 class="w-full h-full object-cover block"
+                            />
+                        </div>
+                        <!-- Text and right-side content -->
+                        <div class="flex items-center flex-1 min-h-[60px] sm:min-h-[86px] px-3 sm:px-6 gap-2 sm:gap-3">
+                            <span class="text-sm sm:text-base">{{ $i }}. {{ $title }}</span>
+                            <span class="flex-1"></span>
+                            <span class="flex justify-end">
+                                <svg id="qwell-chevron-icon-{{ $i == 0 ? '' : $i }}" class="transform transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" style="">
+                                    <path d="M7 10l5 5 5-5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                        </div>
                     </button>
                 </div>
             @endif
