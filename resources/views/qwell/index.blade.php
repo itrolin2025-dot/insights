@@ -111,7 +111,7 @@
             <h2 class="text-2xl font-bold text-[#0B6E99] mb-1">Masukkan Password</h2>
             <p class="text-gray-600 mb-5 text-center text-base font-normal">Halaman ini dilindungi.<br>Silakan masukkan password untuk melanjutkan.</p>
             <form id="qwell-password-form" autocomplete="off" class="w-full flex flex-col items-center gap-3">
-                <input type="password" id="qwell-password-input" class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#06B6D4] focus:outline-none transition" placeholder="Password..." required autofocus>
+                <input type="password" id="qwell-password-input" class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#06B6D4] focus:outline-none transition" placeholder="Password..." required autocomplete="current-password">
                 <span id="qwell-password-error" class="text-sm text-red-500 mt-1 mb-2 w-full hidden">Password salah. Coba lagi.</span>
                 <button type="submit" class="mt-1 w-full bg-[#0B6E99] text-white font-bold py-2 rounded-lg hover:bg-[#06B6D4] transition">Masuk</button>
             </form>
@@ -133,15 +133,18 @@
     <script>
         // Langsung tampilkan blur saat HTML selesai parse (tanpa menunggu loading)
         document.addEventListener('DOMContentLoaded', function() {
-            // Jangan kasih .password-locked hilang sebelum login
             document.body.classList.add('password-locked');
-
-            // Tampilkan blur langsung
             document.getElementById('qwell-blur-bg').classList.add('qwell-show');
 
             // Popup password akan muncul sedikit terlambat biar transisinya smooth
             setTimeout(function() {
                 document.getElementById('qwell-password-popup').classList.add('qwell-show');
+
+                // Fokus ke input password begitu popup muncul
+                setTimeout(function(){
+                    var passInput = document.getElementById('qwell-password-input');
+                    if(passInput) passInput.focus();
+                }, 50);
             }, 400);
 
             var blurBg = document.getElementById('qwell-blur-bg');
@@ -174,6 +177,7 @@
                 } else {
                     errorText.classList.remove('hidden');
                     passInput.classList.add('border-red-500', 'ring', 'ring-red-300');
+                    passInput.focus();
                 }
             });
 
@@ -221,8 +225,9 @@
                             />
                         </div>
                         <!-- Text and right-side content -->
-                        <div class="flex items-center flex-1 min-h-[60px] sm:min-h-[86px] px-3 sm:px-6 gap-2 sm:gap-3">
-                            <span class="text-sm sm:text-base">{{ $i }}. {{ $title }}</span>
+                        <div class="flex items-center flex-1 min-h-[60px] sm:min-h-[86px] px-3 sm:px-6 gap-2 sm:gap-3 text-left">
+                            <span class="text-sm sm:text-base text-left font-bold min-w-[2ch] sm:min-w-[2ch]">{{ $i }}.</span>
+                            <span class="text-sm sm:text-base text-left break-words whitespace-normal">{{ $title }}</span>
                             <span class="flex-1"></span>
                             <span class="flex justify-end">
                                 <svg id="qwell-chevron-icon-{{ $i == 0 ? '' : $i }}" class="transform transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" style="">
