@@ -1,7 +1,7 @@
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-5">
     <div class="bg-white rounded-xl shadow-lg p-8 sm:p-12 lg:p-16 space-y-12">
-        <h2 class="text-4xl font-extrabold text-[#0B6E99] mb-8">Methodology</h2>
+        <h2 class="text-4xl font-extrabold text-[#0B6E99] mb-8 text-center">Methodology</h2>
         <div class="text-xl text-gray-700 leading-[2.05] space-y-12">
             
             <div class="mb-8">
