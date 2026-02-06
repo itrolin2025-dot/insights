@@ -52,10 +52,11 @@
 </header>
 
 <header class="bg-yellow-300 shadow-md top-0 z-80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-3 flex flex-col items-center justify-center text-center
+        h-7 md:h-14 transition-all duration-200">
         <!-- Access protected notice: Always visible & larger font, smaller for mobile -->
-        <span class="block text-lg sm:text-2xl font-extrabold tracking-tight text-[#0B6E99] text-center">
-            <span class="text-xs sm:text-base font-semibold text-gray-700">
+        <span class="block text-xl sm:text-3xl px-4 font-extrabold tracking-tight text-[#0B6E99] text-center">
+            <span class="text-lg sm:text-lg font-semibold text-gray-700">
                 Prepared exclusively for Q’WELL
             </span>
         </span>

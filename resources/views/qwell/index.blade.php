@@ -81,6 +81,44 @@
             opacity: 1;
             transition: opacity 0.45s cubic-bezier(.4,0,.2,1), visibility 0s;
         }
+
+
+        /* Back to Top Floating Button */
+        #qwell-back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 950;
+            display: none;
+            background: #F59E0B;
+            color: #fff;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            box-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.25s cubic-bezier(.4,0,.2,1), visibility 0.2s;
+            cursor: pointer;
+        }
+        #qwell-back-to-top.show {
+            display: flex;
+            opacity: 1;
+        }
+        #qwell-back-to-top:active {
+            background: #fbbf24;
+        }
+        @media (max-width: 600px) {
+            #qwell-back-to-top {
+                bottom: 18px;
+                right: 18px;
+                width: 46px;
+                height: 46px;
+            }
+        }
+        #qwell-back-to-top svg {
+            display: block;
+        }
     </style>
 
     <!-- 
@@ -117,6 +155,15 @@
             </form>
         </div>
     </div>
+
+    <!-- Back to Top Floating Button -->
+    <button id="qwell-back-to-top" aria-label="Kembali ke Atas" title="Back to Top">
+        <!-- Up Arrow SVG -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="13.5" fill="none"/>
+            <path d="M14 20V10M14 10L9 15M14 10l5 5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
 
     <!-- Sukses Message popup -->
     <!-- <div id="qwell-success-message" class="fixed inset-0 flex items-center justify-center z-[999] bg-transparent pointer-events-none">
@@ -185,6 +232,31 @@
                 this.classList.remove('border-red-500','ring','ring-red-300');
                 errorText.classList.add('hidden');
             });
+
+            // --- BACK TO TOP BUTTON LOGIC ---
+            var backToTopBtn = document.getElementById('qwell-back-to-top');
+            var prevShow = false;
+            function handleBackToTop() {
+                // Show only after user scrolls down at least 80px
+                if(window.scrollY > 0) {
+                    if (!prevShow) {
+                        backToTopBtn.classList.add('show');
+                        prevShow = true;
+                    }
+                } else {
+                    if (prevShow) {
+                        backToTopBtn.classList.remove('show');
+                        prevShow = false;
+                    }
+                }
+            }
+            window.addEventListener('scroll', handleBackToTop);
+            // optional: on page load
+            handleBackToTop();
+            // smooth scrolling when button clicked
+            backToTopBtn.addEventListener('click', function(){
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         });
     </script>
 
@@ -198,12 +270,14 @@
         
         @php
             $sections = [
-                1 => 'Strategic Foundation: Trust & Scalp Health',
-                2 => 'Indonesia 2026: The Premium Inflection',
-                3 => 'The Urban Barrier-Repairer',
-                4 => 'Market Lens: Indonesia',
-                5 => 'The Positioning Lock Point',
-                6 => 'Essence, Core Belief & Immortalization',
+                1 => 'Research Objective & Brand Question',
+                2 => 'National Skin & Hair Reality in Indonesia',
+                3 => 'Behavioral & Emotional Tension in Indonesia’s Personal Care Market',
+                4 => 'Consumer Needs, Target Audience & Buyer Personas',
+                5 => 'Market Structure, Trends & Distribution Strategy',
+                6 => 'Competitive Landscape, Benchmarking & White Space',
+                7 => 'Brand Positioning & Reasons-To-Believe Validation',
+                8 => 'Product System, Pricing, and Profitability',
             ];
         @endphp
 
