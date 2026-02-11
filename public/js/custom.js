@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Only one accordion open at a time
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 7; i++) {
         if (!toggleButtons[i]) continue;
         toggleButtons[i].addEventListener("click", function() {
             const expanded = toggleButtons[i].getAttribute("aria-expanded") === "true";
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideSection(`.section-${i}-content`);
             } else {
                 // Tutup semua accordion selain yang ini
-                for (let j = 1; j <= 6; j++) {
+                for (let j = 1; j <= 7; j++) {
                     if (j === i) continue;
                     if (toggleButtons[j]) {
                         toggleButtons[j].setAttribute("aria-expanded", "false");

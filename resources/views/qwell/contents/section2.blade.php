@@ -1,507 +1,387 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Custom Config & Styles -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            dark: '#1e1b4b',   /* Indigo 950 */
-                            primary: '#4f46e5', /* Indigo 600 */
-                            secondary: '#db2777', /* Pink 600 */
-                            accent: '#059669',   /* Emerald 600 */
-                            light: '#f3f4f6',    /* Gray 100 */
-                            surface: '#ffffff'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+<style>
+    /* Scoped Variables needed for Section 2 */
+    .section-2-wrapper {
+        --primary: #65BDAD;
+        --secondary: #FFCC97;
+        --accent: #CAF1EB;
+        --bg-light: #FFEBDA;
+        --text-dark: #2D3436;
+        --white: #FFFFFF;
+        --soft-shadow: 0 4px 20px rgba(0,0,0,0.05);
 
-    <style>
-        /* Chart Container Logic: Responsive, Centered, Constrained */
-        .chart-container {
-            position: relative;
-            margin: auto;
-            width: 100%;
-            max-width: 650px; /* Constrain width on large screens */
-            height: 350px;    /* Default mobile height */
-        }
-        
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px; /* Taller on desktop */
-            }
-        }
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+        /* Flex needed for layout, but scoped */
+        display: flex;
+        flex-direction: column; /* Stacked on mobile, row on desktop */
+    }
 
-        /* Hide scrollbar for clean look */
-        body::-webkit-scrollbar {
-            width: 8px;
+    @media (min-width: 900px) {
+        .section-2-wrapper {
+            flex-direction: row;
         }
-        body::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        body::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        body::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
+    }
 
-        /* Utility for timeline line */
-        .timeline-line::before {
-            content: '';
-            position: absolute;
+    /* Sidebar Navigation (Scoped) */
+    .section-2-sidebar {
+        width: 100%;
+        background: var(--white);
+        padding: 2rem;
+        border-bottom: 1px solid var(--accent);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        /* Sticky behavior within the wrapper */
+        position: relative;
+    }
+
+    @media (min-width: 900px) {
+        .section-2-sidebar {
+            width: 280px;
+            height: 100vh; /* Or auto to fit content */
+            position: sticky;
             top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 4px;
-            background: #e5e7eb;
-            transform: translateX(-50%);
-            z-index: 0;
+            border-right: 1px solid var(--accent);
+            border-bottom: none;
+            flex-shrink: 0;
         }
-    </style>
-    
-    <!-- 
-    SOURCE MATERIAL ANALYSIS & PLAN:
-    
-    1. Narrative: The document argues that 2026 is a tipping point for the Indonesian Personal Care market. 
-       We move from "Mass Volume" to "Premium Precision" driven by Skintellectuals and Regulation (Halal).
-    
-    2. Visualization Choices (NO SVG):
-       - Market Growth: Grouped Bar Chart (Compare Mass vs Premium CAGR).
-       - Category Importance: Donut Chart (Share of Routine).
-       - Consumer Concerns: Horizontal Bar (Ranking ingredients).
-       - Resilience: Line Chart (Premium vs General FMCG trends).
-       - 2026 Timeline: CSS/HTML Vertical Layout.
-       - Strategy Synthesis: CSS Cards.
-    
-    3. Palette: Vibrant Future (Indigo/Pink/Emerald).
-    -->
-</head>
-<body class="section-2-content bg-brand-light text-slate-800 antialiased selection:bg-brand-secondary selection:text-white">
+    }
 
-    <!-- HERO SECTION -->
-    <header class="section-2-content bg-gradient-to-r from-brand-dark to-brand-primary text-white pt-20 pb-24 px-6 shadow-xl relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        <div class="max-w-5xl mx-auto relative z-10 text-center">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight">
-                Indonesia 2026: <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-emerald-300">The Premium Inflection</span>
-            </h1>
-            <p class="text-lg md:text-xl text-indigo-100 max-w-2xl mx-auto font-light">
-                Why structural market shifts, "Skintellectual" consumers, and regulatory convergence make 2026 the critical year for premium personal care brands like Q'WELL.
-            </p>
+    .section-2-sidebar h1 { font-size: 1.2rem; color: var(--primary); margin-bottom: 1rem; }
+    .section-2-sidebar nav { display: flex; flex-direction: column; gap: 0.5rem; }
+    .section-2-sidebar nav a { 
+        text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.9rem;
+        padding: 0.8rem; border-radius: 8px; transition: 0.3s;
+    }
+    .section-2-sidebar nav a:hover { background: var(--accent); color: var(--primary); }
+
+    /* Main Content (Scoped) */
+    .section-2-main {
+        flex: 1;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 100%; /* Ensure it doesn't overflow flex container */
+    }
+
+    .section-2-main .header { margin-bottom: 3rem; }
+    .section-2-main .header h2 { font-size: 2.5rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem; }
+    .section-2-main .header p { color: #636e72; font-size: 1.1rem; }
+
+    /* Controls Area */
+    .section-2-main .controls { 
+        background: var(--white); padding: 1rem 2rem; border-radius: 12px; 
+        margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;
+        box-shadow: var(--soft-shadow);
+        flex-wrap: wrap; gap: 1rem;
+    }
+    .section-2-main .filter-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .section-2-main .filter-btn { 
+        padding: 0.5rem 1rem; border: none; border-radius: 20px; font-size: 0.8rem; cursor: pointer;
+        background: var(--accent); color: var(--primary); transition: 0.3s; font-weight: 600;
+    }
+    .section-2-main .filter-btn.active { background: var(--primary); color: var(--white); }
+
+    .section-2-main .source-toggle { font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+
+    /* Grid Layout */
+    .section-2-main .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    
+    @media (min-width: 900px) {
+        .section-2-main .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .section-2-main .card { 
+        background: var(--white); border-radius: 16px; padding: 1.5rem; 
+        box-shadow: var(--soft-shadow); transition: transform 0.2s;
+        border: 1px solid transparent;
+        display: flex;
+        flex-direction: column;
+    }
+    .section-2-main .card:hover { transform: translateY(-3px); border-color: var(--secondary); }
+    .section-2-main .card.full-width { grid-column: span 1; }
+    
+    @media (min-width: 900px) {
+        .section-2-main .card.full-width { grid-column: span 2; }
+    }
+
+    .section-2-main .card h3 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
+    .section-2-main .insight-text { font-size: 0.95rem; color: #4b4b4b; margin-bottom: 1rem; }
+    .section-2-main .highlight { font-weight: 700; color: var(--primary); }
+
+    /* Accordion Style (Local to Section 2) */
+    .section-2-main .accordion { margin-top: auto; border-top: 1px solid #f1f1f1; }
+    .section-2-main .accordion-item { padding: 0.75rem 0; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #7f8c8d; }
+    .section-2-main .accordion-content { display: none; padding-bottom: 1rem; color: #4b4b4b; font-weight: 400; }
+    .section-2-main .accordion-content ul { padding-left: 1.2rem; }
+    .section-2-main .accordion-content li { margin-bottom: 0.4rem; }
+
+    /* Tooltips */
+    .section-2-main .tooltip { position: relative; border-bottom: 1px dotted var(--primary); cursor: help; }
+    .section-2-main .tooltip:hover::after {
+        content: attr(data-tip); position: absolute; bottom: 120%; left: 0; background: #333;
+        color: #fff; padding: 8px; border-radius: 4px; width: 200px; font-size: 0.75rem; z-index: 10;
+    }
+
+    /* Charts Wrapper */
+    .section-2-main .chart-container { height: 250px; position: relative; margin: 1rem 0; }
+
+    /* Citation Style */
+    .section-2-main .citation { display: none; font-size: 0.7rem; color: var(--primary); font-style: italic; margin-top: 5px; }
+</style>
+
+<div class="section-2-wrapper">
+    <aside class="section-2-sidebar">
+        <h1>Q'WELL Research</h1>
+        <nav>
+            <a href="#prevalence">1. Prevalence Overview</a>
+            <a href="#causes">2. Structural Causes</a>
+            <a href="#barrier">3. Barrier & Risk</a>
+            <a href="#behavior">4. Consumer Behavior</a>
+            <a href="#summary">5. Executive Summary</a>
+        </nav>
+    </aside>
+
+    <div class="section-2-main">
+        <div class="header">
+            <h2>Dermatological Crisis Dashboard</h2>
+            <p>Analyzing the Structural Determinants of Sensitivity in Indonesia</p>
         </div>
-    </header>
 
-    <!-- CONTENT WRAPPER -->
-    <main class="section-2-content max-w-6xl mx-auto -mt-16 px-4 pb-20 space-y-16 relative z-20">
-
-        <!-- SECTION 1: MARKET DYNAMICS -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Intro Card -->
-            <div class="bg-brand-surface rounded-2xl shadow-lg p-8 md:col-span-2 border-l-8 border-brand-primary">
-                <h2 class="text-2xl font-bold text-brand-dark mb-3">1. The Premium Opportunity</h2>
-                <p class="text-slate-600 leading-relaxed">
-                    While the overall Indonesian FMCG market shows steady maturation, the <strong>Premium Personal Care</strong> segment is decoupling from the mass market. Projections indicate that by 2030, premium segments will outpace mass categories significantly, driven by a rising middle class trading up for efficacy and safety rather than just status.
-                </p>
+        <div class="controls">
+            <div class="filter-btns">
+                <button class="filter-btn active" onclick="section2FilterInsight('all', this)">All Insights</button>
+                <button class="filter-btn" onclick="section2FilterInsight('env', this)">Environmental</button>
+                <button class="filter-btn" onclick="section2FilterInsight('life', this)">Lifestyle</button>
+                <button class="filter-btn" onclick="section2FilterInsight('form', this)">Formulation</button>
             </div>
+            <div class="source-toggle" onclick="section2ToggleSources()">
+                <input type="checkbox" id="section2SrcSwitch"> <span>Show Sources</span>
+            </div>
+        </div>
 
-            <!-- Visualization: Market Growth -->
-            <div class="bg-brand-surface rounded-2xl shadow-md p-6 flex flex-col items-center">
-                <h3 class="text-lg font-semibold text-slate-700 mb-2 w-full text-left">Projected CAGR (2024-2030)</h3>
+        <div class="dashboard-grid">
+            <!-- Section 1: Prevalence -->
+            <div class="card" id="prevalence" data-cat="all">
+                <h3>Prevalence Trajectory</h3>
+                <p class="insight-text">Population-level sensitivity is shifting from <span class="highlight">acute irritation to chronic reactivity</span>.</p>
                 <div class="chart-container">
-                    <canvas id="marketGrowthChart"></canvas>
+                    <canvas id="prevalenceChart"></canvas>
                 </div>
-                <p class="text-xs text-slate-400 mt-4 text-center w-full">Source: Euromonitor / Internal Analysis</p>
+                <div class="accordion">
+                    <div class="accordion-item" onclick="section2ToggleAcc(this)">View Clinical Breakdown ▼</div>
+                    <div class="accordion-content">
+                        <ul>
+                            <li><span class="highlight">88%</span> of male students report recurring dandruff/scalp itch.</li>
+                            <li>Dermatitis prevalence at <span class="highlight">6.8%</span>, with 90% linked to contact irritants.</li>
+                            <li><span class="highlight">87.5%</span> of urban youth suffer from treatment-induced barrier sensitivity.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="citation">Sources: BPS Health Survey, Dermatology Journals ID</div>
             </div>
 
-            <!-- Visualization: Category Split -->
-            <div class="bg-brand-surface rounded-2xl shadow-md p-6 flex flex-col items-center">
-                <h3 class="text-lg font-semibold text-slate-700 mb-2 w-full text-left">Share of "Trust-Dependent" Routine</h3>
+            <!-- Section 2: Structural Causes -->
+            <div class="card" id="causes" data-cat="env life form">
+                <h3>Structural Root Causes</h3>
+                <p class="insight-text">Drivers of sensitivity are baked into the urban environment and commercial cycles.</p>
                 <div class="chart-container">
-                    <canvas id="categorySplitChart"></canvas>
+                    <canvas id="causesChart"></canvas>
                 </div>
-                <p class="text-sm text-slate-500 mt-4 text-center">
-                    <span class="font-bold text-brand-primary">Insight:</span> Hair & Body care account for 60% of high-frequency application moments, building trust faster than facial care.
-                </p>
-            </div>
-        </section>
-
-        <!-- SECTION 2: THE CONSUMER SHIFT -->
-        <section class="bg-white rounded-3xl shadow-xl overflow-hidden">
-            <div class="bg-brand-dark p-8 text-white">
-                <h2 class="text-3xl font-bold mb-2">2. Rise of the "Skintellectual"</h2>
-                <p class="text-indigo-200">
-                    Indonesian consumers are moving beyond basic hygiene. 2026 marks the maturity of "Ingredient Literacy," where purchase decisions are driven by label transparency and safety over celebrity endorsements.
-                </p>
-            </div>
-            
-            <div class="p-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Text Content -->
-                <div class="space-y-6">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-secondary flex items-center justify-center text-white font-bold text-lg">A</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-bold text-brand-dark">Chemophobia & Safety</h4>
-                            <p class="text-slate-600 text-sm">Fear of harsh chemicals (SLS, Parabens) is the #1 trigger for brand switching in the premium segment.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-primary flex items-center justify-center text-white font-bold text-lg">B</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-bold text-brand-dark">Halal as Quality Assurance</h4>
-                            <p class="text-slate-600 text-sm">Halal is no longer just religious compliance; it is viewed as a proxy for hygiene, safety, and manufacturing excellence.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-accent flex items-center justify-center text-white font-bold text-lg">C</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-bold text-brand-dark">Efficacy over Status</h4>
-                            <p class="text-slate-600 text-sm">The modern premium consumer asks "Does it work?" before "Is it famous?". Clinical backing is key.</p>
-                        </div>
+                <div class="accordion">
+                    <div class="accordion-item" onclick="section2ToggleAcc(this)">Key Environmental Factors ▼</div>
+                    <div class="accordion-content">
+                        <ul>
+                            <li><strong>Pollution:</strong> $PM_{2.5}$ triggers oxidative stress and barrier micro-inflammation.</li>
+                            <li><strong>Water Toxicity:</strong> Hard water and high mineral content strip natural lipids.</li>
+                            <li><strong>Formulation:</strong> <span class="highlight">54.9%</span> of products cause sensitivity through active overuse.</li>
+                        </ul>
                     </div>
                 </div>
-
-                <!-- Visualization: Ingredient Concerns -->
-                <div class="w-full">
-                    <h3 class="text-lg font-semibold text-slate-700 mb-4">Top Purchase Drivers (Premium Segment)</h3>
-                    <div class="chart-container" style="height: 300px;">
-                        <canvas id="consumerConcernsChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 3: ECONOMIC RESILIENCE -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="md:col-span-3 mb-4">
-                 <h2 class="text-3xl font-bold text-brand-dark border-b-4 border-brand-secondary inline-block pb-2">3. The Resilience of Beauty</h2>
-                 <p class="text-slate-600 mt-4 max-w-3xl">
-                     Analysis of consumer expenditure during economic downturns proves that <strong>Personal Care is inelastic</strong>. While travel and dining spend contracts, consumers view "self-care" and "health maintenance" as non-negotiable protections, reinforcing the "Lipstick Effect."
-                 </p>
+                <div class="citation">Sources: Ministry of Environment ID, Industry Market Research</div>
             </div>
 
-            <!-- Visualization: Resilience Chart -->
-            <div class="md:col-span-2 bg-brand-surface rounded-2xl shadow-md p-6">
-                <h3 class="text-lg font-semibold text-slate-700 mb-2">Spending Stability During Economic Pressure</h3>
+            <!-- Section 3: Barrier Damage Loop -->
+            <div class="card" id="barrier" data-cat="env form">
+                <h3>The Barrier Degradation Loop</h3>
+                <p class="insight-text">High <span class="tooltip" data-tip="Transepidermal Water Loss: the amount of water lost across the stratum corneum through evaporation.">TEWL</span> values indicate permanent barrier breach.</p>
                 <div class="chart-container">
-                    <canvas id="resilienceChart"></canvas>
+                    <svg viewBox="0 0 400 200" style="width:100%; height:100%;">
+                        <circle cx="200" cy="100" r="70" fill="none" stroke="#CAF1EB" stroke-width="2" stroke-dasharray="5,5" />
+                        <g transform="translate(200,30)">
+                            <rect x="-60" y="-15" width="120" height="30" rx="15" fill="#65BDAD" />
+                            <text y="5" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">External Stressors</text>
+                        </g>
+                        <g transform="translate(320,100)">
+                            <rect x="-50" y="-15" width="100" height="30" rx="15" fill="#FFCC97" />
+                            <text y="5" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Barrier Failure</text>
+                        </g>
+                        <g transform="translate(200,170)">
+                            <rect x="-60" y="-15" width="120" height="30" rx="15" fill="#65BDAD" />
+                            <text y="5" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Inflammation Flare</text>
+                        </g>
+                        <g transform="translate(80,100)">
+                            <rect x="-50" y="-15" width="100" height="30" rx="15" fill="#FFCC97" />
+                            <text y="5" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">TEWL Elevation</text>
+                        </g>
+                    </svg>
                 </div>
+                <div class="insight-text">
+                    TEWL for sensitive skin: <span class="highlight">18.07 $g/m^2/h$</span> vs <span class="highlight">5.61 $g/m^2/h$</span> in healthy skin. This 3x increase creates a "leaky" interface.
+                </div>
+                <div class="citation">Sources: Clinical Barrier Studies ID</div>
             </div>
 
-            <!-- Key Stat Card -->
-            <div class="flex flex-col gap-6">
-                <div class="bg-gradient-to-br from-brand-primary to-indigo-800 rounded-2xl p-6 text-white shadow-lg flex-1 flex flex-col justify-center">
-                    <span class="text-sm font-medium opacity-80 uppercase tracking-wider">Premium Retention</span>
-                    <span class="text-5xl font-extrabold my-2">85%</span>
-                    <p class="text-sm opacity-90">of premium users <strong>do not downgrade</strong> to mass brands even during inflation, opting to buy smaller formats instead.</p>
+            <!-- Section 4: Cocok-Cocokan -->
+            <div class="card" id="behavior" data-cat="life form">
+                <h3>“Cocok-Cocokan” Behavior Funnel</h3>
+                <p class="insight-text">Misinformation drives a high-cost, high-wastage cycle of brand switching.</p>
+                <div class="chart-container">
+                    <canvas id="behaviorChart"></canvas>
                 </div>
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex-1 flex flex-col justify-center">
-                    <span class="text-4xl font-bold text-brand-secondary mb-2">3.2x</span>
-                    <p class="text-slate-600 text-sm">Higher lifetime value (LTV) for customers acquired through "Trust" categories (Body/Hair) vs. "Trend" categories (Makeup).</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 4: 2026 TIMELINE -->
-        <section class="relative">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-brand-dark">4. The 2026 Convergence</h2>
-                <p class="text-slate-500 mt-2">Why timing matters: Regulatory milestones meet behavioral maturity.</p>
-            </div>
-
-            <div class="relative max-w-4xl mx-auto timeline-line">
-                
-                <!-- 2024 Event -->
-                <div class="relative z-10 mb-12 flex flex-col md:flex-row items-center w-full">
-                    <div class="order-1 bg-white border-r-4 border-brand-accent shadow-lg rounded-xl p-6 w-full md:w-5/12 ml-auto md:ml-0 md:text-right">
-                        <span class="font-black text-4xl text-brand-accent opacity-20 absolute top-2 right-4 md:left-4 md:right-auto">2024</span>
-                        <h4 class="font-bold text-lg text-brand-dark mt-2">The "Clean" Awakening</h4>
-                        <p class="text-sm text-slate-600 mt-2">Consumer search volume for "Non-Toxic" and "Natural Ingredients" hits all-time high. Early adopters reject legacy mass brands.</p>
-                    </div>
-                    <div class="z-20 flex items-center order-1 bg-brand-accent shadow-xl w-10 h-10 rounded-full border-4 border-white md:absolute left-0 md:left-1/2 transform md:-translate-x-1/2 mt-4 md:mt-0"></div>
-                    <div class="order-1 w-full md:w-5/12"></div>
-                </div>
-
-                <!-- 2025 Event -->
-                <div class="relative z-10 mb-12 flex flex-col md:flex-row items-center w-full">
-                    <div class="order-1 w-full md:w-5/12"></div>
-                    <div class="z-20 flex items-center order-1 bg-brand-primary shadow-xl w-10 h-10 rounded-full border-4 border-white md:absolute left-0 md:left-1/2 transform md:-translate-x-1/2 mt-4 md:mt-0"></div>
-                    <div class="order-1 bg-white border-l-4 border-brand-primary shadow-lg rounded-xl p-6 w-full md:w-5/12 mr-auto md:mr-0">
-                        <span class="font-black text-4xl text-brand-primary opacity-20 absolute top-2 right-4">2025</span>
-                        <h4 class="font-bold text-lg text-brand-dark mt-2">Regulatory Tightening</h4>
-                        <p class="text-sm text-slate-600 mt-2">Pre-compliance phase for stricter Halal mandates. Uncertified import brands begin to exit or lose retail shelf space, clearing the market.</p>
+                <div class="accordion">
+                    <div class="accordion-item" onclick="section2ToggleAcc(this)">Behavior Drivers ▼</div>
+                    <div class="accordion-content">
+                        <ul>
+                            <li><strong>Claim Fatigue:</strong> Viral transparency tests show massive gaps in actual active levels.</li>
+                            <li><strong>Financial Impact:</strong> Indonesians spend significant income on failed "trial" products.</li>
+                            <li><strong>Social Pressure:</strong> gen-Z purchases are 50%+ driven by TikTok/IG hype cycles.</li>
+                        </ul>
                     </div>
                 </div>
+                <div class="citation">Sources: Consumer Signal Aggregation, E-commerce Sentiment Data</div>
+            </div>
 
-                <!-- 2026 Event (Hero) -->
-                <div class="relative z-10 flex flex-col md:flex-row items-center w-full">
-                    <div class="order-1 bg-brand-dark text-white shadow-2xl rounded-xl p-8 w-full md:w-5/12 ml-auto md:ml-0 md:text-right ring-4 ring-brand-secondary/30">
-                        <span class="font-black text-5xl text-white opacity-10 absolute top-2 right-4 md:left-4 md:right-auto">2026</span>
-                        <h4 class="font-bold text-xl text-brand-secondary mt-2">The Structural Inflection</h4>
-                        <p class="text-sm text-indigo-100 mt-2">Full Halal mandate enforcement + Peak Ingredient Literacy. Trust becomes the primary currency. Brands without clear safety/halal lineage face "Trust Cliffs".</p>
+            <!-- Section 5: Summary -->
+            <div class="card full-width" id="summary" style="background-color: var(--accent); border: 2px solid var(--primary);">
+                <h3>Systemic Problem Definition</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <p style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">Skin sensitivity in Indonesia is a structural health reality, not a trend.</p>
+                        <ul class="insight-text" style="list-style: none;">
+                            <li style="margin-bottom: 0.5rem;">🚨 <strong>Environment:</strong> Unavoidable exposure to extreme UV and lethal air particulates.</li>
+                            <li style="margin-bottom: 0.5rem;">🚨 <strong>Barrier:</strong> Permanent degradation turning temporary irritation chronic.</li>
+                            <li style="margin-bottom: 0.5rem;">🚨 <strong>Culture:</strong> "Cocok-cocokan" cycle fueled by claim integrity failure.</li>
+                        </ul>
                     </div>
-                    <div class="z-20 flex items-center order-1 bg-brand-secondary shadow-xl w-14 h-14 rounded-full border-4 border-white md:absolute left-0 md:left-1/2 transform md:-translate-x-1/2 mt-4 md:mt-0"></div>
-                    <div class="order-1 w-full md:w-5/12"></div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECTION 5: STRATEGIC SYNTHESIS -->
-        <section class="bg-white rounded-2xl p-8 shadow-lg border-t-8 border-brand-dark">
-            <h2 class="text-2xl font-bold text-brand-dark mb-6 text-center">Synthesis: Precision over Scale</h2>
-            <p class="text-center text-slate-600 mb-10 max-w-2xl mx-auto">
-                Q'WELL cannot and should not compete on mass volume. The 2026 landscape favors a precision approach.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Mass Model (Old) -->
-                <div class="border-2 border-slate-100 rounded-xl p-6 bg-slate-50 opacity-70">
-                    <h3 class="text-lg font-bold text-slate-500 mb-4 flex items-center">
-                        <span class="text-2xl mr-2">📉</span> The Mass Model
-                    </h3>
-                    <ul class="space-y-3 text-sm text-slate-500">
-                        <li class="flex items-center"><span class="w-2 h-2 bg-slate-400 rounded-full mr-2"></span>Volume-driven low margins</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-slate-400 rounded-full mr-2"></span>Generic "All-in-One" claims</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-slate-400 rounded-full mr-2"></span>Heavy reliance on TVC advertising</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-slate-400 rounded-full mr-2"></span>Vulnerable to ingredient scrutiny</li>
-                    </ul>
-                </div>
-
-                <!-- Q'WELL Model (New) -->
-                <div class="border-2 border-brand-primary/20 rounded-xl p-6 bg-indigo-50/50 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-brand-secondary text-white text-xs font-bold px-3 py-1 rounded-bl-lg">WINNING STRATEGY</div>
-                    <h3 class="text-lg font-bold text-brand-primary mb-4 flex items-center">
-                        <span class="text-2xl mr-2">🎯</span> The Q'WELL Precision Model
-                    </h3>
-                    <ul class="space-y-3 text-sm text-slate-700 font-medium">
-                        <li class="flex items-center"><span class="w-2 h-2 bg-brand-secondary rounded-full mr-2"></span>High-Frequency Trust Categories (Hair/Body)</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-brand-secondary rounded-full mr-2"></span>Clinical & Halal Transparency</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-brand-secondary rounded-full mr-2"></span>Targeting "Skintellectual" Early Adopters</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-brand-secondary rounded-full mr-2"></span>Resilient Pricing Power</li>
-                    </ul>
+                    <div style="flex: 1; min-width: 300px; padding: 1.5rem; background: var(--white); border-radius: 12px;">
+                        <p class="insight-text"><strong>Conclusion:</strong> Consumers are trapped in a loop of <strong>hostile stressors</strong> and <strong>ineffective active-heavy products</strong>. Q'WELL solves this by targeting the structural barrier deficiency first.</p>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</div>
 
-        <!-- FOOTER -->
-        <section class="section-2-content bg-brand-dark text-slate-400 py-12 text-center text-sm">
-            <p class="mb-2">Generated for Deep Research Strategy</p>
-            <p>&copy; 2026 Strategic Foresight Group. All rights reserved.</p>
-        </section>
-
-
-    </main>
-
-    <!-- CHART.JS LOGIC -->
-    <script>
-        // --- UTILITY: Label Splitting (16 chars) ---
-        function splitLabel(label) {
-            if (typeof label !== 'string') return label;
-            const words = label.split(' ');
-            const lines = [];
-            let currentLine = words[0];
-
-            for (let i = 1; i < words.length; i++) {
-                if (currentLine.length + 1 + words[i].length <= 16) {
-                    currentLine += ' ' + words[i];
-                } else {
-                    lines.push(currentLine);
-                    currentLine = words[i];
+<script>
+    (function() { // Wrap in IIFE to avoid global variable conflicts
+        // 1. PREVALENCE CHART (Indexed 1-5 Trend)
+        const ctx1 = document.getElementById('prevalenceChart');
+        if (ctx1) {
+            new Chart(ctx1.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+                    datasets: [{
+                        label: 'Sensitivity Index',
+                        data: [2.8, 3.2, 3.5, 4.1, 4.5, 4.8],
+                        borderColor: '#65BDAD',
+                        backgroundColor: 'rgba(101, 189, 173, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { min: 1, max: 5, ticks: { stepSize: 1 } } }
                 }
-            }
-            lines.push(currentLine);
-            return lines.length > 1 ? lines : lines[0]; // Return string if 1 line, array if multiple
+            });
         }
 
-        // --- UTILITY: Common Tooltip Config ---
-        const commonTooltipConfig2 = {
-            callbacks: {
-                title: function(tooltipItems) {
-                    const item = tooltipItems[0];
-                    let label = item.chart.data.labels[item.dataIndex];
-                    if (Array.isArray(label)) {
-                        return label.join(' ');
-                    } else {
-                        return label;
-                    }
-                }
-            }
-        };
-
-        // --- CHART 1: Market Growth (Grouped Bar) ---
-        const ctxGrowth = document.getElementById('marketGrowthChart').getContext('2d');
-        const rawLabelsGrowth = ['2024', '2025', '2026', '2027', '2028', '2029', '2030'];
-        new Chart(ctxGrowth, {
-            type: 'bar',
-            data: {
-                labels: rawLabelsGrowth,
-                datasets: [
-                    {
-                        label: 'Mass Market Growth (%)',
-                        data: [4.2, 4.1, 4.0, 3.8, 3.5, 3.2, 3.0],
-                        backgroundColor: '#cbd5e1', // Slate 300
-                        borderRadius: 4
-                    },
-                    {
-                        label: 'Premium Market Growth (%)',
-                        data: [6.5, 7.2, 8.5, 9.1, 9.8, 10.2, 10.5],
-                        backgroundColor: '#4f46e5', // Brand Primary
-                        borderRadius: 4
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    tooltip: commonTooltipConfig2,
-                    legend: { position: 'bottom' },
-                    annotation: {
-                        annotations: {
-                            line1: {
-                                type: 'line',
-                                xMin: 2,
-                                xMax: 2,
-                                borderColor: '#db2777',
-                                borderWidth: 2,
-                                borderDash: [6, 6],
-                                label: {
-                                    content: '2026 Inflection',
-                                    enabled: true,
-                                    position: 'top'
-                                }
-                            }
-                        }
-                    }
+        // 2. ROOT CAUSES CHART (Radar)
+        const ctx2 = document.getElementById('causesChart');
+        if (ctx2) {
+            new Chart(ctx2.getContext('2d'), {
+                type: 'radar',
+                data: {
+                    labels: ['Pollution', 'UV Exposure', 'Water Quality', 'Lifestyle Stress', 'Formulation Harshness'],
+                    datasets: [{
+                        label: 'Contribution Level (Indexed)',
+                        data: [4.8, 4.2, 4.5, 3.8, 4.0],
+                        backgroundColor: 'rgba(255, 204, 151, 0.5)',
+                        borderColor: '#FFCC97',
+                        pointBackgroundColor: '#65BDAD'
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'YoY Growth Rate' }
-                    }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { min: 0, max: 5, ticks: { display: false } } }
                 }
-            }
-        });
+            });
+        }
 
-        // --- CHART 2: Category Split (Donut) ---
-        const ctxSplit = document.getElementById('categorySplitChart').getContext('2d');
-        const rawLabelsSplit = ['Hair & Body Care', 'Facial Skincare', 'Color Cosmetics', 'Fragrance & Others'];
-        new Chart(ctxSplit, {
-            type: 'doughnut',
-            data: {
-                labels: rawLabelsSplit.map(splitLabel),
-                datasets: [{
-                    data: [55, 25, 12, 8],
-                    backgroundColor: [
-                        '#4f46e5', // Primary (Focus)
-                        '#db2777', // Secondary
-                        '#059669', // Accent
-                        '#e2e8f0'  // Gray
-                    ],
-                    borderWidth: 0,
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '70%',
-                plugins: {
-                    tooltip: commonTooltipConfig2,
-                    legend: { position: 'bottom', labels: { boxWidth: 12 } }
-                }
-            }
-        });
-
-        // --- CHART 3: Consumer Concerns (Horizontal Bar) ---
-        const ctxConcerns = document.getElementById('consumerConcernsChart').getContext('2d');
-        const rawLabelsConcerns = ['Ingredient Safety', 'Halal Certification', 'Proven Efficacy', 'Brand Prestige', 'Price Promotion', 'Packaging'];
-        new Chart(ctxConcerns, {
-            type: 'bar',
-            indexAxis: 'y', // Horizontal
-            data: {
-                labels: rawLabelsConcerns.map(splitLabel),
-                datasets: [{
-                    label: 'Importance Score (1-10)',
-                    data: [9.2, 8.8, 8.5, 6.2, 5.8, 4.5],
-                    backgroundColor: [
-                        '#db2777', // Top priority
-                        '#db2777',
-                        '#4f46e5',
-                        '#cbd5e1',
-                        '#cbd5e1',
-                        '#cbd5e1'
-                    ],
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    tooltip: commonTooltipConfig2,
-                    legend: { display: false }
+        // 4. BEHAVIOR CHART (Horizontal Bar)
+        const ctx4 = document.getElementById('behaviorChart');
+        if (ctx4) {
+            new Chart(ctx4.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Social Hype Discovery', 'Product Purchase', 'Barrier Irritation', 'Brand Abandonment', 'New Cycle Start'],
+                    datasets: [{
+                        label: 'Participation %',
+                        data: [95, 82, 68, 74, 88],
+                        backgroundColor: ['#CAF1EB', '#FFCC97', '#65BDAD', '#FFCC97', '#CAF1EB']
+                    }]
                 },
-                scales: {
-                    x: { beginAtZero: true, max: 10 }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } }
                 }
-            }
-        });
+            });
+        }
+    })();
 
-        // --- CHART 4: Resilience (Line) ---
-        const ctxResilience = document.getElementById('resilienceChart').getContext('2d');
-        const rawLabelsResilience = ['Pre-Crisis', 'Month 1', 'Month 3', 'Month 6', 'Recovery'];
-        new Chart(ctxResilience, {
-            type: 'line',
-            data: {
-                labels: rawLabelsResilience,
-                datasets: [
-                    {
-                        label: 'Premium Personal Care Spend',
-                        data: [100, 98, 97, 99, 105],
-                        borderColor: '#059669', // Emerald (Resilient)
-                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 3
-                    },
-                    {
-                        label: 'Dining & Leisure Spend',
-                        data: [100, 60, 55, 65, 80],
-                        borderColor: '#ef4444', // Red (Volatile)
-                        borderDash: [5, 5],
-                        tension: 0.4,
-                        borderWidth: 2,
-                        pointRadius: 0
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    tooltip: commonTooltipConfig2,
-                    legend: { position: 'top' }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        min: 40,
-                        title: { display: true, text: 'Index (Base = 100)' }
-                    }
+    // Interactivity Scripts (Global Functions with unique names)
+    function section2ToggleAcc(element) {
+        const content = element.nextElementSibling;
+        const isOpen = content.style.display === "block";
+        content.style.display = isOpen ? "none" : "block";
+        element.innerText = isOpen ? element.innerText.replace('▲', '▼') : element.innerText.replace('▼', '▲');
+    }
+
+    function section2ToggleSources() {
+        const citations = document.querySelectorAll('.section-2-wrapper .citation');
+        const isChecked = document.getElementById('section2SrcSwitch').checked;
+        citations.forEach(c => c.style.display = isChecked ? 'block' : 'none');
+    }
+
+    function section2FilterInsight(cat, btn) {
+        const wrapper = btn.closest('.section-2-main');
+        const cards = wrapper.querySelectorAll('.card');
+        const buttons = wrapper.querySelectorAll('.filter-btn');
+        
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        cards.forEach(card => {
+            if (cat === 'all' || card.id === 'summary') {
+                card.style.opacity = "1";
+                card.style.display = "flex";
+            } else {
+                const categories = card.getAttribute('data-cat');
+                if (categories && categories.includes(cat)) {
+                    card.style.opacity = "1";
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
                 }
             }
         });
-    </script>
-</body>
-</html>
+    }
+</script>

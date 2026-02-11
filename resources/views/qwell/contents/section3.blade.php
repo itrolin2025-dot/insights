@@ -1,537 +1,1137 @@
+<style>
+    /* Scoped Variables for Section 3 */
+    .section-3-wrapper {
+      --primary: #65BDAD;
+      --secondary: #FFCC97;
+      --bg-soft: #FFEBDA;
+      --bg-mint: #CAF1EB;
+      --text: #243036;
+      --muted: #5a6a72;
+      --card: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 8px 24px rgba(0,0,0,0.06);
+      --radius: 16px;
+      --radius-sm: 12px;
+      
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg-soft);
+      color: var(--text);
+      /* Ensure local stacking context */
+      position: relative;
+      isolation: isolate;
+    }
 
-<head>
-    <meta charset="UTF-8">
+    /* Reset within wrapper */
+    .section-3-wrapper * { box-sizing: border-box; }
     
-    <!-- 
-    PALETTE: Clinical & Urban Vibrant
-    Primary: #0f172a (Slate 900 - Deep Urban)
-    Secondary: #0d9488 (Teal 600 - Clinical/Safety)
-    Accent: #f43f5e (Rose 500 - Skin/Barrier Repair)
-    Background: #f8fafc (Slate 50 - Clean)
-    -->
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            dark: '#0f172a',
-                            primary: '#0d9488', 
-                            accent: '#f43f5e',
-                            light: '#f1f5f9'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    /* Layout */
+    .section-3-wrapper .app { display: grid; grid-template-columns: 290px 1fr; min-height: 100vh; }
 
-    <style>
-        body {
-            background-color: #f8fafc;
-            color: #1e293b;
-        }
-        
-        /* Chart Container Styling - Mandatory Requirements */
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 650px; /* Constraint for readability */
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px; /* Base height */
-            max-height: 400px;
-        }
-        
-        @media (max-width: 640px) {
-            .chart-container {
-                height: 300px;
-            }
-        }
+    /* Sidebar */
+    .section-3-wrapper .sec3-nav {
+      position: sticky; top: 0;
+      height: 100vh;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      padding: 20px 16px;
+      overflow: auto;
+    }
 
-        .card {
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+    .section-3-wrapper .brand {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 10px 18px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      margin-bottom: 14px;
+    }
+    .section-3-wrapper .brand-badge{
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--bg-mint), var(--secondary));
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .section-3-wrapper .brand-title{ font-weight: 800; letter-spacing: 0.2px; }
+    .section-3-wrapper .brand-sub{ font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-        /* Custom Scrollbar for a cleaner look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-    </style>
-    
-    <!-- 
-    NARRATIVE PLAN:
-    1. Hook: Define the "Urban Barrier-Repairer".
-    2. Demographics: SES A focus (Ability to Pay).
-    3. Psychographics: The pivot from experimentation to safety.
-    4. The Problem: Pollution/Lifestyle driving "Barrier Anxiety".
-    5. Solution Fit: Transparency vs. Hype (Radar Chart).
-    6. Exclusion: Who we are NOT targeting.
-    7. Synthesis: Final Audience Definition.
-    
-    Confirmations:
-    - NO SVG used.
-    - NO Mermaid JS used.
-    - Chart.js used for visualisations.
-    - Tailwind used for styling.
-    -->
-</head>
-<body class="section-3-content antialiased">
+    .section-3-wrapper .navlinks { display: flex; flex-direction: column; gap: 6px; margin: 10px 0 14px; }
+    .section-3-wrapper .nav-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 10px;
+      border-radius: 12px;
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: 160ms ease;
+      font-size: 14px;
+    }
+    .section-3-wrapper .nav-link:hover { background: rgba(101,189,173,0.10); border-color: rgba(101,189,173,0.18); }
+    .section-3-wrapper .nav-link.active { background: rgba(101,189,173,0.16); border-color: rgba(101,189,173,0.30); }
 
-    <!-- Header / Hero Section -->
-    <header class="section-3-content bg-brand-dark text-white py-12 px-4 sm:px-6 lg:px-8 border-b-4 border-brand-accent">
-        <div class="max-w-7xl mx-auto">
-            <div class="md:flex md:items-center md:justify-between">
-                <div>
-                    <h2 class="text-brand-primary font-bold tracking-wide uppercase text-sm mb-2">Deep Research Section 3</h2>
-                    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">The Urban Barrier-Repairer</h1>
-                    <p class="mt-4 text-xl text-gray-300 max-w-3xl">
-                        Defining the 25–40 year old Indonesian consumer shifting from "Trend Chasing" to "Strategic Rituals."
-                    </p>
-                </div>
-                <div class="mt-6 md:mt-0 flex flex-col items-center justify-center bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-                    <span class="text-3xl font-bold text-brand-accent">SES A</span>
-                    <span class="text-sm text-gray-300">Target Segment</span>
-                </div>
-            </div>
+    .section-3-wrapper .pill {
+      font-size: 11px; color: var(--muted);
+      padding: 4px 8px; border-radius: 999px;
+      background: rgba(0,0,0,0.04);
+    }
+
+    .section-3-wrapper .panel {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .section-3-wrapper .panel h4 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #7a8b93; }
+
+    .section-3-wrapper .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .section-3-wrapper .chip {
+      user-select: none;
+      cursor: pointer;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(101,189,173,0.55);
+      background: #fff;
+      color: var(--primary);
+      font-size: 12px;
+      transition: 160ms ease;
+    }
+    .section-3-wrapper .chip.active { background: var(--primary); color: #fff; }
+
+    .section-3-wrapper .side-actions { display: grid; gap: 10px; margin-top: 14px; }
+    .section-3-wrapper .btn {
+      cursor: pointer;
+      border-radius: 12px;
+      border: 1px solid rgba(101,189,173,0.45);
+      background: rgba(202,241,235,0.55);
+      color: #1f5f56;
+      padding: 10px 12px;
+      font-weight: 650;
+      transition: 160ms ease;
+    }
+    .section-3-wrapper .btn:hover { background: rgba(202,241,235,0.75); }
+
+    /* Main */
+    .section-3-wrapper .sec3-main { padding: 22px 26px 60px; }
+
+    .section-3-wrapper .topbar {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .section-3-wrapper .title h1 { margin: 0; font-size: 22px; letter-spacing: -0.02em; }
+    .section-3-wrapper .title p { margin: 6px 0 0; color: var(--muted); font-size: 13px; max-width: 70ch; }
+
+    .section-3-wrapper .disclaimer {
+      background: rgba(255, 255, 255, 0.70);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      max-width: 520px;
+    }
+    .section-3-wrapper .disclaimer strong { color: #1f5f56; }
+    .section-3-wrapper .disclaimer small { color: var(--muted); display: block; margin-top: 2px; line-height: 1.35; }
+
+    /* KPI Strip */
+    .section-3-wrapper .kpis {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 18px;
+    }
+    .section-3-wrapper .kpi {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 12px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+    .section-3-wrapper .kpi:hover { transform: translateY(-1px); }
+    .section-3-wrapper .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #7a8b93; }
+    .section-3-wrapper .kpi .value { margin-top: 6px; font-size: 18px; font-weight: 800; color: var(--text); }
+    .section-3-wrapper .kpi .hint { margin-top: 2px; color: var(--muted); font-size: 12px; }
+
+    /* Sections */
+    .section-3-wrapper .section { margin-top: 24px; scroll-margin-top: 16px; }
+    .section-3-wrapper .section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .section-3-wrapper .section-head h2 { margin: 0; font-size: 18px; }
+    .section-3-wrapper .section-head .meta { color: var(--muted); font-size: 12px; }
+
+    .section-3-wrapper .grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 12px; }
+
+    .section-3-wrapper .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-3-wrapper .card h3 { margin: 0 0 6px; color: #1f5f56; font-size: 14px; }
+    .section-3-wrapper .meaning { color: var(--muted); font-weight: 650; font-size: 13px; margin: 0 0 10px; }
+    .section-3-wrapper ul { margin: 0; padding-left: 18px; color: #33434a; }
+    .section-3-wrapper li { margin: 6px 0; line-height: 1.35; }
+
+    .section-3-wrapper .quote {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.03);
+      color: #3f4f56;
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    .section-3-wrapper .chart {
+      height: 330px;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .section-3-wrapper .tools { display: flex; gap: 10px; align-items: center; }
+    .section-3-wrapper .toggle {
+      display: inline-flex; align-items: center; gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .section-3-wrapper .toggle input { accent-color: var(--primary); }
+
+    .section-3-wrapper .sources { display: none; margin-top: 10px; padding: 10px 12px; background: rgba(202,241,235,0.35); border-radius: 12px; color: #37565b; font-size: 12px; }
+    .section-3-wrapper .sources a { color: #1f5f56; }
+
+    /* Accordions */
+    .section-3-wrapper details { margin-top: 10px; }
+    .section-3-wrapper summary { cursor: pointer; font-weight: 700; color: #1f5f56; }
+    .section-3-wrapper details p { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+    /* Modal - Scoped IDs using common styles */
+    .sec3-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.46);
+      z-index: 1000;
+    }
+    .sec3-modal {
+      display: none;
+      position: fixed; inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: min(760px, calc(100% - 24px));
+      background: #fff;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.25);
+      z-index: 1001;
+      padding: 16px;
+    }
+
+    .section-3-wrapper .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .section-3-wrapper .modal-head h2 { margin: 0; font-size: 16px; }
+    .section-3-wrapper .modal-head p { margin: 6px 0 0; color: var(--muted); font-size: 12px; }
+    .section-3-wrapper .x { cursor: pointer; font-weight: 900; padding: 6px 10px; border-radius: 10px; background: rgba(0,0,0,0.04); }
+
+    .section-3-wrapper .searchrow { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 12px; }
+    .section-3-wrapper input[type="search"]{
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 12px;
+      font-size: 13px;
+    }
+    .section-3-wrapper .select{
+      padding: 10px 12px;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 12px;
+      font-size: 13px;
+      background: #fff;
+    }
+    .section-3-wrapper .quotes { margin-top: 12px; max-height: 360px; overflow: auto; padding-right: 6px; }
+    .section-3-wrapper .q { border: 1px solid rgba(0,0,0,0.08); border-radius: 14px; padding: 10px 12px; margin-bottom: 10px; }
+    .section-3-wrapper .q .tag { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #7a8b93; }
+    .section-3-wrapper .q .txt { margin-top: 6px; color: #2f3f46; }
+
+    /* Mobile */
+    .section-3-wrapper .mobilebar {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 10px 12px;
+    }
+    .section-3-wrapper .mobilebar .row { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+    .section-3-wrapper .mobilebar button { border: 1px solid rgba(0,0,0,0.10); background: #fff; border-radius: 12px; padding: 8px 10px; cursor: pointer; }
+
+    .sec3-drawer {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 950;
+    }
+    .sec3-drawer .bg { position: absolute; inset: 0; background: rgba(0,0,0,0.42); }
+    .sec3-drawer .panel {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: min(320px, 92vw);
+      background: #fff;
+      padding: 16px;
+      overflow: auto;
+      border-right: 1px solid rgba(0,0,0,0.08);
+      border-top: none; /* override default panel top border if any */
+    }
+
+    @media (max-width: 980px){
+      .section-3-wrapper .app { grid-template-columns: 1fr; }
+      .section-3-wrapper .sec3-nav { display: none; }
+      .section-3-wrapper .mobilebar { display: block; }
+      .section-3-wrapper .sec3-main { padding: 14px 12px 56px; }
+      .section-3-wrapper .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-3-wrapper .grid { grid-template-columns: 1fr; }
+    }
+
+    /* Filtering */
+    .section-3-wrapper [data-tags] { display: block; }
+    .section-3-wrapper .hidden { display: none !important; }
+
+    /* Chart.js typography */
+    .section-3-wrapper canvas { max-width: 100%; }
+</style>
+
+<div class="section-3-wrapper">
+  
+  <div class="mobilebar">
+    <div class="row">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="brand-badge"></div>
+        <div>
+          <div style="font-weight:800;">Section 3 Dashboard</div>
+          <div style="font-size:12px;color:var(--muted);">Consumer tension — Indonesia</div>
         </div>
-    </header>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button id="sec3_openMenu">Menu</button>
+        <button id="sec3_openQuotes">Quotes</button>
+      </div>
+    </div>
+  </div>
 
-    <!-- Main Content Container -->
-    <main class="section-3-content max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-16">
+  <div class="sec3-drawer" id="sec3_drawer">
+    <div class="bg" id="sec3_closeMenu"></div>
+    <div class="panel">
+      <div class="brand">
+        <div class="brand-badge"></div>
+        <div>
+          <div class="brand-title">Research Dashboard</div>
+          <div class="brand-sub">Section 3 — Consumer psychology</div>
+        </div>
+      </div>
+      <div class="navlinks" id="sec3_drawerLinks"></div>
+      <div class="panel">
+        <h4>Tension filters</h4>
+        <div class="chips" id="sec3_drawerChips"></div>
+      </div>
+      <div class="side-actions">
+        <button class="btn" id="sec3_drawerOpenQuotes">Open Quote Bank</button>
+        <button class="btn" id="sec3_drawerClear">Clear filters</button>
+      </div>
+    </div>
+  </div>
 
-        <!-- SECTION 1: Demographics (The Ability to Pay) -->
-        <section id="demographics" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-                <div class="flex items-center space-x-2 mb-4">
-                    <span class="bg-brand-primary text-white text-xs font-bold px-2 py-1 rounded">DEMOGRAPHICS</span>
-                    <h2 class="text-2xl font-bold text-brand-dark">Who Can Sustain the Ritual?</h2>
-                </div>
-                <p class="text-gray-600 mb-6 leading-relaxed">
-                    The Q'WELL routine requires a monthly discretionary spend exceeding Rp 500k. This creates a hard economic filter. We are not targeting the mass market; we are targeting the <strong>financially stable urbanite</strong> (SES A/Upper Middle) who views skincare as a non-negotiable health investment, not a luxury splurge.
-                </p>
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-brand-primary">
-                        <p class="text-sm text-gray-500">Target Age</p>
-                        <p class="text-2xl font-bold text-brand-dark">25-40</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-brand-primary">
-                        <p class="text-sm text-gray-500">Location</p>
-                        <p class="text-xl font-bold text-brand-dark">JKT/SBY/BDG</p>
-                    </div>
-                </div>
+  <div class="app">
+    <nav class="sec3-nav">
+      <div class="brand">
+        <div class="brand-badge"></div>
+        <div>
+          <div class="brand-title">Research Dashboard</div>
+          <div class="brand-sub">Section 3 — Consumer tension</div>
+        </div>
+      </div>
+
+      <div class="navlinks" id="sec3_navLinks"></div>
+
+      <div class="panel">
+        <h4>Tension filters</h4>
+        <div class="chips" id="sec3_chips"></div>
+      </div>
+
+      <div class="side-actions">
+        <button class="btn" id="sec3_btnQuotes">Open Quote Bank</button>
+        <button class="btn" id="sec3_btnClear">Clear filters</button>
+      </div>
+    </nav>
+
+    <main class="sec3-main">
+      <div class="topbar" id="sec3_overview">
+        <div class="title">
+          <h1>Indonesia Hair & Body Care Decisions Under Uncertainty</h1>
+          <p>Dashboard view of Section 3 insights: how consumers perceive risk, lose trust, and reframe value after negative product experiences. Charts use indexed indicators when hard numbers are unavailable.</p>
+        </div>
+        <div class="disclaimer">
+          <strong>Visualization note</strong>
+          <small>Some charts use <b>Indexed Indicators (1–5)</b> to visualize patterns from qualitative evidence. They are not population statistics unless explicitly cited.</small>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi" data-jump="#sec3_risk">
+          <div class="label">Risk Aversion</div>
+          <div class="value">High</div>
+          <div class="hint">Avoidance & delay behaviors</div>
+        </div>
+        <div class="kpi" data-jump="#sec3_trust">
+          <div class="label">Claim Skepticism</div>
+          <div class="value">Rising</div>
+          <div class="hint">Proof-seeking mindset</div>
+        </div>
+        <div class="kpi" data-jump="#sec3_fatigue">
+          <div class="label">Decision Fatigue</div>
+          <div class="value">Elevated</div>
+          <div class="hint">Overchoice & switching</div>
+        </div>
+        <div class="kpi" data-jump="#sec3_cost">
+          <div class="label">Failure Cost</div>
+          <div class="value">Salient</div>
+          <div class="hint">Wasted spend + stress</div>
+        </div>
+        <div class="kpi" data-jump="#sec3_search">
+          <div class="label">Safety Seeking</div>
+          <div class="value">Up</div>
+          <div class="hint">Ingredient + verification</div>
+        </div>
+        <div class="kpi" data-jump="#sec3_authority">
+          <div class="label">Authority Signals</div>
+          <div class="value">Strong</div>
+          <div class="hint">Labels used as shortcuts</div>
+        </div>
+      </div>
+
+      <!-- EXECUTIVE TENSION MAP -->
+      <section class="section" id="sec3_tension">
+        <div class="section-head">
+          <h2>Executive Tension Map</h2>
+          <div class="meta">Summary view</div>
+        </div>
+        <div class="card" data-tags="fear skepticism safety-seeking">
+          <h3>Core tension</h3>
+          <p class="meaning">Consumers try to achieve culturally expected outcomes <b>without</b> risking biological harm — leading to verification-first behavior.</p>
+          <details>
+            <summary>What this looks like in the wild</summary>
+            <p>In reviews and discourse, consumers frequently describe a cycle: prior failure → fear → skeptical reading of claims → reliance on authority cues → willingness to pay for reliability.</p>
+          </details>
+          <div class="tools" style="margin-top:10px;">
+            <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+          </div>
+          <div class="sources">
+            <div><b>Sources:</b> Populate with links/citations from your Section 3 research output (e.g., platform excerpts, Google Trends snapshots, research papers).</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RISK -->
+      <section class="section" id="sec3_risk">
+        <div class="section-head">
+          <h2>1) Risk Perception & Decision-Making</h2>
+          <div class="meta">Fear • Safety-seeking</div>
+        </div>
+        <div class="grid">
+          <div class="chart" data-tags="fear safety-seeking">
+            <canvas id="sec3_chartRiskAnxiety"></canvas>
+          </div>
+          <div class="card" data-tags="fear safety-seeking">
+            <h3>Risk barrier heuristic</h3>
+            <p class="meaning">Consumers prioritize <b>non-harm</b> over potential efficacy when prior failure exists.</p>
+            <ul>
+              <li>Common behaviors: delay, “wait-and-see,” and peer verification before committing.</li>
+              <li>Risk perception escalates when products are used daily (hair & body care routines).</li>
+              <li>Language patterns often emphasize “takut makin parah” (fear of worsening).</li>
+            </ul>
+            <div class="quote">“Takut makin parah. Mending cari yang aman dulu.”</div>
+            <div class="tools">
+              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
             </div>
-            
-            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">Indonesia Urban SES Composition</h3>
-                <p class="text-sm text-gray-500 mb-4">The "Ability to Pay" Filter (Estimated Distribution)</p>
-                
-                <!-- CHART CONTAINER -->
-                <div class="chart-container">
-                    <canvas id="demographicsChart"></canvas>
-                </div>
-                <p class="text-xs text-center text-gray-400 mt-4 italic">Source: Synthesis of BPS & World Bank Income Tiers (Visualisation)</p>
+            <div class="sources">
+              <div><b>Sources:</b> Add citations (e-commerce reviews, forum threads, behavioral studies).</div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- SECTION 2: Psychographics (The Pivot) -->
-        <section id="psychographics" class="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div class="p-8 lg:p-12">
-                <div class="max-w-3xl mx-auto text-center mb-10">
-                    <span class="bg-brand-accent text-white text-xs font-bold px-2 py-1 rounded">PSYCHOGRAPHICS</span>
-                    <h2 class="text-3xl font-bold text-brand-dark mt-3">The "Post-Experimentation" Curve</h2>
-                    <p class="text-gray-600 mt-4">
-                        Between ages 25 and 30, a critical psychological shift occurs. The thrill of trying "viral" products fades, replaced by a fear of breakouts and a desire for consistency. We call this the <strong>Reliability Pivot</strong>.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Text Context -->
-                    <div class="lg:col-span-1 space-y-6 flex flex-col justify-center">
-                        <div class="bg-blue-50 p-4 rounded-lg">
-                            <h4 class="font-bold text-brand-dark mb-1">Phase 1: Discovery (18-24)</h4>
-                            <p class="text-sm text-gray-600">Driven by FOMO, trends, and low price points. High churn rate.</p>
-                        </div>
-                        <div class="bg-teal-50 p-4 rounded-lg border-l-4 border-brand-primary">
-                            <h4 class="font-bold text-brand-dark mb-1">Phase 2: The Pivot (25-30)</h4>
-                            <p class="text-sm text-gray-600">First signs of aging/damage. "My skin can't take it anymore."</p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-lg">
-                            <h4 class="font-bold text-brand-dark mb-1">Phase 3: Ritual (30-40)</h4>
-                            <p class="text-sm text-gray-600">Loyalty to what works. Willing to pay premium for safety.</p>
-                        </div>
-                    </div>
-
-                    <!-- Chart -->
-                    <div class="lg:col-span-2">
-                         <!-- CHART CONTAINER -->
-                        <div class="chart-container">
-                            <canvas id="psychoChart"></canvas>
-                        </div>
-                    </div>
-                </div>
+      <!-- LANGUAGE -->
+      <section class="section" id="sec3_language">
+        <div class="section-head">
+          <h2>2) Emotional Language & Lived Experience</h2>
+          <div class="meta">Fear • Cost</div>
+        </div>
+        <div class="grid">
+          <div class="card" data-tags="fear cost">
+            <h3>Emotion vocabulary is decision data</h3>
+            <p class="meaning">Recurring phrases act as markers of regret, avoidance, and permanent distrust.</p>
+            <ul>
+              <li><b>Iritasi</b>: immediate biological rejection signal</li>
+              <li><b>Nyesel</b>: financial loss + physical discomfort</li>
+              <li><b>Kapok</b>: intent to permanently avoid re-trial</li>
+            </ul>
+            <details>
+              <summary>Examples (anonymized)</summary>
+              <p>“Nyesel banget, malah jadi iritasi.” • “Udah kapok coba-coba.” • “Takut breakout lagi.”</p>
+            </details>
+            <div class="tools">
+              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
             </div>
-        </section>
-
-        <!-- SECTION 3: The Urban Tax (The Problem) -->
-        <section id="problem" class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <!-- Chart Side -->
-            <div class="bg-white p-6 rounded-xl shadow-md order-2 md:order-1">
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">Sources of "Barrier Anxiety"</h3>
-                <p class="text-sm text-gray-500 mb-6">Top reported skin stressors for Urban Indonesian Women</p>
-                <!-- CHART CONTAINER -->
-                <div class="chart-container">
-                    <canvas id="anxietyChart"></canvas>
-                </div>
+            <div class="sources">
+              <div><b>Sources:</b> Add citation links to forum excerpts and review samples.</div>
             </div>
+          </div>
+          <div class="chart" data-tags="fear cost">
+            <canvas id="sec3_chartLexicon"></canvas>
+          </div>
+        </div>
+      </section>
 
-            <!-- Narrative Side -->
-            <div class="flex flex-col justify-center order-1 md:order-2">
-                <div class="mb-4">
-                    <span class="bg-gray-200 text-gray-700 text-xs font-bold px-2 py-1 rounded">PAIN POINTS</span>
-                </div>
-                <h2 class="text-3xl font-bold text-brand-dark mb-4">High-Functioning Fatigue & The Urban Tax</h2>
-                <p class="text-gray-600 mb-4 text-lg">
-                    The target audience isn't just aging; they are <strong>oxidizing</strong>. Commutes in Jakarta traffic (pollution), 10 hours in office AC (dehydration), and high-cortisol careers create a specific profile of skin damage: The Compromised Barrier.
-                </p>
-                <ul class="space-y-3">
-                    <li class="flex items-start">
-                        <span class="text-brand-accent mr-2 text-xl">&#10003;</span>
-                        <span class="text-gray-700"><strong>Dullness:</strong> Caused by pollution particles (PM2.5).</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-brand-accent mr-2 text-xl">&#10003;</span>
-                        <span class="text-gray-700"><strong>Sensitization:</strong> Result of harsh "peeling" trends.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-brand-accent mr-2 text-xl">&#10003;</span>
-                        <span class="text-gray-700"><strong>Adult Acne:</strong> Stress and hormonal triggers.</span>
-                    </li>
-                </ul>
+      <!-- TRUST -->
+      <section class="section" id="sec3_trust">
+        <div class="section-head">
+          <h2>3) Trust Erosion & Claim Skepticism</h2>
+          <div class="meta">Skepticism</div>
+        </div>
+        <div class="grid">
+          <div class="chart" data-tags="suspicious skepticism">
+            <canvas id="sec3_chartTrustDrivers"></canvas>
+          </div>
+          <div class="card" data-tags="skepticism">
+            <h3>Claim fatigue → verification behavior</h3>
+            <p class="meaning">Overlapping claims create confusion; consumers respond by demanding stronger proof cues.</p>
+            <ul>
+              <li>Skepticism rises when influencer recommendations conflict (“yang viral beda-beda”).</li>
+              <li>Consumers interpret “natural/gentle/sensitive skin” as non-differentiating unless verified.</li>
+              <li>De-influencing content accelerates distrust toward marketing language.</li>
+            </ul>
+            <div class="quote">“Klaimnya sama semua. Yang penting bukti dan aman.”</div>
+            <div class="tools">
+              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
             </div>
-        </section>
-
-        <!-- SECTION 4: Trust Signals (Radar Chart) -->
-        <section class="bg-brand-dark text-white rounded-2xl shadow-2xl p-8 lg:p-12 relative overflow-hidden">
-            <!-- Background element -->
-            <div class="absolute top-0 right-0 w-64 h-64 bg-brand-primary opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-
-            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6">Winning the "Intellectual Skincare" Buyer</h2>
-                    <p class="text-gray-300 mb-6 text-lg">
-                        This audience researches before they buy. They read ingredient labels, not just taglines. The "Trust Signal" has moved from celebrity faces to clinical transparency.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b border-gray-700 pb-2">
-                            <span class="font-semibold text-brand-primary">Mass Market Driver</span>
-                            <span class="text-gray-400">Low Price & Viral Trends</span>
-                        </div>
-                        <div class="flex items-center justify-between border-b border-gray-700 pb-2">
-                            <span class="font-semibold text-brand-accent">Q'WELL Driver</span>
-                            <span class="text-white">Active % & Transparency</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white/5 p-6 rounded-xl backdrop-blur-sm border border-white/10">
-                    <h3 class="text-center font-semibold mb-4 text-brand-primary">Purchase Decision Drivers</h3>
-                     <!-- CHART CONTAINER -->
-                    <div class="chart-container">
-                        <canvas id="radarChart"></canvas>
-                    </div>
-                </div>
+            <div class="sources">
+              <div><b>Sources:</b> Add citations to de-influencing discussions and platform evidence.</div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- SECTION 5: Exclusion Logic (HTML Grid - No Chart Needed) -->
-        <section id="exclusion">
-            <div class="text-center mb-10">
-                <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded">STRATEGIC EXCLUSION</span>
-                <h2 class="text-3xl font-bold text-brand-dark mt-3">Who Will NOT Buy Q'WELL?</h2>
-                <p class="text-gray-600 mt-2">Protecting the brand positioning requires explicitly excluding these segments.</p>
+      <!-- FATIGUE -->
+      <section class="section" id="sec3_fatigue">
+        <div class="section-head">
+          <h2>4) Fatigue & Cognitive Overload</h2>
+          <div class="meta">Fatigue</div>
+        </div>
+        <div class="grid">
+          <div class="chart" data-tags="fatigue">
+            <canvas id="sec3_chartDecisionFatigue"></canvas>
+          </div>
+          <div class="card" data-tags="fatigue">
+            <h3>Overchoice produces paralysis</h3>
+            <p class="meaning">Too many routines and “actives” increase switching and reduce long-term commitment.</p>
+            <ul>
+              <li>Consumers simplify routines to reduce risk exposure.</li>
+              <li>Switching becomes a coping mechanism under uncertainty.</li>
+              <li>“Skinimalism” emerges as a psychological retreat.</li>
+            </ul>
+            <div class="tools">
+              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Card 1 -->
-                <div class="card bg-white p-6 rounded-lg shadow-md border-t-4 border-gray-300">
-                    <div class="text-4xl mb-4 text-center">🏷️</div>
-                    <h3 class="text-xl font-bold text-gray-800 text-center mb-2">The Bargain Hunter</h3>
-                    <p class="text-sm text-gray-500 text-center mb-4">"Why is this 500k? I can get x for 50k."</p>
-                    <hr class="my-3 border-gray-100">
-                    <p class="text-sm text-gray-600"><strong>Why Exclude:</strong> Price elasticity is too high. They dilute the premium perception and require unsustainable discounting.</p>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="card bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400">
-                    <div class="text-4xl mb-4 text-center">⚡</div>
-                    <h3 class="text-xl font-bold text-gray-800 text-center mb-2">The Trend Chaser</h3>
-                    <p class="text-sm text-gray-500 text-center mb-4">"I need 10 steps because TikTok said so."</p>
-                    <hr class="my-3 border-gray-100">
-                    <p class="text-sm text-gray-600"><strong>Why Exclude:</strong> High churn. They will leave Q'WELL the moment the next viral ingredient (e.g., Snail Mucin) appears.</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="card bg-white p-6 rounded-lg shadow-md border-t-4 border-green-600">
-                    <div class="text-4xl mb-4 text-center">🌿</div>
-                    <h3 class="text-xl font-bold text-gray-800 text-center mb-2">The "Natural = Cheap" Purist</h3>
-                    <p class="text-sm text-gray-500 text-center mb-4">"Chemicals are bad. I only use DIY."</p>
-                    <hr class="my-3 border-gray-100">
-                    <p class="text-sm text-gray-600"><strong>Why Exclude:</strong> They reject the "Clinical/Science" positioning that justifies Q'WELL's efficacy and price point.</p>
-                </div>
+            <div class="sources">
+              <div><b>Sources:</b> Add citations to routine-fatigue discussions and behavior research.</div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- SECTION 6: Synthesis -->
-        <section class="bg-brand-primary rounded-2xl p-10 text-center shadow-lg my-12">
-            <h2 class="text-white opacity-80 font-bold tracking-widest text-sm mb-4">AUDIENCE SYNTHESIS</h2>
-            <div class="max-w-4xl mx-auto">
-                <p class="text-2xl md:text-4xl font-bold text-white leading-tight">
-                    "The Financially Independent Urbanite (25–40) seeking <span class="text-brand-dark bg-white/20 px-2 rounded">control</span> over her stressed skin through a high-efficiency, medically-transparent barrier ritual."
-                </p>
+      <!-- COST -->
+      <section class="section" id="sec3_cost">
+        <div class="section-head">
+          <h2>5) Emotional & Financial Cost of Failure</h2>
+          <div class="meta">Cost</div>
+        </div>
+        <div class="grid">
+          <div class="card" data-tags="cost fear">
+            <h3>Failure feels like double loss</h3>
+            <p class="meaning">Consumers experience regret both from wasted spend and from the perceived recovery burden.</p>
+            <ul>
+              <li>“Wasted money” is frequently paired with “damaged skin/hair” narratives.</li>
+              <li>Consumers become more risk-averse after one severe negative experience.</li>
+              <li>Trust, once regained, becomes sticky (defensive loyalty).</li>
+            </ul>
+            <div class="quote">“Bukan cuma rugi uang, tapi rusak dan lama balikin lagi.”</div>
+            <div class="tools">
+              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
             </div>
-        </section>
+            <div class="sources">
+              <div><b>Sources:</b> Add citations to review samples and forum narratives.</div>
+            </div>
+          </div>
+          <div class="chart" data-tags="cost">
+            <canvas id="sec3_chartFailureCost"></canvas>
+          </div>
+        </div>
+      </section>
 
-        <!-- Footer -->
-        <section class="border-t border-gray-200 pt-8 pb-12 text-center">
-            <p class="text-gray-400 text-sm">Generated for Deep Research Strategy Deck &bull; Market: Indonesia</p>
-        </section>
+      <!-- SEARCH -->
+      <section class="section" id="sec3_search">
+        <div class="section-head">
+          <h2>6) Safety-Oriented Search Behavior</h2>
+          <div class="meta">Safety-seeking</div>
+        </div>
+        <div class="grid">
+          <div class="chart" data-tags="safety-seeking">
+            <canvas id="sec3_chartSearchIntent"></canvas>
+          </div>
+          <div class="card" data-tags="safety-seeking">
+            <h3>Search shifts toward verification</h3>
+            <p class="meaning">Query intent moves from outcomes (“glow”) toward safety and legitimacy checks.</p>
+            <ul>
+              <li>Rising interest in ingredient safety queries and “cek BPOM” style verification.</li>
+              <li>“Dermatologist-tested” terms often used as shortcut filters.</li>
+              <li>Consumers develop pre-purchase rituals: check, compare, then buy.</li>
+            </ul>
+            <div class="tools">
+              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+            </div>
+            <div class="sources">
+              <div><b>Sources:</b> Add Google Trends screenshots/links and search keyword clusters.</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <!-- VALUE -->
+      <section class="section" id="sec3_value">
+        <div class="section-head">
+          <h2>7) Psychological Justification for Paying More</h2>
+          <div class="meta">Safety-seeking • Cost</div>
+        </div>
+        <div class="grid">
+          <div class="chart" data-tags="safety-seeking cost">
+            <canvas id="sec3_chartValueReframing"></canvas>
+          </div>
+          <div class="card" data-tags="safety-seeking cost">
+            <h3>Reliability premium</h3>
+            <p class="meaning">Higher price is justified as insurance against uncertainty and repeated failure.</p>
+            <ul>
+              <li>Consumers frame value as “consistency” rather than “fast results.”</li>
+              <li>Risk reduction becomes more important than novelty.</li>
+              <li>Proof cues (testing, compliance, transparency) support this justification.</li>
+            </ul>
+            <div class="tools">
+              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+            </div>
+            <div class="sources">
+              <div><b>Sources:</b> Add citations to behavior research and consumer discourse.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AUTHORITY -->
+      <section class="section" id="sec3_authority">
+        <div class="section-head">
+          <h2>8) Authority Signals & Perceived Medical Credibility</h2>
+          <div class="meta">Authority</div>
+        </div>
+        <div class="grid">
+          <div class="chart" data-tags="authority">
+            <canvas id="sec3_chartAuthorityImpact"></canvas>
+          </div>
+          <div class="card" data-tags="authority skepticism">
+            <h3>Shortcuts to trust</h3>
+            <p class="meaning">Authority cues are used to bypass marketing uncertainty (without verifying scientific validity).</p>
+            <ul>
+              <li><b>BPOM</b> functions as a non-negotiable legal baseline.</li>
+              <li><b>Testing language</b> is read as “less risky,” even if test depth varies.</li>
+              <li><b>Halal</b> can be interpreted as broader quality/ethics assurance.</li>
+            </ul>
+            <div class="tools">
+              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+            </div>
+            <div class="sources">
+              <div><b>Sources:</b> Add citations to consumer discussions referencing these cues.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SYNTHESIS -->
+      <section class="section" id="sec3_synthesis">
+        <div class="section-head">
+          <h2>Dominant Psychological Tension — Synthesis</h2>
+          <div class="meta">Output requirement</div>
+        </div>
+        <div class="card" data-tags="fear skepticism fatigue safety-seeking authority cost">
+          <h3>One-sentence synthesis</h3>
+          <p class="meaning">The consumer wants culturally expected results, but increasingly behaves as an <b>investigative pragmatist</b>—optimizing for safety, legitimacy, and reliability to avoid repeating biological harm.</p>
+          <details>
+            <summary>What shifts are most visible</summary>
+            <p><b>Language shift:</b> “viral” → “aman” • “cepat putih/glow” → “stabil & nggak bikin parah”  
+              <br/><b>Behavior shift:</b> impulse → verification-first  
+              <br/><b>Value shift:</b> price sensitivity → reliability sensitivity</p>
+          </details>
+          <div class="tools" style="margin-top:10px;">
+            <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+          </div>
+          <div class="sources">
+            <div><b>Sources:</b> Add citations from Section 3 research output.</div>
+          </div>
+        </div>
+      </section>
+
+      <div style="margin-top:18px;color:var(--muted);font-size:12px;">
+        Tip: Use the filter chips to hide irrelevant tension themes when presenting to stakeholders.
+      </div>
     </main>
+  </div>
 
-    <!-- CHART.JS LOGIC -->
-    <script>
-        // --- UTILITY: Label Wrapping Function (16 char limit) ---
-        function formatLabel(str, maxwidth) {
-            var sections = [];
-            var words = str.split(" ");
-            var temp = "";
-            words.forEach(function(item, index) {
-                if (temp.length > 0) {
-                    var concat = temp + ' ' + item;
-                    if (concat.length > maxwidth) {
-                        sections.push(temp);
-                        temp = "";
-                    } else {
-                        if (index == (words.length - 1)) {
-                            sections.push(concat);
-                            return;
-                        } else {
-                            temp = concat;
-                            return;
-                        }
-                    }
-                }
-                if (index == (words.length - 1)) {
-                    sections.push(item);
-                    return;
-                }
-                if (item.length < maxwidth) {
-                    temp = item;
-                } else {
-                    sections.push(item);
-                }
-            });
-            return sections;
-        }
+  <!-- Quote Modal (Scoped) -->
+  <div class="sec3-overlay" id="sec3_overlay"></div>
+  <div class="sec3-modal" id="sec3_modal" role="dialog" aria-modal="true" aria-label="Quote Bank">
+    <div class="modal-head">
+      <div>
+        <h2>Quote Bank (Indonesia)</h2>
+        <p>Search and group recurring phrases used to describe fear, regret, skepticism, fatigue, and safety-seeking behavior.</p>
+      </div>
+      <div class="x" id="sec3_closeModal">✕</div>
+    </div>
+    <div class="searchrow">
+      <input type="search" id="sec3_qSearch" placeholder="Search phrases (e.g., nyesel, iritasi, kapok)…" />
+      <select class="select" id="sec3_qFilter">
+        <option value="all">All emotions</option>
+        <option value="damage">Damage</option>
+        <option value="regret">Regret</option>
+        <option value="avoidance">Avoidance</option>
+        <option value="skepticism">Skepticism</option>
+        <option value="fatigue">Fatigue</option>
+        <option value="safety">Safety-seeking</option>
+      </select>
+    </div>
+    <div class="quotes" id="sec3_quotes"></div>
+  </div>
 
-        // --- COMMON CONFIG ---
-        Chart.defaults.font.family = "'Inter', sans-serif";
-        Chart.defaults.color = '#64748b';
-        Chart.defaults.responsive = true;
-        Chart.defaults.maintainAspectRatio = false;
+</div>
 
-        // Tooltip Callback for Multi-line Labels
-        const tooltipConfig = {
-            callbacks: {
-                title: function(tooltipItems) {
-                    const item = tooltipItems[0];
-                    let label = item.chart.data.labels[item.dataIndex];
-                    if (Array.isArray(label)) {
-                        return label.join(' ');
-                    } else {
-                        return label;
-                    }
-                }
-            }
-        };
+<script>
+  (function(){ // Wrap in IIFE
+    
+    // ----- Navigation model -----
+    const sections = [
+      { id: 'sec3_overview', label: 'Overview', pill: 'Start' },
+      { id: 'sec3_tension', label: 'Executive Tension Map', pill: 'Summary' },
+      { id: 'sec3_risk', label: 'Risk & Uncertainty', pill: 'Fear' },
+      { id: 'sec3_language', label: 'Emotional Lexicon', pill: 'Language' },
+      { id: 'sec3_trust', label: 'Trust Erosion', pill: 'Skepticism' },
+      { id: 'sec3_fatigue', label: 'Fatigue & Overload', pill: 'Fatigue' },
+      { id: 'sec3_cost', label: 'Cost of Failure', pill: 'Cost' },
+      { id: 'sec3_search', label: 'Search Behavior', pill: 'Signals' },
+      { id: 'sec3_value', label: 'Value Reframing', pill: 'WTP' },
+      { id: 'sec3_authority', label: 'Authority Signals', pill: 'Trust cues' },
+      { id: 'sec3_synthesis', label: 'Final Synthesis', pill: 'Output' },
+    ];
 
-        // --- CHART 1: DEMOGRAPHICS (Doughnut) ---
-        const ctxDemo = document.getElementById('demographicsChart').getContext('2d');
-        new Chart(ctxDemo, {
-            type: 'doughnut',
-            data: {
-                labels: [
-                    formatLabel('SES A (Upper Middle / Affluent) - Target', 16),
-                    formatLabel('SES B (Middle Class)', 16),
-                    formatLabel('SES C/D (Aspiring / Lower)', 16)
-                ],
-                datasets: [{
-                    data: [18, 32, 50], // Estimated split for Urban centers
-                    backgroundColor: [
-                        '#0d9488', // Brand Teal (Target)
-                        '#94a3b8', // Grey
-                        '#cbd5e1'  // Light Grey
-                    ],
-                    borderWidth: 0,
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                cutout: '65%',
-                plugins: {
-                    legend: { position: 'bottom' },
-                    tooltip: tooltipConfig,
-                    title: {
-                        display: true,
-                        text: 'Target Addressable Market (%)'
-                    }
-                }
-            }
+    function renderNav(container){
+      container.innerHTML = sections.map(s => `
+        <a href="#${s.id}" class="nav-link" data-target="${s.id}">
+          <span>${s.label}</span>
+          <span class="pill">${s.pill}</span>
+        </a>
+      `).join('');
+    }
+
+    // ----- Filters -----
+    const filterTags = [
+      { key: 'fear', label: 'Fear' },
+      { key: 'skepticism', label: 'Skepticism' },
+      { key: 'fatigue', label: 'Fatigue' },
+      { key: 'cost', label: 'Cost' },
+      { key: 'safety-seeking', label: 'Safety-Seeking' },
+      { key: 'authority', label: 'Authority' },
+    ];
+
+    const activeFilters = new Set();
+    // Scope querySelector to section3 wrapper
+    const wrapper = document.querySelector('.section-3-wrapper');
+
+    function renderChips(container){
+      container.innerHTML = filterTags.map(f => `
+        <div class="chip" data-tag="${f.key}">${f.label}</div>
+      `).join('');
+    }
+
+    function applyFilters(){
+      const blocks = wrapper.querySelectorAll('[data-tags]');
+      if(activeFilters.size === 0){
+        blocks.forEach(b => b.classList.remove('hidden'));
+        return;
+      }
+      blocks.forEach(b => {
+        const tags = (b.getAttribute('data-tags') || '').split(/\s+/).filter(Boolean);
+        const show = tags.some(t => activeFilters.has(t));
+        b.classList.toggle('hidden', !show);
+      });
+    }
+
+    function bindChips(container){
+      container.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const tag = chip.getAttribute('data-tag');
+          const on = chip.classList.toggle('active');
+          if(on) activeFilters.add(tag); else activeFilters.delete(tag);
+          // mirror state across all chip containers
+          wrapper.querySelectorAll(`.chip[data-tag="${tag}"]`).forEach(c => c.classList.toggle('active', on));
+          applyFilters();
         });
+      });
+    }
 
-        // --- CHART 2: PSYCHOGRAPHICS (Line) ---
-        const ctxPsycho = document.getElementById('psychoChart').getContext('2d');
-        new Chart(ctxPsycho, {
-            type: 'line',
-            data: {
-                labels: ['20yo', '25yo', '30yo', '35yo', '40yo'],
-                datasets: [
-                    {
-                        label: 'Willingness to Experiment (Risk)',
-                        data: [90, 75, 40, 20, 15],
-                        borderColor: '#f43f5e', // Rose (Danger/Risk)
-                        tension: 0.4,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#fff'
-                    },
-                    {
-                        label: 'Need for Reliability/Safety',
-                        data: [20, 45, 80, 90, 95],
-                        borderColor: '#0d9488', // Teal (Safety)
-                        tension: 0.4,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#fff'
-                    }
-                ]
-            },
-            options: {
-                plugins: {
-                    legend: { position: 'top' },
-                    tooltip: tooltipConfig
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Psychological Driver Strength (0-100)' }
-                    }
-                }
-            }
+    function clearFilters(){
+      activeFilters.clear();
+      wrapper.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      applyFilters();
+    }
+
+    // ----- Active link on scroll -----
+    function observeSections(){
+      const links = wrapper.querySelectorAll('.nav-link');
+      const map = new Map([...links].map(a => [a.getAttribute('data-target'), a]));
+
+      const observer = new IntersectionObserver(entries => {
+        const visible = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+        if(!visible) return;
+        links.forEach(l => l.classList.remove('active'));
+        const id = visible.target.id;
+        const link = map.get(id);
+        if(link) link.classList.add('active');
+        // mirror in drawer
+        const l2 = document.getElementById('sec3_drawerLinks').querySelector(`[data-target="${id}"]`);
+        if(l2) l2.classList.add('active');
+      }, { rootMargin: '-15% 0px -70% 0px', threshold: [0.1, 0.2, 0.4, 0.6] });
+
+      sections.forEach(s => {
+        const el = document.getElementById(s.id);
+        if(el) observer.observe(el);
+      });
+    }
+
+    // ----- Sources toggle -----
+    function bindSourceToggles(){
+      wrapper.querySelectorAll('.srcToggle').forEach(t => {
+        t.addEventListener('change', () => {
+          const card = t.closest('.card');
+          const src = card?.querySelector('.sources');
+          if(src) src.style.display = t.checked ? 'block' : 'none';
         });
+      });
+    }
 
-        // --- CHART 3: URBAN ANXIETY (Horizontal Bar) ---
-        const ctxAnxiety = document.getElementById('anxietyChart').getContext('2d');
-        new Chart(ctxAnxiety, {
+    // ----- KPI jumps -----
+    function bindKpis(){
+      wrapper.querySelectorAll('.kpi').forEach(k => {
+        k.addEventListener('click', () => {
+          const jump = k.getAttribute('data-jump');
+          if(jump) document.querySelector(jump)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    }
+
+    // ----- Quote bank -----
+    const quoteData = [
+      { tag: 'damage', label: 'Damage', text: '"Kulit jadi perih dan merah, kayak terbakar."' },
+      { tag: 'regret', label: 'Regret', text: '"Nyesel banget beli ini, malah iritasi parah."' },
+      { tag: 'avoidance', label: 'Avoidance', text: '"Udah kapok, nggak mau coba-coba lagi."' },
+      { tag: 'skepticism', label: 'Skepticism', text: '"Klaimnya banyak, tapi buktinya mana?"' },
+      { tag: 'fatigue', label: 'Fatigue', text: '"Capek gonta-ganti, pengen yang pasti aja."' },
+      { tag: 'safety', label: 'Safety-Seeking', text: '"Sekarang cek BPOM dulu sebelum beli."' },
+    ];
+
+    function renderQuotes(){
+      const qWrap = document.getElementById('sec3_quotes');
+      const term = (document.getElementById('sec3_qSearch').value || '').toLowerCase();
+      const f = document.getElementById('sec3_qFilter').value;
+
+      const items = quoteData.filter(q => {
+        const okTag = (f === 'all') || (q.tag === f);
+        const okTerm = !term || q.text.toLowerCase().includes(term);
+        return okTag && okTerm;
+      });
+
+      qWrap.innerHTML = items.map(q => `
+        <div class="q">
+          <div class="tag">${q.label}</div>
+          <div class="txt">${q.text}</div>
+        </div>
+      `).join('') || '<div style="color: var(--muted); padding: 10px 2px;">No quotes matched your search.</div>';
+    }
+
+    function openModal(){
+      document.getElementById('sec3_overlay').style.display = 'block';
+      document.getElementById('sec3_modal').style.display = 'block';
+      renderQuotes();
+      document.getElementById('sec3_qSearch').focus();
+    }
+
+    function closeModal(){
+      document.getElementById('sec3_overlay').style.display = 'none';
+      document.getElementById('sec3_modal').style.display = 'none';
+    }
+
+    // ----- Mobile drawer -----
+    function openDrawer(){ document.getElementById('sec3_drawer').style.display = 'block'; }
+    function closeDrawer(){ document.getElementById('sec3_drawer').style.display = 'none'; }
+
+    // ----- Charts -----
+    function chartDefaults(){
+      // Safely check if Chart is defined
+      if(typeof Chart === 'undefined') return;
+      // Use styles from wrapper
+      Chart.defaults.font.family = 'ui-sans-serif, system-ui, sans-serif';
+      Chart.defaults.color = '#4b5a61';
+    }
+
+    function initCharts(){
+      if(typeof Chart === 'undefined') return;
+      
+      const primary = '#65BDAD';
+      const secondary = '#FFCC97';
+
+      const chart1 = document.getElementById('sec3_chartRiskAnxiety');
+      if(chart1) {
+        new Chart(chart1, {
+          type: 'line',
+          data: {
+            labels: ['2022','2023','2024','2025'],
+            datasets: [{
+              label: 'Risk Anxiety Index (indexed)',
+              data: [2.6, 3.3, 4.1, 4.6],
+              borderColor: primary,
+              backgroundColor: 'rgba(101,189,173,0.18)',
+              fill: true,
+              tension: 0.35,
+              pointRadius: 3,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { min: 0, max: 5, title: { display: true, text: 'Indexed 0–5' } } },
+            plugins: { tooltip: { callbacks: { footer: () => 'Indexed for visualization only' } } }
+          }
+        });
+      }
+
+      const chart2 = document.getElementById('sec3_chartLexicon');
+      if(chart2) {
+          new Chart(chart2, {
             type: 'bar',
-            indexAxis: 'y',
             data: {
-                labels: [
-                    formatLabel('Pollution / City Dust (PM2.5)', 16),
-                    formatLabel('Air Conditioning Dehydration', 16),
-                    formatLabel('Stress-Induced Breakouts', 16),
-                    formatLabel('Sun Damage / Hyperpigmentation', 16),
-                    formatLabel('Over-exfoliation Damage', 16)
-                ],
-                datasets: [{
-                    label: 'Reported Concern Level (Scale 1-10)',
-                    data: [9.5, 8.8, 8.5, 7.2, 6.5],
-                    backgroundColor: '#1e293b', // Dark Blue
-                    borderRadius: 4
-                }]
+              labels: ['iritasi', 'nyesel', 'kapok', 'breakout', 'aman'],
+              datasets: [{
+                label: 'Lexicon salience (indexed)',
+                data: [4.5, 4.2, 3.6, 3.9, 4.6],
+                backgroundColor: [primary, secondary, 'rgba(202,241,235,0.9)', 'rgba(255,204,151,0.65)', 'rgba(101,189,173,0.65)'],
+                borderRadius: 10,
+              }]
             },
             options: {
-                plugins: {
-                    legend: { display: false },
-                    tooltip: tooltipConfig
-                },
-                scales: {
-                    x: { max: 10 }
-                }
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { y: { min: 0, max: 5, title: { display: true, text: 'Indexed 0–5' } } },
+              plugins: { tooltip: { callbacks: { footer: () => 'Indexed for visualization only' } } }
             }
-        });
+          });
+      }
 
-        // --- CHART 4: TRUST SIGNALS (Radar) ---
-        const ctxRadar3 = document.getElementById('radarChart').getContext('2d');
-        new Chart(ctxRadar3, {
+      const chart3 = document.getElementById('sec3_chartTrustDrivers');
+      if(chart3) {
+          new Chart(chart3, {
+            type: 'bar',
+            data: {
+              labels: ['Claims overload','Influencer conflict','Past failures'],
+              datasets: [{
+                label: 'Erosion impact (indexed)',
+                data: [4.4, 3.9, 4.7],
+                backgroundColor: [secondary, 'rgba(202,241,235,0.95)', primary],
+                borderRadius: 10,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { y: { min: 0, max: 5, title: { display: true, text: 'Indexed 0–5' } } },
+              plugins: { tooltip: { callbacks: { footer: () => 'Indexed for visualization only' } } }
+            }
+          });
+      }
+
+      const chart4 = document.getElementById('sec3_chartDecisionFatigue');
+      if(chart4) {
+          new Chart(chart4, {
             type: 'radar',
             data: {
-                labels: [
-                    formatLabel('Ingredient Transparency (%)', 15),
-                    formatLabel('Clinical Proof / Data', 15),
-                    formatLabel('Brand "Prestige" / Aesthetics', 15),
-                    formatLabel('Celebrity / Influencer Hype', 15),
-                    formatLabel('Discount / Low Price', 15)
-                ],
-                datasets: [{
-                    label: "Q'WELL Target Persona",
-                    data: [90, 85, 70, 30, 20],
-                    fill: true,
-                    backgroundColor: 'rgba(13, 148, 136, 0.2)', // Teal transparent
-                    borderColor: '#0d9488',
-                    pointBackgroundColor: '#0d9488',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#0d9488'
-                }, {
-                    label: 'Mass Market Consumer',
-                    data: [30, 20, 50, 90, 85],
-                    fill: true,
-                    backgroundColor: 'rgba(244, 63, 94, 0.2)', // Rose transparent
-                    borderColor: '#f43f5e',
-                    pointBackgroundColor: '#f43f5e',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#f43f5e'
-                }]
+              labels: ['Overchoice','Routine complexity','Active trend','Switching','Confusion'],
+              datasets: [{
+                label: 'Fatigue score (indexed)',
+                data: [4.2, 3.8, 4.4, 3.4, 4.1],
+                backgroundColor: 'rgba(101,189,173,0.22)',
+                borderColor: primary,
+                pointBackgroundColor: primary,
+              }]
             },
             options: {
-                plugins: {
-                    tooltip: tooltipConfig,
-                    legend: { 
-                        labels: { color: 'white' }
-                    }
-                },
-                scales: {
-                    r: {
-                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        pointLabels: { 
-                            color: 'white',
-                            font: { size: 11 }
-                        },
-                        ticks: { display: false, backdropColor: 'transparent' }
-                    }
-                }
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { r: { min: 0, max: 5, ticks: { display: false } } },
+              plugins: { tooltip: { callbacks: { footer: () => 'Indexed for visualization only' } } }
             }
-        });
+          });
+      }
 
-    </script>
-</body>
+      const chart5 = document.getElementById('sec3_chartFailureCost');
+      if(chart5) {
+          new Chart(chart5, {
+            type: 'doughnut',
+            data: {
+              labels: ['Wasted spend','Time to recover','Emotional stress','Opportunity cost'],
+              datasets: [{
+                label: 'Failure cost (indexed share)',
+                data: [30, 25, 28, 17],
+                backgroundColor: [secondary, primary, 'rgba(202,241,235,0.95)', 'rgba(0,0,0,0.08)'],
+                borderWidth: 0,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { tooltip: { callbacks: { footer: () => 'Illustrative composition (not statistical)' } } }
+            }
+          });
+      }
+
+      const chart6 = document.getElementById('sec3_chartSearchIntent');
+      if(chart6) {
+          new Chart(chart6, {
+            type: 'line',
+            data: {
+              labels: ['2022','2023','2024','2025'],
+              datasets: [
+                { label: 'Symptom-led (indexed)', data: [4.4, 4.1, 3.6, 3.2], borderColor: secondary, tension: 0.25, pointRadius: 3 },
+                { label: 'Safety-led (indexed)', data: [2.1, 2.9, 4.0, 4.7], borderColor: primary, tension: 0.25, pointRadius: 3 },
+                { label: 'Brand-led (indexed)', data: [3.4, 3.3, 3.1, 2.9], borderColor: 'rgba(0,0,0,0.35)', tension: 0.25, pointRadius: 3 },
+              ]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { y: { min: 0, max: 5, title: { display: true, text: 'Indexed 0–5' } } },
+              plugins: { tooltip: { callbacks: { footer: () => 'Indexed for visualization only' } } }
+            }
+          });
+      }
+
+      const chart7 = document.getElementById('sec3_chartValueReframing');
+      if(chart7) {
+          new Chart(chart7, {
+            type: 'scatter',
+            data: {
+              datasets: [{
+                label: 'Segments (illustrative)',
+                data: [
+                  {x: 4.6, y: 4.6}, {x: 4.2, y: 4.3}, {x: 3.8, y: 4.0},
+                  {x: 2.1, y: 1.8}, {x: 1.6, y: 1.2}, {x: 4.9, y: 4.8}
+                ],
+                backgroundColor: secondary,
+                pointRadius: 5,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                x: { min: 0, max: 5, title: { display: true, text: 'Risk aversion (indexed)' } },
+                y: { min: 0, max: 5, title: { display: true, text: 'Willingness to pay (indexed)' } },
+              },
+              plugins: { tooltip: { callbacks: { footer: () => 'Illustrative placement (not statistical)' } } }
+            }
+          });
+      }
+
+      const chart8 = document.getElementById('sec3_chartAuthorityImpact');
+      if(chart8) {
+          new Chart(chart8, {
+            type: 'bar',
+            data: {
+              labels: ['BPOM verified','Testing language','Derm-associated','Halal','Natural/organic'],
+              datasets: [{
+                label: 'Impact on confidence (indexed)',
+                data: [4.9, 4.6, 4.3, 4.0, 3.1],
+                backgroundColor: primary,
+                borderRadius: 10,
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: { x: { min: 0, max: 5, title: { display: true, text: 'Indexed 0–5' } } },
+              plugins: { tooltip: { callbacks: { footer: () => 'Indexed for visualization only' } } }
+            }
+          });
+      }
+    }
+
+    // ----- Boot -----
+    function init(){
+      renderNav(document.getElementById('sec3_navLinks'));
+      renderNav(document.getElementById('sec3_drawerLinks'));
+      renderChips(document.getElementById('sec3_chips'));
+      renderChips(document.getElementById('sec3_drawerChips'));
+      bindChips(document.getElementById('sec3_chips'));
+      bindChips(document.getElementById('sec3_drawerChips'));
+      observeSections();
+      bindSourceToggles();
+      bindKpis();
+
+      document.getElementById('sec3_btnQuotes').addEventListener('click', openModal);
+      document.getElementById('sec3_btnClear').addEventListener('click', clearFilters);
+
+      document.getElementById('sec3_openQuotes').addEventListener('click', openModal);
+      document.getElementById('sec3_openMenu').addEventListener('click', openDrawer);
+      document.getElementById('sec3_closeMenu').addEventListener('click', closeDrawer);
+
+      document.getElementById('sec3_drawerOpenQuotes').addEventListener('click', () => { closeDrawer(); openModal(); });
+      document.getElementById('sec3_drawerClear').addEventListener('click', () => { clearFilters(); closeDrawer(); });
+
+      document.getElementById('sec3_overlay').addEventListener('click', closeModal);
+      document.getElementById('sec3_closeModal').addEventListener('click', closeModal);
+
+      document.getElementById('sec3_qSearch').addEventListener('input', renderQuotes);
+      document.getElementById('sec3_qFilter').addEventListener('change', renderQuotes);
+
+      // KPI jump also works on desktop (no menu needed)
+      document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ closeModal(); closeDrawer(); } });
+
+      // Initialize charts
+      chartDefaults();
+      initCharts();
+
+      // Fix a minor tag typo ("suspicious") if any
+      applyFilters();
+    }
+
+    // Run init
+    init();
+
+  })();
+</script>

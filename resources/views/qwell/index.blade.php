@@ -8,7 +8,6 @@
     <link rel="icon" href="{{ asset('images/logo/app-logo.png') }}" type="image/png">
     
     <!-- custom style -->
-    <link rel="stylesheet" href="{{ asset('css/qwell/section1.css') }}">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,7 +20,6 @@
 
     <!-- custom js -->
     <script src="{{ asset('js/custom.js') }}" defer></script>
-    <script src="{{ asset('js/qwell/section1.js') }}" defer></script>
     
     <style>
         /* Blur overlay for popup */
@@ -137,12 +135,10 @@
         7. Conclusion: The Core Question.
     -->
 </head>
-<body class="antialiased password-locked">
-
-    <!-- Blur Background Overlay (hidden after unlock) -->
+<body class="antialiased">
+    <!-- 
     <div id="qwell-blur-bg"></div>
 
-    <!-- Password Popup (centered card) -->
     <div id="qwell-password-popup" class="fixed inset-0 flex items-center justify-center z-[999]">
         <div class="bg-white rounded-2xl shadow-xl px-7 py-8 max-w-md w-full border border-blue-100 flex flex-col items-center animate-fadeIn">
             <img src="{{ asset('images/logo/app-logo.png') }}" class="w-16 h-16 mb-2 object-contain" style="aspect-ratio:1/1;display:block;" alt="Logo">
@@ -155,6 +151,7 @@
             </form>
         </div>
     </div>
+    -->
 
     <!-- Back to Top Floating Button -->
     <button id="qwell-back-to-top" aria-label="Kembali ke Atas" title="Back to Top">
@@ -177,6 +174,7 @@
         </div>
     </div> -->
 
+    <!--
     <script>
         // Langsung tampilkan blur saat HTML selesai parse (tanpa menunggu loading)
         document.addEventListener('DOMContentLoaded', function() {
@@ -259,6 +257,7 @@
             });
         });
     </script>
+    -->
 
     <!-- Header -->
     @include('qwell.components.header')
@@ -313,7 +312,9 @@
                 </div>
             @endif
 
-            @include('qwell.contents.section'.$i)
+            <div class="section-{{ $i }}-content">
+                @include('qwell.contents.section'.$i)
+            </div>
         @endforeach
 
     </main>

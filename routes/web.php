@@ -20,3 +20,9 @@ Route::get('/', function () {
 Route::get('/qwell', function () {
     return view('qwell/index');
 });
+
+Route::get('/qwell-old', function () {
+    return view('qwell_old/index');
+});
+
+
