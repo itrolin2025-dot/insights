@@ -217,26 +217,65 @@
     .sec3-overlay {
       display: none;
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.46);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
       z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
+    .sec3-overlay.open { display: block; opacity: 1; }
+
     .sec3-modal {
       display: none;
-      position: fixed; inset: 50% auto auto 50%;
-      transform: translate(-50%, -50%);
+      position: fixed; 
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -40%);
       width: min(760px, calc(100% - 24px));
       background: #fff;
-      border-radius: 18px;
+      border-radius: 24px;
       border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 18px 60px rgba(0,0,0,0.25);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
       z-index: 1001;
-      padding: 16px;
+      padding: 24px;
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .sec3-modal.open { 
+        display: block; 
+        opacity: 1; 
+        transform: translate(-50%, -50%); 
+        pointer-events: auto;
     }
 
-    .section-3-wrapper .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-    .section-3-wrapper .modal-head h2 { margin: 0; font-size: 16px; }
-    .section-3-wrapper .modal-head p { margin: 6px 0 0; color: var(--muted); font-size: 12px; }
-    .section-3-wrapper .x { cursor: pointer; font-weight: 900; padding: 6px 10px; border-radius: 10px; background: rgba(0,0,0,0.04); }
+    .section-3-wrapper .modal-head { 
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        gap: 12px; 
+        margin-bottom: 20px;
+    }
+    .section-3-wrapper .modal-head h2 { 
+        margin: 0; 
+        font-size: 1.25rem; 
+        color: var(--primary);
+    }
+    .section-3-wrapper .modal-head-text p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+
+    .sec3-close-x { 
+        cursor: pointer; 
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        transition: background 0.2s, transform 0.2s;
+    }
+    .sec3-close-x:hover { background: rgba(0,0,0,0.1); transform: rotate(90deg); }
 
     .section-3-wrapper .searchrow { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 12px; }
     .section-3-wrapper input[type="search"]{
@@ -700,11 +739,11 @@
   <div class="sec3-overlay" id="sec3_overlay"></div>
   <div class="sec3-modal" id="sec3_modal" role="dialog" aria-modal="true" aria-label="Quote Bank">
     <div class="modal-head">
-      <div>
+      <div class="modal-head-text">
         <h2>Quote Bank (Indonesia)</h2>
         <p>Search and group recurring phrases used to describe fear, regret, skepticism, fatigue, and safety-seeking behavior.</p>
       </div>
-      <div class="x" id="sec3_closeModal">✕</div>
+      <div class="sec3-close-x" id="sec3_closeModal">✕</div>
     </div>
     <div class="searchrow">
       <input type="search" id="sec3_qSearch" placeholder="Search phrases (e.g., nyesel, iritasi, kapok)…" />
@@ -876,15 +915,27 @@
     }
 
     function openModal(){
-      document.getElementById('sec3_overlay').style.display = 'block';
-      document.getElementById('sec3_modal').style.display = 'block';
+      const overlay = document.getElementById('sec3_overlay');
+      const modal = document.getElementById('sec3_modal');
+      overlay.style.display = 'block';
+      modal.style.display = 'block';
+      setTimeout(() => {
+          overlay.classList.add('open');
+          modal.classList.add('open');
+      }, 10);
       renderQuotes();
       document.getElementById('sec3_qSearch').focus();
     }
 
     function closeModal(){
-      document.getElementById('sec3_overlay').style.display = 'none';
-      document.getElementById('sec3_modal').style.display = 'none';
+      const overlay = document.getElementById('sec3_overlay');
+      const modal = document.getElementById('sec3_modal');
+      overlay.classList.remove('open');
+      modal.classList.remove('open');
+      setTimeout(() => {
+          overlay.style.display = 'none';
+          modal.style.display = 'none';
+      }, 300);
     }
 
     // ----- Mobile drawer -----
@@ -1093,6 +1144,12 @@
 
     // ----- Boot -----
     function init(){
+      // Teleport modal & overlay to body
+      const overlay = document.getElementById('sec3_overlay');
+      const modal = document.getElementById('sec3_modal');
+      if (overlay && overlay.parentElement !== document.body) document.body.appendChild(overlay);
+      if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
       renderNav(document.getElementById('sec3_navLinks'));
       renderNav(document.getElementById('sec3_drawerLinks'));
       renderChips(document.getElementById('sec3_chips'));

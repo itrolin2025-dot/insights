@@ -227,8 +227,8 @@
                 <p class="text-xs uppercase tracking-widest text-gray-400 font-semibold mt-1">Section 1 Dashboard</p>
             </div>
 
-            <nav class="space-y-1">
-                <a href="#context" class="nav-link flex items-center px-4 py-3 text-sm rounded-lg hover:bg-gray-50 transition-colors">Context Snapshot</a>
+            <nav class="space-y-1" id="sidebarNavLinks">
+                <a href="#context-header" class="nav-link flex items-center px-4 py-3 text-sm rounded-lg hover:bg-gray-50 transition-colors">Context Snapshot</a>
                 <a href="#uncertainty" class="nav-link flex items-center px-4 py-3 text-sm rounded-lg hover:bg-gray-50 transition-colors">Strategic Uncertainty</a>
                 <a href="#brand-question" class="nav-link flex items-center px-4 py-3 text-sm rounded-lg hover:bg-gray-50 transition-colors">Primary Brand Question</a>
                 <a href="#secondary-questions" class="nav-link flex items-center px-4 py-3 text-sm rounded-lg hover:bg-gray-50 transition-colors">Decision Questions</a>
@@ -250,13 +250,62 @@
                 </button>
             </div>
         </div>
+        <script>
+            // Highlight active nav link based on scroll position
+            document.addEventListener('DOMContentLoaded', function() {
+                const sections = [
+                    "context-header",
+                    "uncertainty",
+                    "brand-question",
+                    "secondary-questions",
+                    "success-criteria",
+                    "guardrails",
+                    "research-flow"
+                ];
+                const navLinks = document.querySelectorAll('#sidebarNavLinks .nav-link');
+
+                let lastActiveSection = null;
+
+                function onScroll() {
+                    let fromTop = window.scrollY + 140;
+                    let currentSection = sections[0];
+
+                    // Cari section yang paling cocok dengan scroll saat ini
+                    for (let i = 0; i < sections.length; i++) {
+                        let section = document.getElementById(sections[i]);
+                        if (section && (section.offsetTop <= fromTop)) {
+                            currentSection = sections[i];
+                        }
+                    }
+
+                    // Jika tidak ada section yang cocok, atur active ke section pertama
+                    if (!document.getElementById(currentSection)) {
+                        currentSection = sections[0];
+                    }
+
+                    // Hindari update class jika tidak berubah (mengurangi flicker/error)
+                    if (lastActiveSection !== currentSection) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('bg-gray-100', 'text-teal-dark', 'font-bold');
+                            if (link.getAttribute('href') === '#' + currentSection) {
+                                link.classList.add('bg-gray-100', 'text-teal-dark', 'font-bold');
+                            }
+                        });
+                        lastActiveSection = currentSection;
+                    }
+                }
+
+                window.addEventListener('scroll', onScroll, { passive: true });
+                onScroll(); // Jalankan saat awal untuk sync nav
+            });
+        </script>
     </aside>
 
     <!-- MAIN CONTENT -->
     <main class="flex-grow p-4 md:p-8 lg:p-12 space-y-12 overflow-x-hidden">
 
         <!-- HEADER SECTION -->
-        <header id="context" class="space-y-6">
+        <header id="context-header" class="space-y-6">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div class="flex items-center">
                     <h2 class="text-3xl font-bold text-gray-800">Context Snapshot</h2>
@@ -294,6 +343,58 @@
                             }
                         });
                     }
+
+                    // SMOOTH SCROLL & ACTIVE NAV LOGIC
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            const targetId = this.getAttribute('href').replace('#','');
+                            const target = document.getElementById(targetId);
+                            if(target) {
+                                e.preventDefault();
+                                const yOffset = -16; // offset for nicer position (adjust as needed)
+                                const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset - 60; // offset for sticky headers
+                                window.scrollTo({top: y, behavior: 'smooth'});
+                                // Close sidebar on mobile
+                                if(window.innerWidth < 1024) {
+                                    document.getElementById('sidebarNav').classList.remove('sidebar-mobile-open');
+                                    document.getElementById('sidebarOverlay').style.opacity=0;
+                                    setTimeout(()=>{document.getElementById('sidebarOverlay').style.display='none';},170);
+                                    document.body.style.overflow = '';
+                                }
+                            }
+                        });
+                    });
+
+                    // ACTIVE STATE HIGHLIGHT ON SCROLL
+                    const ids = [
+                        'context-header',
+                        'uncertainty',
+                        'brand-question',
+                        'secondary-questions',
+                        'success-criteria',
+                        'guardrails',
+                        'research-flow'
+                    ];
+                    const sectionElems = ids.map(id => document.getElementById(id));
+                    window.addEventListener('scroll', function() {
+                        let scrollPos = window.scrollY || document.documentElement.scrollTop;
+                        let currentId = '';
+                        for (let i = sectionElems.length - 1; i >= 0; i--) {
+                            const section = sectionElems[i];
+                            if(section && scrollPos >= section.offsetTop - 110) {
+                                currentId = section.id;
+                                break;
+                            }
+                        }
+                        navLinks.forEach(link=>{
+                            if(link.getAttribute('href') === ('#'+currentId)){
+                                link.classList.add('bg-gray-100','font-bold','text-teal-dark');
+                            } else {
+                                link.classList.remove('bg-gray-100','font-bold','text-teal-dark');
+                            }
+                        });
+                    });
                 });
             </script>
 

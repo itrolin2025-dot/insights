@@ -300,37 +300,99 @@
     .sec4-modal{
       display:none;
       position:fixed; inset:0;
-      background:rgba(0,0,0,.45);
-      z-index:120;
-      padding:24px;
+      z-index:9999;
+      pointer-events:none;
+      align-items:center;
+      justify-content:center;
     }
-    .sec4-modal.open{ display:flex; align-items:center; justify-content:center; }
+    .sec4-modal.open{ display:flex; pointer-events:auto; }
+
+    .sec4-modal-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.48);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .sec4-modal.open .sec4-modal-overlay { opacity: 1; }
+
     .section-4-wrapper .modal-card{
-      width:min(760px, 96vw);
-      background:#fff;
-      border-radius:22px;
-      box-shadow:var(--shadow);
-      padding:18px 18px 16px;
-      border:1px solid rgba(0,0,0,.06);
+      position: relative;
+      width: 480px;
+      max-width: 92vw;
+      background: var(--c-white);
+      border-radius: 20px;
+      box-shadow: 0 12px 50px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.08);
+      padding: 24px 22px;
+      border: 1px solid rgba(0,0,0,.06);
+      z-index: 10;
+      transform: scale(0.96);
+      opacity: 0;
+      transition: transform 0.28s cubic-bezier(.16,1,.3,1), opacity 0.28s;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      max-height: 92vh;
     }
-    .section-4-wrapper .modal-card h3{ margin:0 0 6px; }
-    .section-4-wrapper .modal-card p{ margin:8px 0; color:var(--c-muted); line-height:1.5; }
-    .section-4-wrapper .modal-card .actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
-    .section-4-wrapper .modal-card .actions button{
-      border:0; cursor:pointer; font-weight:900;
-      border-radius:12px; padding:10px 12px;
+    .sec4-modal.open .modal-card { transform: scale(1); opacity: 1; }
+
+    .section-4-wrapper .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
     }
-    .section-4-wrapper .btn-primary{ background:var(--c-primary); color:#fff; }
-    .section-4-wrapper .btn-ghost{ background:rgba(0,0,0,.06); color:var(--c-text); }
+
+    .section-4-wrapper .modal-header h3 { 
+        margin: 0; 
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--c-primary);
+        line-height: 1.25;
+    }
+
+    .section-4-wrapper .modal-close-btn {
+      background: rgba(0,0,0,0.05);
+      border: none;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .section-4-wrapper .modal-close-btn:hover { background: rgba(0,0,0,0.1); transform: rotate(90deg); }
+
+    .section-4-wrapper .modal-card p { margin:10px 0; color:var(--c-muted); line-height:1.6; font-size: 0.95rem; }
+    .section-4-wrapper .modal-card .actions { display:flex; gap:10px; justify-content:flex-end; margin-top:24px; }
+    .section-4-wrapper .modal-card .actions button {
+      border:0; cursor:pointer; font-weight:800;
+      border-radius:12px; padding:10px 20px;
+      font-size: 0.9rem;
+      transition: filter 0.2s, transform 0.2s;
+    }
+    .section-4-wrapper .modal-card .actions button:hover { filter: brightness(0.92); transform: translateY(-1px); }
+    .section-4-wrapper .btn-primary { background:var(--c-primary); color:#fff; }
+    .section-4-wrapper .btn-ghost { background:rgba(0,0,0,0.06); color:var(--c-text); }
 
     @media (max-width: 980px){
       .section-4-wrapper .sec4-nav{ display:none; }
       .section-4-wrapper .topbar{ display:block; }
-      .section-4-wrapper .sec4-main{ padding:18px 14px 46px; }
-      .section-4-wrapper .kpis{ grid-template-columns:1fr 1fr; }
+      .section-4-wrapper .sec4-main{ padding:16px 14px 40px; }
+      .section-4-wrapper .header h1 { font-size: 1.6rem; }
+      .section-4-wrapper .kpis{ grid-template-columns: 1fr; gap: 10px; }
+      .section-4-wrapper .kpi .value { font-size: 1.3rem; }
       .section-4-wrapper .grid2{ grid-template-columns:1fr; }
+      .section-4-wrapper .grid3{ grid-template-columns:1fr; }
       .section-4-wrapper .jtbd-list{ grid-template-columns:1fr; }
-      .section-4-wrapper .chart-container{ height:260px; }
+      .section-4-wrapper .chart-container{ height:250px; }
+      .section-4-wrapper .section { padding: 16px 14px; }
     }
 </style>
 
@@ -370,8 +432,12 @@
   </div>
 
   <div class="sec4-modal" id="sec4_methodModal">
+    <div class="sec4-modal-overlay" onclick="closeSec4Modal()"></div>
     <div class="modal-card">
-      <h3>Indexed Indicators (How to read the charts)</h3>
+      <div class="modal-header">
+        <h3>Indexed Indicators (How to read the charts)</h3>
+        <button class="modal-close-btn" onclick="closeSec4Modal()" aria-label="Close">✕</button>
+      </div>
       <p>
         Some Section 4 visuals may use <strong>indexed indicators</strong> (e.g., 1–5 or 0–10) when the underlying research text is qualitative.
         These indexes are <strong>non-statistical</strong> and exist only to make complex decision logic easier to grasp.
@@ -380,8 +446,8 @@
         If you have real numeric data (survey, panel, platform exports), replace the indexed arrays in the HTML with actual values.
       </p>
       <div class="actions">
-        <button class="btn-ghost" id="sec4_closeMethod">Close</button>
-        <button class="btn-primary" id="sec4_gotItMethod">Got it</button>
+        <button class="btn-ghost" onclick="closeSec4Modal()">Close</button>
+        <button class="btn-primary" onclick="closeSec4Modal()">Got it</button>
       </div>
     </div>
   </div>
@@ -654,12 +720,10 @@
     
         // ---------- Modal ----------
         function openMethod(){ document.getElementById('sec4_methodModal').classList.add('open'); }
-        function closeMethod(){ document.getElementById('sec4_methodModal').classList.remove('open'); }
+        window.closeSec4Modal = function(){ document.getElementById('sec4_methodModal').classList.remove('open'); }
 
         document.getElementById('sec4_btnMethodNav')?.addEventListener('click', openMethod);
         document.getElementById('sec4_btnMethodDrawer')?.addEventListener('click', openMethod);
-        document.getElementById('sec4_closeMethod')?.addEventListener('click', closeMethod);
-        document.getElementById('sec4_gotItMethod')?.addEventListener('click', closeMethod);
         document.getElementById('sec4_openNotes')?.addEventListener('click', openMethod);
 
         // ---------- Drawer ----------
@@ -889,6 +953,12 @@
                 box.innerHTML = reasons[type] || '';
             });
         });
+
+        // Teleport modal to body to bypass accordion transform issues
+        const modalEl = document.getElementById('sec4_methodModal');
+        if (modalEl && modalEl.parentElement !== document.body) {
+            document.body.appendChild(modalEl);
+        }
 
     })();
 </script>

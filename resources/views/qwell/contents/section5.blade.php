@@ -14,6 +14,14 @@
         position: relative;
         isolation: isolate;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @media (min-width: 1025px) {
+        .section-5-wrapper {
+            flex-direction: row;
+        }
     }
 
     .section-5-wrapper * { 
@@ -28,39 +36,121 @@
         width: 100%;
     }
 
-    @media (min-width: 769px) {
+    @media (min-width: 1025px) {
         .section-5-wrapper .flex-container {
             flex-direction: row;
         }
     }
 
-    /* Sidebar Navigation */
+    /* Sidebar Navigation (Scoped) */
     .section-5-wrapper .sec5-aside {
         width: 100%;
         background: var(--white);
         padding: 1.5rem;
         border-bottom: 1px solid rgba(0,0,0,0.05);
-        z-index: 10;
+        z-index: 80;
+        transition: transform 0.27s cubic-bezier(.21,.6,.34,1), opacity 0.27s;
     }
 
-    @media (min-width: 769px) {
+    @media (max-width: 1024px) {
         .section-5-wrapper .sec5-aside {
-            width: 280px;
-            border-right: 1px solid rgba(0,0,0,0.05);
-            border-bottom: none;
-            position: sticky;
+            height: 100vh;
+            position: fixed;
+            left: 0;
             top: 0;
-            height: auto;
-            max-height: 100vh;
+            width: 86vw;
+            max-width: 320px;
+            min-width: 220px;
+            box-shadow: 0 8px 32px rgba(0,0,0,.11), 0 1.5px 6px rgba(0,0,0,.04);
+            transform: translateX(-105%);
+            opacity: 0;
+            pointer-events: none;
+            border-bottom: none;
+        }
+        .section-5-wrapper .sec5-aside.mobile-open {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: all;
         }
     }
+
+    @media (min-width: 1025px) {
+        .section-5-wrapper .sec5-aside {
+            width: 280px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            border-right: 1px solid rgba(0,0,0,0.05);
+            border-bottom: none;
+            flex-shrink: 0;
+            transform: none !important;
+            opacity: 1 !important;
+            pointer-events: all !important;
+        }
+    }
+
+    /* Overlay for mobile sidebar */
+    .sec5-sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 70;
+        background: rgba(0,0,0,0.18);
+        cursor: pointer;
+        transition: opacity 0.19s;
+    }
+
+    /* Burger button style */
+    .sec5-burger-btn {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        border: 1px solid #ececec;
+        cursor: pointer;
+        padding: 0;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 1024px) {
+        .sec5-burger-btn {
+            display: flex;
+        }
+    }
+
+    .sec5-burger-lines {
+        display: inline-block;
+        width: 22px;
+        height: 16px;
+        position: relative;
+    }
+    .sec5-burger-lines span {
+        display: block;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 2px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        transition: .22s cubic-bezier(.21,.6,.34,1);
+    }
+    .sec5-burger-lines span:nth-child(1) { top: 0; }
+    .sec5-burger-lines span:nth-child(2) { top: 6.5px; }
+    .sec5-burger-lines span:nth-child(3) { top: 13px; }
+    .sec5-burger-btn.open .sec5-burger-lines span:nth-child(1) { transform: rotate(45deg) translateY(6.2px); }
+    .sec5-burger-btn.open .sec5-burger-lines span:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
+    .sec5-burger-btn.open .sec5-burger-lines span:nth-child(3) { transform: rotate(-45deg) translateY(-6.2px); }
 
     .section-5-wrapper .nav-header h1 { font-size: 1.25rem; color: var(--primary); letter-spacing: 1px; margin-bottom: 0.5rem; }
     .section-5-wrapper .nav-links { list-style: none; padding: 0; }
     .section-5-wrapper .nav-links li { margin-bottom: 0.5rem; }
     .section-5-wrapper .nav-links a { 
         text-decoration: none; color: var(--text-muted); font-size: 0.9rem; 
-        padding: 0.6rem; display: block; border-radius: 8px; transition: 0.2s;
+        padding: 0.8rem; display: block; border-radius: 8px; transition: 0.2s;
     }
     .section-5-wrapper .nav-links a:hover, .section-5-wrapper .nav-links a.active { 
         background: var(--secondary); color: var(--primary); font-weight: 600; 
@@ -69,11 +159,11 @@
     /* Main Content */
     .section-5-wrapper .sec5-main { 
         flex: 1;
-        padding: 2rem 1rem; 
+        padding: 1.5rem; 
         width: 100%; 
     }
 
-    @media (min-width: 769px) {
+    @media (min-width: 1025px) {
         .section-5-wrapper .sec5-main {
             padding: 2rem 3rem;
         }
@@ -81,7 +171,27 @@
 
     /* Section Styling */
     .section-5-wrapper section { margin-bottom: 3rem; scroll-margin-top: 1rem; }
-    .section-5-wrapper .card { background: var(--white); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-bottom: 1.5rem; border: 1px solid rgba(101, 189, 173, 0.1); }
+    .section-5-wrapper .card { 
+        background: var(--white); 
+        border-radius: 12px; 
+        padding: 1.5rem; 
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02); 
+        margin-bottom: 1.5rem; 
+        border: 1px solid rgba(101, 189, 173, 0.1);
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @media (min-width: 1025px) {
+        .section-5-wrapper .card {
+            max-width: none;
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
     .section-5-wrapper .header-box { margin-bottom: 1.5rem; }
     .section-5-wrapper h2 { font-size: 1.75rem; color: var(--text-dark); margin-bottom: 0.5rem; border-left: 4px solid var(--primary); padding-left: 1rem; }
     .section-5-wrapper .headline-insight { font-size: 1.1rem; color: var(--primary); font-weight: 600; margin-bottom: 1rem; }
@@ -94,17 +204,21 @@
 
     /* Charts */
     .section-5-wrapper .sec5-chart-container { position: relative; height: 300px; width: 100%; margin: 1.5rem 0; }
-    .section-5-wrapper .price-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    .section-5-wrapper .price-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; justify-items: center; }
     @media (min-width: 640px) {
-        .section-5-wrapper .price-grid { grid-template-columns: repeat(2, 1fr); }
+        .section-5-wrapper .price-grid { grid-template-columns: repeat(2, 1fr); justify-items: stretch; }
     }
-    .section-5-wrapper .price-chart-box { background: #fff; padding: 1rem; border-radius: 8px; border: 1px solid #eee; }
+    .section-5-wrapper .price-chart-box { background: #fff; padding: 1rem; border-radius: 8px; border: 1px solid #eee; width: 100%; max-width: 500px; }
     .section-5-wrapper .price-chart-container { position: relative; height: 180px; width: 100%; }
 
     /* Verdict */
     .section-5-wrapper .verdict-banner { 
         background: linear-gradient(135deg, var(--primary), #4da695); color: white; 
-        padding: 2rem; border-radius: 16px; text-align: center; margin-bottom: 2rem;
+        padding: 2.5rem 1.5rem; border-radius: 16px; text-align: center; margin-bottom: 2rem;
+        width: 100%;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
     }
     .section-5-wrapper .verdict-badge { 
         background: var(--accent); color: var(--text-dark); padding: 0.5rem 1.5rem; 
@@ -121,13 +235,14 @@
 </style>
 
 <div class="section-5-wrapper">
+    <div class="sec5-sidebar-overlay" id="sec5SidebarOverlay"></div>
     <div class="flex-container">
-        <aside class="sec5-aside">
+        <aside class="sec5-aside" id="sec5Sidebar">
             <div class="nav-header">
                 <h1>Q’WELL</h1>
                 <p style="font-size: 0.75rem; color: var(--text-muted);">Market Validation Gates v5.0</p>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="sec5NavLinks">
                 <li><a href="#sec5_scope" class="active">Scope Lock</a></li>
                 <li><a href="#sec5_baseline">Market Baseline</a></li>
                 <li><a href="#sec5_segment">Premium Segment</a></li>
@@ -142,6 +257,13 @@
         <main class="sec5-main">
             <section id="sec5_scope">
                 <div class="header-box">
+                    <button class="sec5-burger-btn" id="sec5BurgerBtn" aria-label="Toggle Navigation">
+                        <span class="sec5-burger-lines">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
                     <h2>Market Boundary Lock</h2>
                     <p class="headline-insight">Strict categorization to ensure valid comparison.</p>
                 </div>
@@ -179,7 +301,7 @@
                         <canvas id="sec5_chartMarket"></canvas>
                     </div>
                     <div class="sec5-accordion">
-                        <div class="sec5-accordion-header">Audit: Assumptions & Data Gaps <span>+</span></div>
+                        <div class="sec5-accordion-header" onclick="sec5ToggleAcc(this)">Audit: Assumptions & Data Gaps <span>+</span></div>
                         <div class="sec5-accordion-content">
                             Calculations based on IMARC 2025 Hair Care (USD 1.21B) and ReportCubes Bath/Shower (USD 1.20B). Exchange rates IDR 15,700/USD.
                         </div>
@@ -261,6 +383,43 @@
 
 <script>
 (function(){
+    // Local state for sidebar
+    const burgerBtn = document.getElementById('sec5BurgerBtn');
+    const sidebar = document.getElementById('sec5Sidebar');
+    const overlay = document.getElementById('sec5SidebarOverlay');
+    const navLinks = document.querySelectorAll('#sec5NavLinks a');
+
+    function toggleSidebar() {
+        const isOpen = sidebar.classList.toggle('mobile-open');
+        burgerBtn.classList.toggle('open');
+        overlay.style.display = isOpen ? 'block' : 'none';
+        if (isOpen) {
+            setTimeout(() => overlay.style.opacity = "1", 10);
+            document.body.style.overflow = 'hidden';
+        } else {
+            overlay.style.opacity = "0";
+            setTimeout(() => overlay.style.display = "none", 170);
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (burgerBtn) burgerBtn.addEventListener('click', toggleSidebar);
+    if (overlay) overlay.addEventListener('click', toggleSidebar);
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) toggleSidebar();
+            
+            const targetId = link.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+                e.preventDefault();
+                const y = target.getBoundingClientRect().top + window.pageYOffset - 100;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+        });
+    });
+
     const P = {
         primary: '#65BDAD', secondary: '#CAF1EB', accent: '#FFCC97',
         text: '#2D3748', muted: '#718096', white: '#FFFFFF'
@@ -268,8 +427,9 @@
 
     const MARKET = { h: 1213.3, b: 1200.0, share: 0.359 };
 
-    function init(){
+    function initCharts(){
         if(typeof Chart === 'undefined') return;
+        Chart.defaults.font.family = "'Segoe UI', 'Inter', sans-serif";
 
         // Market Baseline
         new Chart(document.getElementById('sec5_chartMarket'), {
@@ -334,49 +494,48 @@
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: {position:'bottom'} } }
         });
 
-        // Accordions
-        document.querySelectorAll('.section-5-wrapper .sec5-accordion-header').forEach(h => {
-            h.addEventListener('click', () => {
-                const acc = h.parentElement;
-                const isOpen = acc.classList.toggle('open');
-                h.querySelector('span').textContent = isOpen ? '−' : '+';
-            });
-        });
-
-        // Copy buttons
-        function copy(txt){
-            navigator.clipboard.writeText(txt).then(() => {
-                const t = document.createElement('div');
-                t.textContent = 'Copied';
-                Object.assign(t.style, {
-                    position:'fixed', bottom:'32px', right:'32px', background:P.primary, color:'white',
-                    padding:'8px 16px', borderRadius:'8px', zIndex:'9999', fontWeight:'bold'
-                });
-                document.body.appendChild(t);
-                setTimeout(()=>t.remove(), 1000);
-            });
-        }
-        document.getElementById('sec5_copyBoundary').addEventListener('click', () => copy("Scope: Shampoo, Body Wash, Body Butter, Hair Oil. Market: Indonesia."));
-        document.getElementById('sec5_copyVerdict').addEventListener('click', () => copy("VERDICT: VIABLE. Safety-First positioning validated for structurally underserved 35.9% of ID market."));
-
-        // Nav Active
-        const links = Array.from(document.querySelectorAll('.section-5-wrapper .nav-links a'));
+        // Nav Active Observer
+        const observerLinks = Array.from(document.querySelectorAll('#sec5NavLinks a'));
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if(e.isIntersecting){
-                    links.forEach(l => l.classList.remove('active'));
-                    const a = links.find(l => l.getAttribute('href') === '#'+e.target.id);
+                    observerLinks.forEach(l => l.classList.remove('active'));
+                    const a = observerLinks.find(l => l.getAttribute('href') === '#'+e.target.id);
                     if(a) a.classList.add('active');
                 }
             });
         }, { rootMargin: '-30% 0px -60% 0px', threshold: 0.1 });
+        
         ['sec5_scope','sec5_baseline','sec5_segment','sec5_price','sec5_drivers','sec5_forecast','sec5_verdict'].forEach(id => {
             const el = document.getElementById(id);
             if(el) observer.observe(el);
         });
     }
 
-    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-    else init();
+    // Shared functions
+    window.sec5ToggleAcc = function(el) {
+        const acc = el.parentElement;
+        const isOpen = acc.classList.toggle('open');
+        el.querySelector('span').textContent = isOpen ? '−' : '+';
+    };
+
+    function copy(txt){
+        navigator.clipboard.writeText(txt).then(() => {
+            const t = document.createElement('div');
+            t.textContent = 'Copied';
+            Object.assign(t.style, {
+                position:'fixed', bottom:'32px', right:'32px', background:P.primary, color:'white',
+                padding:'8px 16px', borderRadius:'8px', zIndex:'9999', fontWeight:'bold'
+            });
+            document.body.appendChild(t);
+            setTimeout(()=>t.remove(), 1000);
+        });
+    }
+
+    document.getElementById('sec5_copyBoundary').addEventListener('click', () => copy("Scope: Shampoo, Body Wash, Body Butter, Hair Oil. Market: Indonesia."));
+    document.getElementById('sec5_copyVerdict').addEventListener('click', () => copy("VERDICT: VIABLE. Safety-First positioning validated for structurally underserved 35.9% of ID market."));
+
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCharts);
+    else initCharts();
 })();
 </script>

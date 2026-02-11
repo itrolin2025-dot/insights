@@ -278,7 +278,7 @@ hr.section-6{border:none; border-top:1px solid rgba(0,0,0,.08); margin:14px 0}
   .canvas-wrap-section-6.matrix{height:360px}
 }
 </style>
-</head>
+
 <body class="section-6">
 <div class="layout-section-6">
   <aside class="section-6">
