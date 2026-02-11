@@ -156,7 +156,7 @@
     /* Main Content */
     .section-7-wrapper .sec7-main { 
         flex: 1; 
-        padding: 2rem 1.5rem; 
+        padding: 1.5rem 1rem; 
         background: var(--bg-soft); 
     }
 
@@ -166,12 +166,14 @@
         }
     }
 
-    .section-7-wrapper .sec7-header { margin-bottom: 3rem; }
-    .section-7-wrapper .sec7-header h1 { font-size: 2.22rem; margin: 0; font-weight: 800; color: var(--text-main); letter-spacing: -1px; }
-    .section-7-wrapper .sec7-header p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin-top: 0.5rem; }
+    .section-7-wrapper .sec7-header { margin-bottom: 2rem; }
+    .section-7-wrapper .sec7-header h1 { font-size: 1.75rem; margin: 0; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; line-height: 1.2; }
+    @media (min-width: 769px) { .section-7-wrapper .sec7-header h1 { font-size: 2.22rem; } }
+    .section-7-wrapper .sec7-header p { color: var(--text-muted); font-size: 1rem; max-width: 800px; margin-top: 0.75rem; }
 
-    .section-7-wrapper .sec7-section { margin-bottom: 4rem; scroll-margin-top: 2rem; }
-    .section-7-wrapper .sec7-section-title { font-size: 1.7rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .section-7-wrapper .sec7-section { margin-bottom: 3rem; scroll-margin-top: 1.5rem; }
+    .section-7-wrapper .sec7-section-title { font-size: 1.35rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; }
+    @media (min-width: 769px) { .section-7-wrapper .sec7-section-title { font-size: 1.7rem; } }
     
     /* Dashboard Components */
     .section-7-wrapper .sec7-card-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
@@ -188,9 +190,41 @@
 
     /* Visualizations */
     .section-7-wrapper .sec7-chart-container { height: 300px; position: relative; margin-top: 1rem; width: 100%; }
-    .section-7-wrapper .sec7-pyramid-container { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 2rem; }
-    .section-7-wrapper .sec7-pyramid-layer { width: 100%; height: 60px; display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; font-size: 0.85rem; transition: transform 0.2s; cursor: pointer; text-align: center; padding: 0 10px; }
+    @media (max-width: 768px) {
+        .section-7-wrapper .sec7-chart-container { height: 240px; }
+    }
+
+    .section-7-wrapper .sec7-pyramid-container { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 2rem; }
+    .section-7-wrapper .sec7-pyramid-layer { 
+        width: 100% !important; 
+        height: 54px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        color: var(--white); 
+        font-weight: 700; 
+        font-size: 0.85rem; 
+        transition: transform 0.2s; 
+        cursor: pointer; 
+        text-align: center; 
+        padding: 0 15px; 
+        border-radius: 8px;
+    }
+    
+    @media (min-width: 641px) {
+        .section-7-wrapper .sec7-p-l3 { width: 45% !important; }
+        .section-7-wrapper .sec7-p-l2 { width: 70% !important; }
+        .section-7-wrapper .sec7-p-l1 { width: 95% !important; }
+    }
     .section-7-wrapper .sec7-pyramid-layer:hover { transform: scale(1.02); }
+
+    /* Nested card adjustments */
+    .section-7-wrapper .sec7-card .sec7-card {
+        box-shadow: none;
+        border: 1px solid rgba(0,0,0,0.05);
+        background: #fafafa;
+        padding: 1.25rem;
+    }
 
     /* Interactive Elements */
     .section-7-wrapper .sec7-toggle-container { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
@@ -272,24 +306,29 @@
             <div id="sec7_testing" class="sec7-section">
                 <div class="sec7-section-title">B. Testing Hierarchy</div>
                 <div class="sec7-card sec7-full">
-                    <h3>The Proof Pyramid</h3>
+                    <h3 style="border-bottom:none; margin-bottom: 0.5rem;">The Proof Pyramid</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">The structural hierarchy of evidence required for Q'WELL's safety claims.</p>
+                    
                     <div class="sec7-pyramid-container">
-                        <div class="sec7-pyramid-layer" style="background: #65BDAD; width: 40%;" title="Efficacy Testing (Level 3)">Clinical Performance</div>
-                        <div class="sec7-pyramid-layer" style="background: #8BCBBE; width: 60%;" title="Advanced Safety (Level 2)">HRIPT / Hypoallergenic</div>
-                        <div class="sec7-pyramid-layer" style="background: #B2D9D1; width: 80%;" title="Mandatory Baseline (Level 1)">Microbial & Heavy Metals</div>
+                        <div class="sec7-pyramid-layer sec7-p-l3" style="background: #65BDAD;" title="Efficacy Testing (Level 3)">Clinical Performance</div>
+                        <div class="sec7-pyramid-layer sec7-p-l2" style="background: #8BCBBE;" title="Advanced Safety (Level 2)">HRIPT / Hypoallergenic</div>
+                        <div class="sec7-pyramid-layer sec7-p-l1" style="background: #B2D9D1;" title="Mandatory Baseline (Level 1)">Microbial & Heavy Metals</div>
                     </div>
-                    <div class="sec7-card-grid" style="margin-top: 2rem;">
+
+                    <div class="sec7-card-grid" style="margin-top: 2.5rem;">
                         <div class="sec7-card">
                             <h3>Hierarchy Complexity</h3>
                             <div class="sec7-chart-container"><canvas id="sec7_testingComplexityChart"></canvas></div>
                         </div>
                         <div class="sec7-card">
                             <h3>Compare Proof Levels</h3>
-                            <select id="sec7_compProof" style="width: 100%; padding: 0.5rem; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 1rem;">
-                                <option value="basic">Basic Safety vs HRIPT</option>
-                                <option value="clinical">HRIPT vs Clinical Efficacy</option>
-                            </select>
-                            <div id="sec7_compareResults" class="sec7-details-panel" style="display: block;">
+                            <div style="margin-bottom: 1.25rem;">
+                                <select id="sec7_compProof" style="width: 100%; padding: 0.75rem; border-radius: 12px; border: 1px solid var(--border); background: #fff; font-family: inherit; font-size: 0.9rem; font-weight: 600; -webkit-appearance: none; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23636E72%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 0.65rem auto;">
+                                    <option value="basic">Basic Safety vs HRIPT</option>
+                                    <option value="clinical">HRIPT vs Clinical Efficacy</option>
+                                </select>
+                            </div>
+                            <div id="sec7_compareResults" class="sec7-details-panel" style="display: block; min-height: 100px; background: white; border-style: solid; border-width: 1px; border-color: rgba(0,0,0,0.05);">
                                 <strong>Basic:</strong> Validates physicochemical safety (Mandatory).<br>
                                 <strong>HRIPT:</strong> Validates sensitization (6-week trial). Resolves "Breakout Trauma" fear.[11]
                             </div>

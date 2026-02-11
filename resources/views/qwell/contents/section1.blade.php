@@ -154,12 +154,11 @@
             height: 100vh;
             position: fixed;
         }
-        /* Show burger inline for header, not absolute */
+        /* Show burger above header title on mobile */
         .burger-btn.header-burger {
             display: inline-flex;
             position: static;
-            margin-left: 8px;
-            margin-bottom: 4px;
+            margin-bottom: 12px;
             top: unset;
             left: unset;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -307,16 +306,16 @@
         <!-- HEADER SECTION -->
         <header id="context-header" class="space-y-6">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div class="flex items-center">
-                    <h2 class="text-3xl font-bold text-gray-800">Context Snapshot</h2>
+                <div class="flex flex-col items-start">
                     <!-- Burger for mobile inside header (shown only on mobile/tablet) -->
-                    <button class="burger-btn header-burger ml-2" id="sidebarBurgerBtnHeader" aria-label="Open sidebar" type="button">
+                    <button class="burger-btn header-burger" id="sidebarBurgerBtnHeader" aria-label="Open sidebar" type="button">
                         <span class="burger-lines">
                             <span></span>
                             <span></span>
                             <span></span>
                         </span>
                     </button>
+                    <h2 class="text-3xl font-bold text-gray-800">Context Snapshot</h2>
                 </div>
                 <div class="px-4 py-2 bg-teal-dark text-white rounded-full text-xs font-bold tracking-widest uppercase">
                     Decision Brief Mode

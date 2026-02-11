@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Q'WELL Strategic Research Brief | Insights</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
-    <link rel="icon" href="{{ asset('images/logo/app-logo.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('images/logo/qwell-logo.png') }}" type="image/png">
     
     <!-- custom style -->
 
@@ -269,14 +269,14 @@
         
         @php
             $sections = [
-                1 => 'Research Objective & Brand Question',
-                2 => 'National Skin & Hair Reality in Indonesia',
-                3 => 'Behavioral & Emotional Tension in Indonesia’s Personal Care Market',
-                4 => 'Consumer Needs, Target Audience & Buyer Personas',
-                5 => 'Market Structure, Trends & Distribution Strategy',
-                6 => 'Competitive Landscape, Benchmarking & White Space',
-                7 => 'Brand Positioning & Reasons-To-Believe Validation',
-                8 => 'Product System, Pricing, and Profitability',
+                1 => 'Strategic Question & Positioning Uncertainty',
+                2 => 'Indonesia’s Skin & Scalp Structural Reality',
+                3 => 'Consumer Risk Psychology & Decision Fatigue',
+                4 => 'Ideal Customer Profile (ICP) & Jobs-To-Be-Done',
+                5 => 'Market Validation & Conservative 2030 Outlook',
+                6 => 'Competitive Structure & Claim Inflation Dynamics',
+                7 => 'Proof Architecture & Regulatory Infrastructure',
+                8 => 'Final Positioning Territory & Strategic Durability',
             ];
         @endphp
 

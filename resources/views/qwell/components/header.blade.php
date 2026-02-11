@@ -5,7 +5,7 @@
         <!-- Mobile Layout -->
         <div class="flex w-full items-center md:hidden relative">
             <!-- Logo Left -->
-            <img src="{{ asset('images/logo/app-logo.png') }}" alt="Q'WELL Logo Left"
+            <img src="{{ asset('images/logo/qwell-text-logo.png') }}" alt="Q'WELL Logo Left"
                  class="w-8 h-8 object-contain"
                  style="aspect-ratio:1/1; display:block;"
             />
@@ -23,8 +23,8 @@
         <div class="hidden md:flex w-full items-center justify-between">
             <!-- Left: Logo + Text -->
             <div class="flex items-center min-w-0">
-                <img src="{{ asset('images/logo/app-logo.png') }}" alt="Q'WELL Logo Left"
-                     class="w-12 h-12 object-contain" 
+                <img src="{{ asset('images/logo/qwell-text-logo.png') }}" alt="Q'WELL Logo Left"
+                     class="w-12 h-12 object-contain"
                      style="aspect-ratio:1/1; display:block;"
                 />
                 <span class="ml-5 font-light text-gray-700 text-xl font-normal truncate text-left block" style="white-space:nowrap;">
@@ -51,12 +51,10 @@
     </div>
 </header>
 
-<header class="bg-yellow-300 shadow-md top-0 z-80">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-3 flex flex-col items-center justify-center text-center
-        h-7 md:h-14 transition-all duration-200">
-        <!-- Access protected notice: Always visible & larger font, smaller for mobile -->
-        <span class="block text-xl sm:text-3xl px-4 font-extrabold tracking-tight text-[#0B6E99] text-center">
-            <span class="text-lg sm:text-lg font-semibold text-gray-700">
+<header style="background-color: #f0f757;" class="shadow-md top-0 z-80">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-3 flex items-center justify-center text-center h-6 md:h-10 transition-all duration-200">
+        <span class="block text-base sm:text-xl px-2 font-extrabold tracking-tight text-[#0B6E99] text-center w-full">
+            <span class="font-semibold text-gray-700">
                 Prepared exclusively for Q’WELL
             </span>
         </span>

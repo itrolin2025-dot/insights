@@ -117,6 +117,96 @@
       padding:18px 14px;
     }
 
+    /* --- MODAL REWRITE START --- */
+    .sec4-modal{
+      display:none;
+      position:fixed;
+      z-index:9999;
+      inset:0;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.32);
+      /* fallback bg for lower end browsers */
+      pointer-events:none;
+    }
+    .sec4-modal.open{ display:flex; pointer-events:auto; }
+
+    .sec4-modal .modal-card{
+      position:relative;
+      width:94vw;
+      max-width:420px;
+      background:#fff;
+      border-radius:22px;
+      box-shadow:0 12px 40px rgba(0,0,0,0.20), 0 2px 8px rgba(0,0,0,0.07);
+      padding:28px 20px 22px 20px;
+      border:1px solid #f2f2f2;
+      display:flex;
+      flex-direction:column;
+      max-height:92vh;
+      overflow:auto;
+      animation:fadeInPopSec4Modal 0.23s cubic-bezier(.19,.9,.39,1.03);
+    }
+    @keyframes fadeInPopSec4Modal {
+      0% {opacity:0; transform:scale(.92);}
+      99% {transform:scale(1.04);}
+      100% {opacity:1; transform:scale(1);}
+    }
+    .sec4-modal .modal-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:10px;
+      gap:8px;
+    }
+    .sec4-modal .modal-header h3 {
+      margin:0;
+      font-size:1.1rem;
+      font-weight:900;
+      color:#63b7a7;
+      flex:1 1 auto;
+      line-height:1.25;
+    }
+    .sec4-modal .modal-close-btn {
+      background:transparent;
+      border:none;
+      width:36px; height:36px;
+      display:flex; align-items:center; justify-content:center;
+      border-radius:50%;
+      cursor:pointer;
+      font-size:1.45rem;
+      color:#bbb;
+      position:relative;
+      transition:background 0.17s, color 0.18s;
+      margin-left:8px;
+    }
+    .sec4-modal .modal-close-btn:hover {
+      background:rgba(101,189,173,0.13);
+      color:#408f7c;
+    }
+    .sec4-modal .modal-card p {margin:12px 0; color:#617283; font-size:1.02rem; line-height:1.58;}
+    .sec4-modal .modal-card .actions {
+      display:flex; gap:10px; justify-content:flex-end;margin-top:18px;
+    }
+    .sec4-modal .modal-card .btn-primary {
+      background:#65BDAD; color:#fff; border:0;
+      border-radius:11px; padding:9px 18px;
+      font-weight:700; font-size:0.96rem; cursor:pointer;
+      box-shadow:0 1px 7px 0 rgba(101,189,173,0.07);
+      transition:filter .15s,transform .14s;
+    }
+    .sec4-modal .modal-card .btn-ghost {
+      background:#f9fafb; color:#233241; border:0;
+      border-radius:11px; padding:9px 18px;
+      font-weight:650; font-size:0.96rem; cursor:pointer;
+      transition:filter .15s,transform .14s;
+    }
+    .sec4-modal .modal-card .actions button:hover {
+      filter:brightness(.95);
+      transform:translateY(-1px) scale(1.02);
+    }
+
+    /* --- MODAL REWRITE END --- */
+
     /* Sections & cards */
     .section-4-wrapper .header{
       margin:8px 0 18px;
@@ -296,91 +386,6 @@
       font-weight:700;
     }
 
-    /* Modal */
-    .sec4-modal{
-      display:none;
-      position:fixed; inset:0;
-      z-index:9999;
-      pointer-events:none;
-      align-items:center;
-      justify-content:center;
-    }
-    .sec4-modal.open{ display:flex; pointer-events:auto; }
-
-    .sec4-modal-overlay {
-      position: absolute; inset: 0;
-      background: rgba(0,0,0,0.48);
-      backdrop-filter: blur(5px);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-    .sec4-modal.open .sec4-modal-overlay { opacity: 1; }
-
-    .section-4-wrapper .modal-card{
-      position: relative;
-      width: 480px;
-      max-width: 92vw;
-      background: var(--c-white);
-      border-radius: 20px;
-      box-shadow: 0 12px 50px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.08);
-      padding: 24px 22px;
-      border: 1px solid rgba(0,0,0,.06);
-      z-index: 10;
-      transform: scale(0.96);
-      opacity: 0;
-      transition: transform 0.28s cubic-bezier(.16,1,.3,1), opacity 0.28s;
-      display: flex;
-      flex-direction: column;
-      overflow: auto;
-      max-height: 92vh;
-    }
-    .sec4-modal.open .modal-card { transform: scale(1); opacity: 1; }
-
-    .section-4-wrapper .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 18px;
-    }
-
-    .section-4-wrapper .modal-header h3 { 
-        margin: 0; 
-        font-size: 1.15rem;
-        font-weight: 800;
-        color: var(--c-primary);
-        line-height: 1.25;
-    }
-
-    .section-4-wrapper .modal-close-btn {
-      background: rgba(0,0,0,0.05);
-      border: none;
-      width: 32px;
-      height: 32px;
-      padding: 0;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.2s, transform 0.2s;
-      flex-shrink: 0;
-    }
-
-    .section-4-wrapper .modal-close-btn:hover { background: rgba(0,0,0,0.1); transform: rotate(90deg); }
-
-    .section-4-wrapper .modal-card p { margin:10px 0; color:var(--c-muted); line-height:1.6; font-size: 0.95rem; }
-    .section-4-wrapper .modal-card .actions { display:flex; gap:10px; justify-content:flex-end; margin-top:24px; }
-    .section-4-wrapper .modal-card .actions button {
-      border:0; cursor:pointer; font-weight:800;
-      border-radius:12px; padding:10px 20px;
-      font-size: 0.9rem;
-      transition: filter 0.2s, transform 0.2s;
-    }
-    .section-4-wrapper .modal-card .actions button:hover { filter: brightness(0.92); transform: translateY(-1px); }
-    .section-4-wrapper .btn-primary { background:var(--c-primary); color:#fff; }
-    .section-4-wrapper .btn-ghost { background:rgba(0,0,0,0.06); color:var(--c-text); }
-
     @media (max-width: 980px){
       .section-4-wrapper .sec4-nav{ display:none; }
       .section-4-wrapper .topbar{ display:block; }
@@ -393,6 +398,12 @@
       .section-4-wrapper .jtbd-list{ grid-template-columns:1fr; }
       .section-4-wrapper .chart-container{ height:250px; }
       .section-4-wrapper .section { padding: 16px 14px; }
+      .sec4-modal .modal-card{
+        max-width:98vw;
+        min-width:0;
+        width:99vw;
+        padding:21px 7px 14px 9px;
+      }
     }
 </style>
 
@@ -431,12 +442,17 @@
     </div>
   </div>
 
+  <!-- Modal with card look and close button on top right -->
   <div class="sec4-modal" id="sec4_methodModal">
-    <div class="sec4-modal-overlay" onclick="closeSec4Modal()"></div>
     <div class="modal-card">
       <div class="modal-header">
         <h3>Indexed Indicators (How to read the charts)</h3>
-        <button class="modal-close-btn" onclick="closeSec4Modal()" aria-label="Close">✕</button>
+        <button class="modal-close-btn" onclick="closeSec4Modal()" aria-label="Close">
+          <svg width="22" height="22" viewBox="0 0 22 22" style="pointer-events:none;" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="7.38" y1="7.38" x2="14.62" y2="14.62" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="14.62" y1="7.38" x2="7.38" y2="14.62" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
       </div>
       <p>
         Some Section 4 visuals may use <strong>indexed indicators</strong> (e.g., 1–5 or 0–10) when the underlying research text is qualitative.
@@ -451,6 +467,7 @@
       </div>
     </div>
   </div>
+  <!-- End modal rewrite -->
 
   <div class="app">
     <nav class="sec4-nav">
