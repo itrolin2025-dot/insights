@@ -261,8 +261,7 @@
 
     <!-- Header -->
     @include('qwell.components.header')
-    @include('qwell.components.overview')
-    @include('qwell.components.methodology')
+    @include('qwell.components.welcome')
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-5">
