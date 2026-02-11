@@ -185,13 +185,15 @@ main.section-6{
   position:fixed;
   top:0; 
   left:0;
-  width:50vw;
-  height:50vh;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:100%;
   z-index:9999;
   pointer-events:none;
 }
 .modal-section-6.open {
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   pointer-events: auto;
@@ -203,7 +205,7 @@ main.section-6{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,.25);
+  background:rgba(0,0,0,.45);
   opacity:0; 
   transition:.2s;
   z-index:10000;
@@ -211,10 +213,8 @@ main.section-6{
 .modal-section-6.open .overlay-section-6{opacity:1}
 
 .modal-section-6 .panel-section-6{
-  position: fixed;
-  top: 700px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  z-index: 10001;
   width: 480px;
   max-width: 92vw;
   height: auto;
@@ -227,12 +227,13 @@ main.section-6{
   padding: 24px 22px;
   overflow: auto;
   border: 1px solid rgba(0,0,0,.06);
-  z-index: 10001;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  transform: scale(0.95);
+  opacity: 0;
 }
-.modal-section-6.open .panel-section-6{transform:translateX(0)}
+.modal-section-6.open .panel-section-6{transform:scale(1); opacity:1}
 
 .close-section-6{
   display:flex; justify-content:space-between; align-items:center;
@@ -574,7 +575,7 @@ hr.section-6{border:none; border-top:1px solid rgba(0,0,0,.08); margin:14px 0}
 </div>
 
 <!-- Modal -->
-<div class="modal-section-6x" id="modal-section-6x">
+<div class="modal-section-6" id="modal-section-6">
   <div class="overlay-section-6" id="modalOverlay-section-6"></div>
   <div class="panel-section-6" role="dialog" aria-modal="true" aria-label="Brand detail">
     <div class="close-section-6">
@@ -1042,6 +1043,12 @@ window.addEventListener("resize", ()=>{
   // Re-render for crispness and to avoid stretched canvases
   renderAll_section_6();
 });
+
+// Move modal to body to bypass accordion transform (containing block) issues
+const modalEl = document.getElementById('modal-section-6');
+if (modalEl && modalEl.parentElement !== document.body) {
+    document.body.appendChild(modalEl);
+}
 
 // Initial render
 renderAll_section_6();

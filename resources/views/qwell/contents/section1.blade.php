@@ -19,6 +19,105 @@
         height: 100vh;
         position: sticky;
         top: 0;
+        /* Transition for slide in/out on mobile */
+        transition: transform 0.27s cubic-bezier(.21,.6,.34,1), opacity 0.27s;
+        z-index: 80;
+        background-color: #fff;
+    }
+
+    /* Hide sidebar on mobile by default */
+    @media (max-width: 1024px) {
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 86vw;
+            max-width: 320px;
+            min-width: 220px;
+            box-shadow: 0 8px 32px rgba(0,0,0,.11), 0 1.5px 6px rgba(0,0,0,.04);
+            transform: translateX(-105%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sidebar.sidebar-mobile-open {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+        /* Show overlay on mobile when sidebar open */
+        .sidebar-overlay {
+            display: block;
+        }
+    }
+    /* Hide burger on desktop */
+    @media (min-width: 1025px) {
+        .sidebar-overlay { display: none !important;}
+        .burger-btn { display: none !important;}
+    }
+
+    /* Overlay for mobile sidebar */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 70;
+        background: rgba(0,0,0,0.18);
+        cursor: pointer;
+        transition: opacity 0.19s;
+    }
+
+    /* Burger button style */
+    .burger-btn {
+        display: flex;
+        /* REMOVE fixed positioning so it can be placed inline */
+        /* position: fixed; */
+        /* top: 18px; */
+        /* left: 22px; */
+        z-index: 99;
+        width: 42px;
+        height: 42px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.07);
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ececec;
+        cursor: pointer;
+        padding: 0;
+    }
+    .burger-btn:active {
+        background: #f2f2f2;
+    }
+    .burger-lines {
+        display: inline-block;
+        width: 22px;
+        height: 16px;
+        position: relative;
+    }
+    .burger-lines span {
+        display: block;
+        height: 3px;
+        background: var(--teal-dark);
+        border-radius: 2px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        transition: .22s cubic-bezier(.21,.6,.34,1);
+    }
+    .burger-lines span:nth-child(1) { top: 0; }
+    .burger-lines span:nth-child(2) { top: 6.5px; }
+    .burger-lines span:nth-child(3) { top: 13px; }
+    /* Animate burger to X when open */
+    .burger-btn.open .burger-lines span:nth-child(1) {
+        transform: rotate(45deg) translateY(6.2px);
+    }
+    .burger-btn.open .burger-lines span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0.2);
+    }
+    .burger-btn.open .burger-lines span:nth-child(3) {
+        transform: rotate(-45deg) translateY(-6.2px);
     }
 
     .card {
@@ -50,12 +149,25 @@
     }
 
     @media (max-width: 1024px) {
+        /* On mobile, don't fix burger or sidebar if there is sufficient space, override above if needed */
         .sidebar {
-            height: auto;
-            position: relative;
+            height: 100vh;
+            position: fixed;
+        }
+        /* Show burger inline for header, not absolute */
+        .burger-btn.header-burger {
+            display: inline-flex;
+            position: static;
+            margin-left: 8px;
+            margin-bottom: 4px;
+            top: unset;
+            left: unset;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
     }
-
+    @media (min-width: 1025px) {
+        .burger-btn.header-burger { display: none !important;}
+    }
     /* Toggle Switch Styling */
     .switch {
         position: relative;
@@ -95,8 +207,20 @@
 
 <div class="flex flex-col lg:flex-row min-h-screen">
 
+    <!-- Burger Button for Mobile (for sidebar, remains but now hidden on mobile) -->
+    <button class="burger-btn" id="sidebarBurgerBtn" aria-label="Open sidebar" type="button" style="display:none;">
+        <span class="burger-lines">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+    </button>
+
+    <!-- Sidebar background overlay (mobile only) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <!-- SIDEBAR NAVIGATION -->
-    <aside class="sidebar w-full lg:w-72 bg-white border-r border-gray-100 flex-shrink-0 z-20 overflow-y-auto">
+    <aside class="sidebar w-full lg:w-72 bg-white border-r border-gray-100 flex-shrink-0 z-20 overflow-y-auto" id="sidebarNav">
         <div class="p-8">
             <div class="mb-10">
                 <h1 class="text-2xl font-bold tracking-tighter text-teal-dark">Q'WELL</h1>
@@ -134,14 +258,44 @@
         <!-- HEADER SECTION -->
         <header id="context" class="space-y-6">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
+                <div class="flex items-center">
                     <h2 class="text-3xl font-bold text-gray-800">Context Snapshot</h2>
-                    <p class="text-gray-500 max-w-2xl mt-2">Pre-launch constraints and existing trust infrastructure for Q'WELL Indonesia.</p>
+                    <!-- Burger for mobile inside header (shown only on mobile/tablet) -->
+                    <button class="burger-btn header-burger ml-2" id="sidebarBurgerBtnHeader" aria-label="Open sidebar" type="button">
+                        <span class="burger-lines">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
                 </div>
                 <div class="px-4 py-2 bg-teal-dark text-white rounded-full text-xs font-bold tracking-widest uppercase">
                     Decision Brief Mode
                 </div>
             </div>
+            <script>
+                // Make the header burger toggle sidebar as well
+                document.addEventListener('DOMContentLoaded', function() {
+                    var burgerHeaderBtn = document.getElementById('sidebarBurgerBtnHeader');
+                    if(burgerHeaderBtn) {
+                        burgerHeaderBtn.addEventListener('click', function() {
+                            const sidebar = document.getElementById('sidebarNav');
+                            const overlay = document.getElementById('sidebarOverlay');
+                            burgerHeaderBtn.classList.toggle('open');
+                            sidebar.classList.toggle('sidebar-mobile-open');
+                            if (sidebar.classList.contains('sidebar-mobile-open')) {
+                                overlay.style.display = 'block';
+                                setTimeout(()=>{overlay.style.opacity="1";},10);
+                                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                            } else {
+                                overlay.style.opacity = "0";
+                                setTimeout(()=>{overlay.style.display="none";}, 170);
+                                document.body.style.overflow = '';
+                            }
+                        });
+                    }
+                });
+            </script>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="card p-5 bg-white">
@@ -309,66 +463,68 @@
                 </div>
             </div>
             <div class="card overflow-hidden">
-                <table class="w-full text-left text-sm" id="criteriaTable">
-                    <thead class="bg-gray-50 border-b border-gray-100">
-                        <tr>
-                            <th class="px-6 py-4 font-bold text-xs uppercase tracking-wider text-gray-500">Criterion</th>
-                            <th class="px-6 py-4 font-bold text-xs uppercase tracking-wider text-gray-500">Meaning / Intent</th>
-                            <th class="px-6 py-4 font-bold text-xs uppercase tracking-wider text-gray-500">Evidence Type</th>
-                            <th class="px-6 py-4 font-bold text-xs uppercase tracking-wider text-gray-500">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr>
-                            <td class="px-6 py-4 font-semibold text-gray-800">A. Market Demand Base</td>
-                            <td class="px-6 py-4 text-gray-600">Credible Indonesian demand for specific benefits at premium prices.</td>
-                            <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Search Trends</td>
-                            <td class="px-6 py-4">
-                                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 font-semibold text-gray-800">B. Competitive Distinction</td>
-                            <td class="px-6 py-4 text-gray-600">Not a generic "clean/natural" clone; distinct from named incumbents.</td>
-                            <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Brand Audit</td>
-                            <td class="px-6 py-4">
-                                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 font-semibold text-gray-800">C. HRIPT Leverage</td>
-                            <td class="px-6 py-4 text-gray-600">Positioning directly benefits from the international HRIPT proof.</td>
-                            <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Claims Audit</td>
-                            <td class="px-6 py-4">
-                                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 font-semibold text-gray-800">D. Trust Insurance Logic</td>
-                            <td class="px-6 py-4 text-gray-600">Premium justified as risk reduction/consistency, not just luxury.</td>
-                            <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Qualitative Analysis</td>
-                            <td class="px-6 py-4">
-                                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 font-semibold text-gray-800">E. 2030 Resilience</td>
-                            <td class="px-6 py-4 text-gray-600">Defensible if macro conditions tighten or clean trends fragment.</td>
-                            <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Forecast Model</td>
-                            <td class="px-6 py-4">
-                                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 font-semibold text-gray-800">F. Compliance Guardrail</td>
-                            <td class="px-6 py-4 text-gray-600">Avoids over-claiming; wording remains legally defensible for Indo.</td>
-                            <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Regulatory Check</td>
-                            <td class="px-6 py-4">
-                                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="w-full overflow-x-auto">
+                    <table class="min-w-[700px] w-full text-left text-sm" id="criteriaTable">
+                        <thead class="bg-gray-50 border-b border-gray-100">
+                            <tr>
+                                <th class="px-6 py-4 font-bold text-xs uppercase tracking-wider text-gray-500">Criterion</th>
+                                <th class="px-6 py-4 font-bold text-xs uppercase tracking-wider text-gray-500">Meaning / Intent</th>
+                                <th class="px-6 py-4 font-bold text-xs uppercase tracking-wider text-gray-500">Evidence Type</th>
+                                <th class="px-6 py-4 font-bold text-xs uppercase tracking-wider text-gray-500">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr>
+                                <td class="px-6 py-4 font-semibold text-gray-800">A. Market Demand Base</td>
+                                <td class="px-6 py-4 text-gray-600">Credible Indonesian demand for specific benefits at premium prices.</td>
+                                <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Search Trends</td>
+                                <td class="px-6 py-4">
+                                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-semibold text-gray-800">B. Competitive Distinction</td>
+                                <td class="px-6 py-4 text-gray-600">Not a generic "clean/natural" clone; distinct from named incumbents.</td>
+                                <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Brand Audit</td>
+                                <td class="px-6 py-4">
+                                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-semibold text-gray-800">C. HRIPT Leverage</td>
+                                <td class="px-6 py-4 text-gray-600">Positioning directly benefits from the international HRIPT proof.</td>
+                                <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Claims Audit</td>
+                                <td class="px-6 py-4">
+                                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-semibold text-gray-800">D. Trust Insurance Logic</td>
+                                <td class="px-6 py-4 text-gray-600">Premium justified as risk reduction/consistency, not just luxury.</td>
+                                <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Qualitative Analysis</td>
+                                <td class="px-6 py-4">
+                                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-semibold text-gray-800">E. 2030 Resilience</td>
+                                <td class="px-6 py-4 text-gray-600">Defensible if macro conditions tighten or clean trends fragment.</td>
+                                <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Forecast Model</td>
+                                <td class="px-6 py-4">
+                                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-semibold text-gray-800">F. Compliance Guardrail</td>
+                                <td class="px-6 py-4 text-gray-600">Avoids over-claiming; wording remains legally defensible for Indo.</td>
+                                <td class="px-6 py-4 text-xs font-mono text-gray-400 uppercase">Regulatory Check</td>
+                                <td class="px-6 py-4">
+                                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <p class="text-[10px] text-gray-400 text-center uppercase tracking-widest font-bold italic">Note: "Qualitative decision scaffold (not statistical)."</p>
         </section>
@@ -399,7 +555,7 @@
                 <!-- Timeline Line -->
                 <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-100 -translate-y-1/2"></div>
                 
-                <div class="relative flex justify-between gap-2 overflow-x-auto pb-4">
+                <div class="relative flex justify-between gap-2 overflow-x-auto pt-4 pb-4">
                     <!-- Section 1 (Active) -->
                     <div class="flex flex-col items-center min-w-[100px]">
                         <div class="w-10 h-10 rounded-full bg-teal-dark text-white flex items-center justify-center font-bold text-sm z-10 shadow-lg ring-4 ring-teal-light">1</div>
@@ -437,7 +593,7 @@
                 </div>
             </div>
 
-            <div class="card p-8 bg-teal-dark text-white">
+            <div class="card p-8 bg-teal-dark text-dark">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                         <h4 class="text-xs font-bold uppercase tracking-widest mb-4 opacity-70">How Section 1 is used</h4>
@@ -458,6 +614,41 @@
     </main>
 
     <script>
+        // Sidebar toggle for mobile screens
+        const burgerBtn = document.getElementById('sidebarBurgerBtn');
+        const sidebar = document.getElementById('sidebarNav');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function openSidebar() {
+            sidebar.classList.add('sidebar-mobile-open');
+            burgerBtn.classList.add('open');
+            overlay.style.display = 'block';
+            setTimeout(()=>{overlay.style.opacity="1";},10);
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('sidebar-mobile-open');
+            burgerBtn.classList.remove('open');
+            overlay.style.opacity = "0";
+            setTimeout(()=>{overlay.style.display="none";}, 170);
+            document.body.style.overflow = '';
+        }
+        burgerBtn.addEventListener('click', function () {
+            if (sidebar.classList.contains('sidebar-mobile-open')) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+        });
+        overlay.addEventListener('click', closeSidebar);
+
+        // Hide sidebar/overlay on resize if desktop
+        window.addEventListener('resize', function() {
+            if(window.innerWidth > 1024) {
+                closeSidebar();
+            }
+        });
+
         // Toggle Sidebar Active State
         const sections = document.querySelectorAll("section, header");
         const navLinks = document.querySelectorAll(".nav-link");
