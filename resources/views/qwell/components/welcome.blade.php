@@ -24,8 +24,8 @@
           It is designed to answer one strategic question:
         </p>
 
-        <div class="qmore" >
-            <div class="qcallout" id="more-overview" hidden>
+        <div class="qmore" id="more-overview" hidden>
+            <div class="qcallout">
             <div class="qcallout__label">Core Strategic Question</div>
             <div class="qcallout__text">
                 Can a safety-led, dermatology-aligned, biologically stable hair &amp; body care system sustain premium pricing in Indonesia
@@ -33,7 +33,7 @@
             </div>
             </div>
 
-          <ul class="qbullets" hidden>
+          <ul class="qbullets">
             <li>Structural skin &amp; scalp realities in Indonesia</li>
             <li>Consumer risk psychology and decision fatigue</li>
             <li>ICP definition grounded in observable behavior</li>
@@ -44,7 +44,7 @@
             <li>Final positioning territory and positioning system</li>
           </ul>
 
-          <p class="qcard__text" hidden>
+          <p class="qcard__text">
             This is not a branding narrative. It is decision support: coherence, defensibility, and long-term durability.
           </p>
         </div>
@@ -149,6 +149,14 @@
       </div>
     </article>
   </div>
+
+  <!-- Master Toggle for Desktop -->
+  <div class="qwell-master-toggle">
+    <button class="qtoggle qtoggle--master" type="button"
+      aria-expanded="false">
+      Show more
+    </button>
+  </div>
 </section>
 
 <style>
@@ -170,12 +178,14 @@
     min-width:100vw;
     margin-left:calc(-50vw + 50%);
     margin-right:calc(-50vw + 50%);
-    padding:18px 8px 8px; /* Lebar padding kiri-kanan diperkecil */
+    padding:18px 8px 32px; /* Bottom padding added for master button */
     color:var(--q-ink);
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     background: url('/banner/qwell.jpg') center center / cover no-repeat;
+    background-attachment: fixed; /* Background stable during scroll/expand */
     width: 100vw !important;
     box-sizing: border-box;
+    position: relative;
   }
 
   .qwell-hero{
@@ -343,13 +353,17 @@
 
   .qbullets{
     margin:10px 0 0 0;
-    padding-left:22px;
+    padding-left:24px; /* Increased padding for markers */
     color:var(--q-muted);
     font-size:14px;
     line-height:1.6;
     transition: font-size 0.2s;
+    list-style-type: disc; /* Ensure bullets show up */
   }
-  .qbullets li{margin:8px 0}
+  .qbullets li {
+    margin: 8px 0;
+    display: list-item; /* Ensure it behaves as a list item */
+  }
 
   .qcard__footer {
     margin-top: auto;
@@ -357,6 +371,18 @@
     justify-content: center;
     align-items: center;
     padding-top: 18px;
+  }
+  @media (min-width: 701px) {
+    .qcard__footer { display: none; } /* Hide individual buttons on desktop */
+  }
+
+  .qwell-master-toggle {
+    display: none; /* Hidden on mobile */
+    justify-content: center;
+    margin-top: 24px;
+  }
+  @media (min-width: 701px) {
+    .qwell-master-toggle { display: flex; } /* Show only on desktop */
   }
 
   .qtoggle{
@@ -392,12 +418,30 @@
      Kini padding lebih pas dan isi lebih lega.
   */
   @media (max-width: 700px) {
+    .qwell-wrap {
+      padding-left: 0;
+      padding-right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
     .qcard {
-      padding: 18px 8px !important; /* Kiri-kanan lebih kecil, atas bawah lebih lega */
-      max-width: 100vw;
+      padding: 20px 18px !important;
+      max-width: 94vw;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     .qcard__title {
       font-size: 22px;
+      text-align: center;
+      width: 100%;
     }
     .qcard__lead,
     .qbullets,
@@ -409,18 +453,26 @@
     .qcard__icon--teal {
       width: 48px;
       height: 48px;
-    }
-    .qwell-wrap {
-      padding-left: 0;
-      padding-right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
     }
     .qcard__top {
       gap: 10px;
       margin-bottom: 14px;
+      width: 100%;
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
     .qcard__body {
       gap: 8px;
-      margin-top:10px;
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 </style>
@@ -428,6 +480,10 @@
 <script>
   (function(){
     const buttons = document.querySelectorAll('.qtoggle[data-target]');
+    const masterBtn = document.querySelector('.qtoggle--master');
+    const panels = document.querySelectorAll('.qmore');
+
+    // Individual toggle (Mobile logic)
     buttons.forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const id = btn.getAttribute('data-target');
@@ -435,10 +491,30 @@
         if(!panel) return;
 
         const expanded = btn.getAttribute('aria-expanded') === 'true';
-        panel.hidden = expanded; // if expanded, hide. if collapsed, show
+        panel.hidden = expanded;
         btn.setAttribute('aria-expanded', String(!expanded));
         btn.textContent = expanded ? 'Show more' : 'Show less';
       });
     });
+
+    // Master toggle (Desktop logic)
+    if(masterBtn) {
+      masterBtn.addEventListener('click', ()=>{
+        const expanded = masterBtn.getAttribute('aria-expanded') === 'true';
+        const nextState = !expanded;
+        
+        panels.forEach(p => p.hidden = !nextState);
+        
+        // Sync master button
+        masterBtn.setAttribute('aria-expanded', String(nextState));
+        masterBtn.textContent = nextState ? 'Show less' : 'Show more';
+
+        // Optional: Sync mobile buttons state
+        buttons.forEach(btn => {
+          btn.setAttribute('aria-expanded', String(nextState));
+          btn.textContent = nextState ? 'Show less' : 'Show more';
+        });
+      });
+    }
   })();
 </script>
