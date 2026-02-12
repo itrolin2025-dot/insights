@@ -569,8 +569,7 @@
         document.querySelectorAll('.sec7-view').forEach(v => {
             v.classList.toggle('sec7-hidden', v.id !== `sec7_view_${viewId}`);
         });
-        window.scrollTo({top: 0, behavior: 'smooth'});
-
+        
         // Close mobile nav if open
         const navWrap = document.getElementById('sec7_nav_wrap');
         if(navWrap.classList.contains('open')) navWrap.classList.remove('open');

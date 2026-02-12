@@ -576,9 +576,10 @@
       tabs.forEach(x=>x.classList.remove('active'));
       t.classList.add('active');
       const id = t.dataset.view;
-      views.forEach(v=>v.classList.toggle('active', v.id===id));
-      // scroll to top of content area for clarity
-      window.scrollTo({top:0, behavior:'smooth'});
+      views.forEach(v=>{
+        v.classList.remove('active');
+        if(v.id === id) v.classList.add('active');
+      });
     });
   });
 
