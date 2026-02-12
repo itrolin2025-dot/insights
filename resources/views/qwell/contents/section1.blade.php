@@ -224,10 +224,10 @@
     <!-- SIDEBAR NAVIGATION -->
     <aside class="sidebar w-full lg:w-72 bg-white border-r border-gray-100 flex-shrink-0 z-20 overflow-y-auto" id="sidebarNav">
         <div class="p-8">
-            <div class="mb-10">
+            <!-- <div class="mb-10">
                 <h1 class="text-2xl font-bold tracking-tighter text-teal-dark">Q'WELL</h1>
                 <p class="text-xs uppercase tracking-widest text-gray-400 font-semibold mt-1">Section 1 Dashboard</p>
-            </div>
+            </div> -->
 
             <nav class="space-y-1" id="sidebarNavLinks">
                 <a href="#context-header" class="nav-link flex items-center px-4 py-3 text-sm rounded-lg hover:bg-gray-50 transition-colors">Context Snapshot</a>
@@ -239,7 +239,7 @@
                 <a href="#research-flow" class="nav-link flex items-center px-4 py-3 text-sm rounded-lg hover:bg-gray-50 transition-colors">Research Flow</a>
             </nav>
 
-            <div class="mt-12 p-4 bg-peach-light rounded-xl">
+            <!-- <div class="mt-12 p-4 bg-peach-light rounded-xl">
                 <div class="flex items-center gap-2 mb-2">
                     <span class="w-2 h-2 rounded-full bg-teal-dark"></span>
                     <span class="text-xs font-bold uppercase tracking-wider text-teal-dark">Controls</span>
@@ -250,7 +250,7 @@
                 <button onclick="copyFullOutput()" class="w-full text-left py-2 px-1 text-sm text-gray-600 hover:text-teal-dark">
                     Copy Section 1 Output
                 </button>
-            </div>
+            </div> -->
         </div>
         <script>
             // Highlight active nav link based on scroll position
@@ -318,11 +318,11 @@
                             <span></span>
                         </span>
                     </button>
-                    <h2 class="text-3xl font-bold text-gray-800">Context Snapshot</h2>
+                    <!-- <h2 class="text-3xl font-bold text-gray-800">Context Snapshot</h2> -->
                 </div>
-                <div class="px-4 py-2 bg-teal-dark text-white rounded-full text-xs font-bold tracking-widest uppercase">
+                <!-- <div class="px-4 py-2 bg-teal-dark text-white rounded-full text-xs font-bold tracking-widest uppercase">
                     Decision Brief Mode
-                </div>
+                </div> -->
             </div>
             <script>
                 // Make the header burger toggle sidebar as well

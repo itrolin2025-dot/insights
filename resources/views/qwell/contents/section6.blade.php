@@ -72,18 +72,18 @@
     <header class="bg-white shadow-sm sticky top-0 z-20 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                <div>
+                <!-- <div>
                     <h1 class="text-xl font-bold text-slate-900 tracking-tight">SECTION 6 — Competitive Landscape</h1>
                     <p class="text-xs text-slate-500 uppercase tracking-wider mt-1">Natural & Sensitive Claim Analysis</p>
-                </div>
+                </div> -->
                 
                 <div class="flex items-center space-x-3">
-                    <button onclick="resetFilters()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                    <!-- <button onclick="resetFilters()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
                         Reset Filters
-                    </button>
-                    <button onclick="exportCSV()" class="px-4 py-2 text-sm font-medium text-white bg-brand-teal hover:bg-teal-600 rounded-lg shadow-sm transition-colors">
+                    </button> -->
+                    <!-- <button onclick="exportCSV()" class="px-4 py-2 text-sm font-medium text-white bg-brand-teal hover:bg-teal-600 rounded-lg shadow-sm transition-colors">
                         Download CSV
-                    </button>
+                    </button> -->
                 </div>
             </div>
 
@@ -118,7 +118,10 @@
                     <option value="False Substitute">False Substitute</option>
                 </select>
 
-                <input type="text" id="searchBrand" onkeyup="filterData()" placeholder="Search Brand..." class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-brand-teal focus:ring focus:ring-brand-teal focus:ring-opacity-50 p-2 bg-white">
+                <button onclick="resetFilters()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                    Reset Filters
+                </button>
+                <!-- <input type="text" id="searchBrand" onkeyup="filterData()" placeholder="Search Brand..." class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-brand-teal focus:ring focus:ring-brand-teal focus:ring-opacity-50 p-2 bg-white"> -->
             </div>
         </div>
     </header>
@@ -245,21 +248,23 @@
                 <span class="text-xs text-slate-400">Scroll horizontally for more columns</span>
             </div>
             <div class="overflow-x-auto custom-scrollbar">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Brand</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Tier</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Claim Type</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Verif. Depth</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Substitutability</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="tableBody">
-                        <!-- Table rows injected by JS -->
-                    </tbody>
-                </table>
+                <div style="max-height:400px;overflow-y:auto;">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50 sticky top-0 z-10">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Brand</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Tier</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Claim Type</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Verif. Depth</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Substitutability</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="tableBody">
+                            <!-- Table rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         
@@ -948,4 +953,4 @@
         }
 
     </script>
-</body>
+</body> 

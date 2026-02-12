@@ -232,20 +232,24 @@
       position: fixed; 
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -40%);
-      width: min(760px, calc(100% - 24px));
+      transform: translate(-50%, -45%);
+      width: min(800px, calc(100% - 32px));
+      max-height: 85vh;
       background: #fff;
-      border-radius: 24px;
-      border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border-radius: 28px;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.25);
       z-index: 1001;
-      padding: 24px;
+      padding: 32px;
       opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
       pointer-events: none;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
     .sec3-modal.open { 
-        display: block; 
+        display: flex; 
         opacity: 1; 
         transform: translate(-50%, -50%); 
         pointer-events: auto;
@@ -267,17 +271,23 @@
 
     .sec3-close-x { 
         cursor: pointer; 
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: rgba(0,0,0,0.05);
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        background: rgba(0,0,0,0.04);
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        transition: background 0.2s, transform 0.2s;
+        transition: all 0.2s;
+        border: none;
+        color: #666;
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        z-index: 20;
     }
-    .sec3-close-x:hover { background: rgba(0,0,0,0.1); transform: rotate(90deg); }
+    .sec3-close-x:hover { background: #fee2e2; color: #ef4444; transform: rotate(90deg); }
 
     .section-3-wrapper .searchrow { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 12px; }
     .section-3-wrapper input[type="search"]{
@@ -294,10 +304,45 @@
       font-size: 13px;
       background: #fff;
     }
-    .section-3-wrapper .quotes { margin-top: 12px; max-height: 360px; overflow: auto; padding-right: 6px; }
-    .section-3-wrapper .q { border: 1px solid rgba(0,0,0,0.08); border-radius: 14px; padding: 10px 12px; margin-bottom: 10px; }
-    .section-3-wrapper .q .tag { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #7a8b93; }
-    .section-3-wrapper .q .txt { margin-top: 6px; color: #2f3f46; }
+    .section-3-wrapper .quotes { 
+        margin-top: 32px; 
+        flex: 1;
+        overflow-y: auto; 
+        padding-right: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+    .section-3-wrapper .q { 
+        border: 1px solid rgba(0,0,0,0.06); 
+        border-radius: 20px; 
+        padding: 24px 28px; 
+        background: #fafbfc;
+        transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .section-3-wrapper .q:hover { transform: translateY(-3px); border-color: var(--primary); background: #fff; box-shadow: 0 12px 24px rgba(101,189,173,0.12); }
+    .section-3-wrapper .q .tag { 
+        font-size: 10px; 
+        letter-spacing: 0.08em; 
+        text-transform: uppercase; 
+        color: var(--primary); 
+        font-weight: 800; 
+        background: rgba(101,189,173,0.15);
+        padding: 4px 10px;
+        border-radius: 8px;
+        margin-right: 12px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .section-3-wrapper .q .txt { 
+        color: #2d3748; 
+        line-height: 1.8; 
+        font-style: italic; 
+        font-size: 15px;
+        display: inline;
+        vertical-align: middle;
+    }
 
     /* Mobile */
     .section-3-wrapper .mobilebar {
@@ -775,26 +820,64 @@
   <!-- Quote Modal (Scoped) -->
   <div class="sec3-overlay" id="sec3_overlay"></div>
   <div class="sec3-modal" id="sec3_modal" role="dialog" aria-modal="true" aria-label="Quote Bank">
+    
     <div class="modal-head">
-      <div class="modal-head-text">
-        <!-- <h2>Quote Bank (Indonesia)</h2> -->
-        <!-- <p>Search and group recurring phrases used to describe fear, regret, skepticism, fatigue, and safety-seeking behavior.</p> -->
-      </div>
-      <div class="sec3-close-x" id="sec3_closeModal">✕</div>
+      <button class="sec3-close-x" id="sec3_closeModal" aria-label="Close">✕</button>
     </div>
-    <div class="searchrow">
-      <input type="search" id="sec3_qSearch" placeholder="Search phrases (e.g., nyesel, iritasi, kapok)…" hidden/>
-      <select class="select" id="sec3_qFilter">
-        <option value="all">All emotions</option>
-        <option value="damage">Damage</option>
-        <option value="regret">Regret</option>
-        <option value="avoidance">Avoidance</option>
-        <option value="skepticism">Skepticism</option>
-        <option value="fatigue">Fatigue</option>
+
+    <div class="searchrow" style="margin-top: 28px; display: flex; gap: 16px; align-items: center; justify-content: flex-start; padding-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+      <div style="position:relative; flex: 1; max-width: 480px;">
+        <input
+          type="search"
+          id="sec3_qSearch"
+          placeholder="Search phrases (e.g., nyesel, iritasi, kapok)…"
+          style="
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            border: 2px solid #edf2f7;
+            border-radius: 14px;
+            background: #f7fafc;
+            font-size: 14px;
+            transition: all 0.2s;
+          "
+          onfocus="this.style.borderColor='var(--primary)'; this.style.background='#fff'; this.style.boxShadow='0 0 0 4px rgba(101,189,173,0.1)';"
+          onblur="this.style.borderColor='#edf2f7'; this.style.background='#f7fafc'; this.style.boxShadow='none';"
+        />
+        <span style="position:absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #a0aec0; display: flex;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </span>
+      </div>
+
+      <select class="select" id="sec3_qFilter"
+        style="
+          padding: 12px 16px;
+          border-radius: 14px;
+          border: 2px solid #edf2f7;
+          background: #f7fafc;
+          font-size: 14px;
+          color: #4a5568;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          min-width: 160px;
+        "
+        onfocus="this.style.borderColor='var(--primary)'; this.style.background='#fff';"
+        onblur="this.style.borderColor='#edf2f7'; this.style.background='#f7fafc';"
+      >
+        <option value="all">All Sentiment</option>
+        <option value="damage">Biological Damage</option>
+        <option value="regret">Financial Regret</option>
+        <option value="avoidance">Brand Avoidance</option>
+        <option value="skepticism">Claim Skepticism</option>
+        <option value="fatigue">Decision Fatigue</option>
         <option value="safety">Safety-seeking</option>
       </select>
     </div>
-    <div class="quotes" id="sec3_quotes"></div>
+
+    <div class="quotes" id="sec3_quotes">
+      <!-- Quotes rendered here -->
+    </div>
+
   </div>
 
 </div>
@@ -958,9 +1041,9 @@
       });
 
       qWrap.innerHTML = items.map(q => `
-        <div class="q">
-          <div class="tag">${q.label}</div>
-          <div class="txt">${q.text}</div>
+        <div class="q" style="display: grid; grid-template-columns: 110px 1fr; align-items: start; gap: 0 20px; margin-bottom: 16px;">
+          <span class="tag" style="font-weight: 600;">${q.label}</span>
+          <span class="txt">${q.text}</span>
         </div>
       `).join('') || '<div style="color: var(--muted); padding: 10px 2px;">No quotes matched your search.</div>';
     }

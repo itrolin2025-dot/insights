@@ -238,10 +238,10 @@
     <div class="sec5-sidebar-overlay" id="sec5SidebarOverlay"></div>
     <div class="flex-container">
         <aside class="sec5-aside" id="sec5Sidebar">
-            <div class="nav-header">
+            <!-- <div class="nav-header">
                 <h1>Q’WELL</h1>
                 <p style="font-size: 0.75rem; color: var(--text-muted);">Market Validation Gates v5.0</p>
-            </div>
+            </div> -->
             <ul class="nav-links" id="sec5NavLinks">
                 <li><a href="#sec5_scope" class="active">Scope Lock</a></li>
                 <li><a href="#sec5_baseline">Market Baseline</a></li>
@@ -267,28 +267,26 @@
                     <h2>Market Boundary Lock</h2>
                     <p class="headline-insight">Strict categorization to ensure valid comparison.</p>
                 </div>
-                <div class="card">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem;">
-                        <div>
-                            <h4 class="filter-label" style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:0.5rem;">In-Scope</h4>
-                            <ul style="list-style:none; font-size: 0.9rem; line-height: 1.8;">
-                                <li><span class="tag tag-positive">✓</span> Shampoo</li>
-                                <li><span class="tag tag-positive">✓</span> Body Wash</li>
-                                <li><span class="tag tag-positive">✓</span> Body Butter</li>
-                                <li><span class="tag tag-positive">✓</span> Hair Oil</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="filter-label" style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:0.5rem;">Exclusions</h4>
-                            <ul style="list-style:none; font-size: 0.9rem; line-height: 1.8; color: var(--text-muted);">
-                                <li><span class="tag tag-caution">✕</span> Facial Care</li>
-                                <li><span class="tag tag-caution">✕</span> Makeup</li>
-                                <li><span class="tag tag-caution">✕</span> Oral Care</li>
-                            </ul>
-                        </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;">
+                    <div class="card">
+                        <h4 class="filter-label" style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:0.5rem;">In-Scope</h4>
+                        <ul style="list-style:none; font-size: 0.9rem; line-height: 1.8; padding:0;">
+                            <li style="margin-bottom: 0.5rem;"><span class="tag tag-positive">✓</span> Shampoo</li>
+                            <li style="margin-bottom: 0.5rem;"><span class="tag tag-positive">✓</span> Body Wash</li>
+                            <li style="margin-bottom: 0.5rem;"><span class="tag tag-positive">✓</span> Body Butter</li>
+                            <li><span class="tag tag-positive">✓</span> Hair Oil</li>
+                        </ul>
                     </div>
-                    <button class="btn-copy" style="margin-top: 1rem;" id="sec5_copyBoundary">Copy Scope Definition</button>
+                    <div class="card">
+                        <h4 class="filter-label" style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:0.5rem;">Exclusions</h4>
+                        <ul style="list-style:none; font-size: 0.9rem; line-height: 1.8; color: var(--text-muted); padding:0;">
+                            <li style="margin-bottom: 0.5rem;"><span class="tag tag-caution">✕</span> Facial Care</li>
+                            <li style="margin-bottom: 0.5rem;"><span class="tag tag-caution">✕</span> Makeup</li>
+                            <li><span class="tag tag-caution">✕</span> Oral Care</li>
+                        </ul>
+                    </div>
                 </div>
+                <button class="btn-copy" style="margin-top: 1rem;" id="sec5_copyBoundary" hidden>Copy Scope Definition</button>
             </section>
 
             <section id="sec5_baseline">
