@@ -367,53 +367,58 @@
   <div class="sec3-drawer" id="sec3_drawer">
     <div class="bg" id="sec3_closeMenu"></div>
     <div class="panel">
-      <div class="brand">
+      <!-- hide : tittle di navbar -->
+      <!-- <div class="brand">
         <div class="brand-badge"></div>
         <div>
           <div class="brand-title">Research Dashboard</div>
           <div class="brand-sub">Section 3 — Consumer psychology</div>
         </div>
-      </div>
+      </div> -->
       <div class="navlinks" id="sec3_drawerLinks"></div>
-      <div class="panel">
+      <div class="panel" hidden>
         <h4>Tension filters</h4>
         <div class="chips" id="sec3_drawerChips"></div>
       </div>
       <div class="side-actions">
-        <button class="btn" id="sec3_drawerOpenQuotes">Open Quote Bank</button>
-        <button class="btn" id="sec3_drawerClear">Clear filters</button>
+        <button class="btn" id="sec3_drawerOpenQuotes">Open Comments</button>
+        <button class="btn" id="sec3_drawerClear" hidden>Clear filters</button>
       </div>
     </div>
   </div>
 
   <div class="app">
     <nav class="sec3-nav">
-      <div class="brand">
+      <!-- hide: tittle banner -->
+      <!-- <div class="brand">
         <div class="brand-badge"></div>
         <div>
           <div class="brand-title">Research Dashboard</div>
           <div class="brand-sub">Section 3 — Consumer tension</div>
         </div>
-      </div>
+      </div> -->
 
       <div class="navlinks" id="sec3_navLinks"></div>
 
-      <div class="panel">
+      <div class="panel" hidden>
         <h4>Tension filters</h4>
         <div class="chips" id="sec3_chips"></div>
       </div>
 
       <div class="side-actions">
-        <button class="btn" id="sec3_btnQuotes">Open Quote Bank</button>
-        <button class="btn" id="sec3_btnClear">Clear filters</button>
+        <button class="btn" id="sec3_btnQuotes">Open Comments</button>
+        <button class="btn" id="sec3_btnClear" hidden>Clear filters</button>
       </div>
     </nav>
 
     <main class="sec3-main">
       <div class="topbar" id="sec3_overview">
         <div class="title">
-          <h1>Indonesia Hair & Body Care Decisions Under Uncertainty</h1>
-          <p>Dashboard view of Section 3 insights: how consumers perceive risk, lose trust, and reframe value after negative product experiences. Charts use indexed indicators when hard numbers are unavailable.</p>
+          <!-- hide: main tittle change -->
+          <!-- <h1>Indonesia Hair & Body Care Decisions Under Uncertainty</h1> -->
+          <!-- <p>Dashboard view of Section 3 insights: how consumers perceive risk, lose trust, and reframe value after negative product experiences. Charts use indexed indicators when hard numbers are unavailable.</p> -->
+          <h1>Decisions Under Uncertainty</h1>
+          <p>How consumers perceive risk, lose trust, and reframe value after negative product experiences. Charts use indexed indicators when hard numbers are unavailable.</p>
         </div>
         <div class="disclaimer">
           <strong>Visualization note</strong>
@@ -468,7 +473,10 @@
             <p>In reviews and discourse, consumers frequently describe a cycle: prior failure → fear → skeptical reading of claims → reliance on authority cues → willingness to pay for reliability.</p>
           </details>
           <div class="tools" style="margin-top:10px;">
-            <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+            <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
           </div>
           <div class="sources">
             <div><b>Sources:</b> Populate with links/citations from your Section 3 research output (e.g., platform excerpts, Google Trends snapshots, research papers).</div>
@@ -496,7 +504,10 @@
             </ul>
             <div class="quote">“Takut makin parah. Mending cari yang aman dulu.”</div>
             <div class="tools">
-              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+              <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
             </div>
             <div class="sources">
               <div><b>Sources:</b> Add citations (e-commerce reviews, forum threads, behavioral studies).</div>
@@ -525,7 +536,10 @@
               <p>“Nyesel banget, malah jadi iritasi.” • “Udah kapok coba-coba.” • “Takut breakout lagi.”</p>
             </details>
             <div class="tools">
-              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+              <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
             </div>
             <div class="sources">
               <div><b>Sources:</b> Add citation links to forum excerpts and review samples.</div>
@@ -557,7 +571,10 @@
             </ul>
             <div class="quote">“Klaimnya sama semua. Yang penting bukti dan aman.”</div>
             <div class="tools">
-              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+              <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
             </div>
             <div class="sources">
               <div><b>Sources:</b> Add citations to de-influencing discussions and platform evidence.</div>
@@ -585,7 +602,10 @@
               <li>“Skinimalism” emerges as a psychological retreat.</li>
             </ul>
             <div class="tools">
-              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+              <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
             </div>
             <div class="sources">
               <div><b>Sources:</b> Add citations to routine-fatigue discussions and behavior research.</div>
@@ -611,7 +631,10 @@
             </ul>
             <div class="quote">“Bukan cuma rugi uang, tapi rusak dan lama balikin lagi.”</div>
             <div class="tools">
-              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+              <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
             </div>
             <div class="sources">
               <div><b>Sources:</b> Add citations to review samples and forum narratives.</div>
@@ -642,7 +665,10 @@
               <li>Consumers develop pre-purchase rituals: check, compare, then buy.</li>
             </ul>
             <div class="tools">
-              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+              <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
             </div>
             <div class="sources">
               <div><b>Sources:</b> Add Google Trends screenshots/links and search keyword clusters.</div>
@@ -670,7 +696,10 @@
               <li>Proof cues (testing, compliance, transparency) support this justification.</li>
             </ul>
             <div class="tools">
-              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+              <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
             </div>
             <div class="sources">
               <div><b>Sources:</b> Add citations to behavior research and consumer discourse.</div>
@@ -698,7 +727,10 @@
               <li><b>Halal</b> can be interpreted as broader quality/ethics assurance.</li>
             </ul>
             <div class="tools">
-              <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+              <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
             </div>
             <div class="sources">
               <div><b>Sources:</b> Add citations to consumer discussions referencing these cues.</div>
@@ -723,7 +755,10 @@
               <br/><b>Value shift:</b> price sensitivity → reliability sensitivity</p>
           </details>
           <div class="tools" style="margin-top:10px;">
-            <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label>
+            <!-- <label class="toggle"><input type="checkbox" class="srcToggle" /> Show sources</label> --><br>
+            <button type="button" class="srcToggle show-sources-btn" style="background: #caf1eb; color: #000000; border: none; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer;">
+              Show sources
+            </button>
           </div>
           <div class="sources">
             <div><b>Sources:</b> Add citations from Section 3 research output.</div>
@@ -742,13 +777,13 @@
   <div class="sec3-modal" id="sec3_modal" role="dialog" aria-modal="true" aria-label="Quote Bank">
     <div class="modal-head">
       <div class="modal-head-text">
-        <h2>Quote Bank (Indonesia)</h2>
-        <p>Search and group recurring phrases used to describe fear, regret, skepticism, fatigue, and safety-seeking behavior.</p>
+        <!-- <h2>Quote Bank (Indonesia)</h2> -->
+        <!-- <p>Search and group recurring phrases used to describe fear, regret, skepticism, fatigue, and safety-seeking behavior.</p> -->
       </div>
       <div class="sec3-close-x" id="sec3_closeModal">✕</div>
     </div>
     <div class="searchrow">
-      <input type="search" id="sec3_qSearch" placeholder="Search phrases (e.g., nyesel, iritasi, kapok)…" />
+      <input type="search" id="sec3_qSearch" placeholder="Search phrases (e.g., nyesel, iritasi, kapok)…" hidden/>
       <select class="select" id="sec3_qFilter">
         <option value="all">All emotions</option>
         <option value="damage">Damage</option>
@@ -869,11 +904,25 @@
     // ----- Sources toggle -----
     function bindSourceToggles(){
       wrapper.querySelectorAll('.srcToggle').forEach(t => {
-        t.addEventListener('change', () => {
-          const card = t.closest('.card');
-          const src = card?.querySelector('.sources');
-          if(src) src.style.display = t.checked ? 'block' : 'none';
-        });
+        // Determine if this is a button or input[type=checkbox]
+        if (t.tagName.toLowerCase() === 'button') {
+          t.addEventListener('click', () => {
+            const card = t.closest('.card');
+            const src = card?.querySelector('.sources');
+            const showing = src && src.style.display === 'block';
+            if (src) src.style.display = showing ? 'none' : 'block';
+            // Set label
+            t.textContent = showing ? 'Show sources' : 'Hide sources';
+          });
+          // Set initial label
+          t.textContent = 'Show sources';
+        } else {
+          t.addEventListener('change', () => {
+            const card = t.closest('.card');
+            const src = card?.querySelector('.sources');
+            if(src) src.style.display = t.checked ? 'block' : 'none';
+          });
+        }
       });
     }
 

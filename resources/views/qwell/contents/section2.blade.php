@@ -250,7 +250,8 @@
 <div class="section-2-wrapper">
     <div class="section-2-sidebar-overlay" id="section2SidebarOverlay"></div>
     
-    <aside class="section-2-sidebar" id="section2Sidebar">
+    <!-- hide : Navbar -->
+    <!-- <aside class="section-2-sidebar" id="section2Sidebar">
         <h1>Q'WELL Research</h1>
         <nav id="section2NavLinks">
             <a href="#prevalence" class="active">1. Prevalence Overview</a>
@@ -259,10 +260,11 @@
             <a href="#behavior">4. Consumer Behavior</a>
             <a href="#summary">5. Executive Summary</a>
         </nav>
-    </aside>
+    </aside> -->
 
     <div class="section-2-main">
-        <div class="header">
+        <!-- hide : Tittle burger dan sub title -->
+        <!-- <div class="header">
             <button class="section-2-burger-btn" id="section2BurgerBtn" aria-label="Toggle Navigation" style="margin-bottom: 15px; margin-left: 0;">
                 <span class="section-2-burger-lines">
                     <span></span>
@@ -274,7 +276,7 @@
                 <h2>Dermatological Crisis Dashboard</h2>
             </div>
             <p>Analyzing the Structural Determinants of Sensitivity in Indonesia</p>
-        </div>
+        </div> -->
 
         <div class="controls">
             <div class="filter-btns">
@@ -283,9 +285,20 @@
                 <button class="filter-btn" onclick="section2FilterInsight('life', this)">Lifestyle</button>
                 <button class="filter-btn" onclick="section2FilterInsight('form', this)">Formulation</button>
             </div>
-            <div class="source-toggle" onclick="section2ToggleSources()">
+            <!-- <div class="source-toggle" onclick="section2ToggleSources()">
                 <input type="checkbox" id="section2SrcSwitch"> <span>Show Sources</span>
-            </div>
+            </div> -->
+            <small>
+                <button 
+                    class="linkbtn" 
+                    id="section2SrcSwitch" 
+                    onclick="section2ToggleSources()" 
+                    data-toggle="sec4_srcUsage"
+                    style="background-color:#caf1eb; color:#000000; border-radius:18px; padding:5px 18px; border:none;"
+                >
+                    Show sources
+                </button>
+            </small>
         </div>
 
         <div class="dashboard-grid">
@@ -545,8 +558,11 @@
 
     function section2ToggleSources() {
         const citations = document.querySelectorAll('.section-2-wrapper .citation');
-        const isChecked = document.getElementById('section2SrcSwitch').checked;
-        citations.forEach(c => c.style.display = isChecked ? 'block' : 'none');
+        const btn = document.getElementById('section2SrcSwitch');
+        const isNowVisible = !btn.classList.contains('src-visible');
+        btn.classList.toggle('src-visible', isNowVisible);
+        citations.forEach(c => c.style.display = isNowVisible ? 'block' : 'none');
+        btn.textContent = isNowVisible ? 'Hide sources' : 'Show sources';
     }
 
     function section2FilterInsight(cat, btn) {

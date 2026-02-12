@@ -471,10 +471,11 @@
 
   <div class="app">
     <nav class="sec4-nav">
-      <div class="brand">
+      <!-- hide -->
+      <!-- <div class="brand">
         <h2>Decisions</h2>
         <span class="pill">Section 4</span>
-      </div>
+      </div> -->
 
       <div class="navlinks" id="sec4_navLinks">
         <a href="#sec4_jtbd">JTBD Ranking</a>
@@ -495,7 +496,8 @@
 
     <main class="sec4-main">
       <div class="header">
-        <h1>ICP & Decision Dashboard <span class="badge">Section 4 Output</span></h1>
+        <!-- hide -->
+        <!-- <h1>ICP & Decision Dashboard <span class="badge">Section 4 Output</span></h1> -->
         <p class="subtitle">
           This dashboard turns Section 3’s risk psychology into clear decisions: <strong>what jobs matter</strong>, <strong>what needs are non-negotiable</strong>, and <strong>who the brand is (and isn’t) for</strong>.
           It is designed for fast stakeholder alignment.
@@ -528,8 +530,7 @@
       <!-- JTBD -->
       <section id="sec4_jtbd" class="section">
         <h3>
-          1) Jobs-To-Be-Done (JTBD) — Ranked
-          <small><button class="linkbtn" data-toggle="sec4_srcJTBD">Show sources</button></small>
+          1) Jobs-To-Be-Done (JTBD) <!-- — Ranked -->
         </h3>
 
         <div class="chips" aria-label="JTBD Filters">
@@ -556,6 +557,9 @@
         <div class="jtbd-list" id="sec4_jtbdList">
           <!-- populated by JS -->
         </div>
+        
+        <br>
+        <small><button class="linkbtn" data-toggle="sec4_srcJTBD">Show sources</button></small>
 
         <div class="sources" id="sec4_srcJTBD">
           <strong>Sources (add/replace with your real links):</strong><br/>
@@ -569,7 +573,6 @@
       <section id="sec4_needs" class="section">
         <h3>
           2) Needs Matrix — Rejection Triggers vs Secondary Benefits
-          <small><button class="linkbtn" data-toggle="sec4_srcNeeds">Show sources</button></small>
         </h3>
         <div class="grid2">
           <div>
@@ -587,6 +590,8 @@
             </div>
           </div>
         </div>
+        <br>
+        <small><button class="linkbtn" data-toggle="sec4_srcNeeds">Show sources</button></small>
         <div class="sources" id="sec4_srcNeeds">
           <strong>Sources (add/replace with your real links):</strong><br/>
           • Shopee/Tokopedia review patterns (rejection reasons)<br/>
@@ -598,7 +603,7 @@
 
       <!-- Value Logic -->
       <section id="sec4_value" class="section">
-        <h3>3) Psychological Willingness-To-Pay (WTP) Logic <small><button class="linkbtn" data-toggle="sec4_srcWTP">Show sources</button></small></h3>
+        <h3>3) Psychological Willingness-To-Pay (WTP) Logic</h3>
         <div class="grid2">
           <div>
             <div class="chart-container"><canvas id="sec4_chartWTP"></canvas></div>
@@ -617,7 +622,8 @@
             </div>
           </div>
         </div>
-
+        <br>
+        <small><button class="linkbtn" data-toggle="sec4_srcWTP">Show sources</button></small>
         <div class="sources" id="sec4_srcWTP">
           <strong>Sources (add/replace with your real links):</strong><br/>
           • Section 3 value reframing logic (risk insurance vs novelty)<br/>
@@ -628,7 +634,7 @@
 
       <!-- ICP -->
       <section id="sec4_icp" class="section">
-        <h3>4) Ideal Customer Profiles (ICP) <small><button class="linkbtn" data-toggle="sec4_srcICP">Show sources</button></small></h3>
+        <h3>4) Ideal Customer Profiles (ICP)</h3>
 
         <div class="grid2">
           <div class="profile primary">
@@ -657,7 +663,8 @@
             </ul>
           </div>
         </div>
-
+        <br>
+        <small><button class="linkbtn" data-toggle="sec4_srcICP">Show sources</button></small>
         <div class="sources" id="sec4_srcICP">
           <strong>Sources (add/replace with your real links):</strong><br/>
           • Section 3: authority-seeking patterns + claim skepticism<br/>
@@ -668,7 +675,7 @@
 
       <!-- ICP vs Exclusions -->
       <section id="sec4_compare" class="section">
-        <h3>5) ICP vs Excluded Segments — Structural Fit <small><button class="linkbtn" data-toggle="sec4_srcCompare">Show sources</button></small></h3>
+        <h3>5) ICP vs Excluded Segments — Structural Fit</h3>
 
         <div class="grid2">
           <div>
@@ -684,7 +691,9 @@
             </ul>
           </div>
         </div>
-
+        
+        <br>
+        <small><button class="linkbtn" data-toggle="sec4_srcCompare">Show sources</button></small>
         <div class="sources" id="sec4_srcCompare">
           <strong>Sources (add/replace with your real links):</strong><br/>
           • Section 3: switching behavior + fatigue patterns<br/>
@@ -707,7 +716,7 @@
 
       <!-- Usage -->
       <section id="sec4_usage" class="section">
-        <h3>7) Usage Context & Routine Expectations <small><button class="linkbtn" data-toggle="sec4_srcUsage">Show sources</button></small></h3>
+        <h3>7) Usage Context & Routine Expectations</h3>
         <div class="grid2">
           <div>
             <div class="chart-container"><canvas id="sec4_chartUsage"></canvas></div>
@@ -722,6 +731,8 @@
             </ul>
           </div>
         </div>
+        <br>
+        <small><button class="linkbtn" data-toggle="sec4_srcUsage">Show sources</button></small>
         <div class="sources" id="sec4_srcUsage">
           <strong>Sources (add/replace with your real links):</strong><br/>
           • Section 3: fatigue + switching patterns<br/>
