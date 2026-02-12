@@ -19,7 +19,7 @@
     }
     .layout{display:flex; min-height:100vh;}
     .sidebar{
-      width:320px; padding:18px 14px; position:sticky; top:0; height:100vh; overflow:auto;
+      width:280px; min-width:280px; flex-shrink:0; padding:18px 14px; position:sticky; top:0; height:100vh; overflow:auto;
       background:linear-gradient(180deg, rgba(255,235,218,.70), rgba(202,241,235,.35));
       border-right:1px solid var(--line);
       backdrop-filter: blur(8px);
@@ -42,7 +42,7 @@
     .tab:hover{background:rgba(255,255,255,.58); border-color:var(--line)}
     .tab.active{background:rgba(101,189,173,.18); border-color:rgba(101,189,173,.38)}
     .pill{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.60);color:var(--muted)}
-    .content{flex:1; padding:22px; max-width:1240px; margin:0 auto;}
+    .content{flex:1; padding:22px; max-width:1240px; margin:0 auto; min-width:0;}
     @media (max-width: 980px){ .sidebar{display:none} .content{padding:16px} }
     .view{display:none}
     .view.active{display:block}
@@ -52,6 +52,7 @@
     .row.three{grid-template-columns:repeat(3,1fr)}
     @media (max-width: 980px){ .row.two,.row.three{grid-template-columns:1fr} }
     .card{
+      min-width:0;
       background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--r);
@@ -107,13 +108,6 @@
   </style>
 <div class="layout">
   <aside class="sidebar">
-    <div class="brand">
-      <div class="mark" aria-hidden="true"></div>
-      <div>
-        <h1>Section 8 — Final Positioning</h1>
-        <p>Recalibrated to the new Section 6 competitor logic</p>
-      </div>
-    </div>
 
     <div class="tabs" id="tabs">
       <button class="tab active" data-view="v_overview">Overview <span class="pill">Start</span></button>
