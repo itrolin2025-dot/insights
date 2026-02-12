@@ -16,13 +16,16 @@
     .border-teal-dark { border-color: var(--teal-dark); }
 
     .sidebar {
-        height: 100vh;
+        height: auto;
+        min-height: calc(100vh - 70px);
         position: sticky;
-        top: 0;
+        top: 70px; /* Aligned below sticky header */
         /* Transition for slide in/out on mobile */
         transition: transform 0.27s cubic-bezier(.21,.6,.34,1), opacity 0.27s;
-        z-index: 80;
+        z-index: 40; /* Lower than header (z-50) */
         background-color: #fff;
+        overflow: visible;
+        box-sizing: border-box;
     }
 
     /* Hide sidebar on mobile by default */

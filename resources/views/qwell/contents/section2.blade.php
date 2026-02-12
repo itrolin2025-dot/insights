@@ -35,7 +35,7 @@
         flex-direction: column;
         gap: 1.5rem;
         position: relative;
-        z-index: 80;
+        z-index: 40; /* Lower than header (z-50) */
         transition: transform 0.27s cubic-bezier(.21,.6,.34,1), opacity 0.27s;
     }
 
@@ -64,15 +64,18 @@
     @media (min-width: 1025px) {
         .section-2-sidebar {
             width: 280px;
-            height: 100vh;
+            height: auto;
+            min-height: calc(100vh - 70px);
             position: sticky;
-            top: 0;
+            top: 70px; /* Aligned below sticky header */
             border-right: 1px solid var(--accent);
             border-bottom: none;
             flex-shrink: 0;
             transform: none !important;
             opacity: 1 !important;
             pointer-events: all !important;
+            overflow: visible;
+            box-sizing: border-box;
         }
     }
 

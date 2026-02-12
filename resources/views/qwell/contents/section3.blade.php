@@ -29,12 +29,14 @@
 
     /* Sidebar */
     .section-3-wrapper .sec3-nav {
-      position: sticky; top: 0;
-      height: 100vh;
+      position: sticky; 
+      top: 70px; /* Aligned below sticky header */
+      height: auto;
+      min-height: calc(100vh - 70px);
       background: var(--card);
       border-right: 1px solid var(--border);
       padding: 20px 16px;
-      overflow: auto;
+      overflow: visible;
     }
 
     .section-3-wrapper .brand {

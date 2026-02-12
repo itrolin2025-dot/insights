@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Hide all section content on load, for .section-1-content through .section-8-content
+    // Hide all section content on load
     for (let i = 1; i <= 8; i++) {
         document.querySelectorAll(`.section-${i}-content`).forEach(function (el) {
             el.style.display = 'none';
             el.style.opacity = '0';
-            el.style.transform = 'translateY(-16px)';
+            el.style.maxHeight = '0';
+            el.style.overflow = 'hidden';
         });
     }
 
@@ -22,26 +23,36 @@ document.addEventListener('DOMContentLoaded', function () {
     // Helper for hide/show
     function hideSection(selector) {
         document.querySelectorAll(selector).forEach(function (el) {
-            el.style.transition = 'opacity 0.4s, transform 0.4s';
+            el.style.transition = 'max-height 0.4s ease-in, opacity 0.3s ease-in';
+            el.style.maxHeight = '0';
             el.style.opacity = '0';
-            el.style.transform = 'translateY(-16px)';
             setTimeout(function () {
-                el.style.display = 'none';
+                if (el.style.maxHeight === '0px' || el.style.maxHeight === '0') {
+                    el.style.display = 'none';
+                }
             }, 400);
         });
     }
     function showSection(selector) {
         document.querySelectorAll(selector).forEach(function (el) {
-            el.style.display = 'block'; // Ensure block display
-            el.style.transition = 'opacity 0.4s, transform 0.4s';
+            el.style.display = 'block';
+            el.style.maxHeight = '0';
             el.style.opacity = '0';
-            el.style.transform = 'translateY(-16px)';
+
             // force reflow
             void el.offsetWidth;
-            setTimeout(function () {
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            }, 10);
+
+            const targetHeight = el.scrollHeight + 'px';
+            el.style.transition = 'max-height 0.6s ease-out, opacity 0.5s ease-out';
+            el.style.maxHeight = targetHeight;
+            el.style.opacity = '1';
+
+            // After transition, allow height to be auto for responsiveness
+            setTimeout(() => {
+                if (el.style.opacity === '1') {
+                    el.style.maxHeight = 'none';
+                }
+            }, 600);
         });
     }
 
@@ -50,13 +61,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!toggleButtons[i]) continue;
         toggleButtons[i].addEventListener("click", function () {
             const expanded = toggleButtons[i].getAttribute("aria-expanded") === "true";
+
             if (expanded) {
                 // Close current section
                 toggleButtons[i].setAttribute("aria-expanded", "false");
                 if (chevrons[i]) chevrons[i].style.transform = "rotate(0deg)";
                 hideSection(`.section-${i}-content`);
             } else {
-                // Tutup semua accordion selain yang ini
+                // 1. Tutup semua accordion selain yang ini
                 for (let j = 1; j <= 8; j++) {
                     if (j === i) continue;
                     if (toggleButtons[j]) {
@@ -65,18 +77,27 @@ document.addEventListener('DOMContentLoaded', function () {
                         hideSection(`.section-${j}-content`);
                     }
                 }
-                // Buka yang ini
+
+                // 2. Buka yang ini
                 toggleButtons[i].setAttribute("aria-expanded", "true");
                 if (chevrons[i]) chevrons[i].style.transform = "rotate(180deg)";
                 showSection(`.section-${i}-content`);
+
+                // 3. SCROLL KE ATAS (Judul tepat di bawah header)
+                // Beri sedikit delay agar konten mulai terbuka dulu
+                setTimeout(() => {
+                    const headerHeight = document.querySelector('header')?.offsetHeight || 70;
+                    const elementPosition = toggleButtons[i].getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }, 150);
             }
         });
         // Cursor styling
-        toggleButtons[i].addEventListener("mouseenter", function () {
-            toggleButtons[i].style.cursor = "pointer";
-        });
-        toggleButtons[i].addEventListener("mouseleave", function () {
-            toggleButtons[i].style.cursor = "pointer";
-        });
+        toggleButtons[i].style.cursor = "pointer";
     }
 });

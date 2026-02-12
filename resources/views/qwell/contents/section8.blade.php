@@ -37,7 +37,7 @@
         background: linear-gradient(180deg, rgba(255, 235, 218, .65), rgba(202, 241, 235, .35));
         border-right: 1px solid var(--line);
         backdrop-filter: blur(8px);
-        z-index: 1000;
+        z-index: 40; /* Lower than header (z-50) */
         transition: transform 0.3s cubic-bezier(.21, .6, .34, 1), opacity 0.3s;
     }
 
