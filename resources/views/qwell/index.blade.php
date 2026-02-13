@@ -48,8 +48,8 @@
       transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
     }
     .accordion-item.active .accordion-content {
-      max-height: 5000px; /* High enough to fit content */
-      transition: max-height 1s ease-in-out;
+      /* max-height handled by JS for infinite growth */
+      transition: max-height 0.5s ease-in-out;
     }
     .accordion-item.active .accordion-icon {
       transform: rotate(180deg);
@@ -372,14 +372,46 @@
     document.querySelectorAll('.accordion-trigger').forEach(trigger => {
         trigger.addEventListener('click', () => {
             const item = trigger.parentElement;
+            const content = item.querySelector('.accordion-content');
             const isOpen = item.classList.contains('active');
             
-            // Close all items
-            document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+            // Close all items first (ensuring animations work)
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                const c = i.querySelector('.accordion-content');
+                if (i !== item && i.classList.contains('active')) {
+                    // Force height first for animation to work from 'auto'
+                    if(c.style.maxHeight === 'none') {
+                        c.style.maxHeight = c.scrollHeight + 'px';
+                        c.style.overflow = 'hidden';
+                    }
+                    // Trigger reflow
+                    void c.offsetWidth;
+                    // Collapse
+                    c.style.maxHeight = '0';
+                    i.classList.remove('active');
+                }
+            });
             
             // Toggle clicked item
             if (!isOpen) {
                 item.classList.add('active');
+                content.style.display = 'block';
+                content.style.maxHeight = content.scrollHeight + "px";
+                
+                // After expansion, remove constraints to prevent cutting off lengthy content
+                setTimeout(() => {
+                    if (item.classList.contains('active')) {
+                        content.style.maxHeight = "none";
+                        content.style.overflow = "visible"; // Critical for sticky headers
+                    }
+                }, 600); // Wait for transition
+            } else {
+                // Closing current item
+                content.style.overflow = 'hidden';
+                content.style.maxHeight = content.scrollHeight + 'px';
+                void content.offsetWidth; // force reflow
+                content.style.maxHeight = '0';
+                item.classList.remove('active');
             }
         });
     });
