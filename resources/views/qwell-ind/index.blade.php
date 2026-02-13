@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Q'WELL Strategic Research Brief | Insights</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
-    <link rel="icon" href="{{ asset('images/logo/app-logo.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('images/logo/qwell-logo.png') }}" type="image/png">
     
     <!-- custom style -->
-    <link rel="stylesheet" href="{{ asset('css/qwell/section1.css') }}">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,7 +20,6 @@
 
     <!-- custom js -->
     <script src="{{ asset('js/custom.js') }}" defer></script>
-    <script src="{{ asset('js/qwell/section1.js') }}" defer></script>
     
     <style>
         /* Blur overlay for popup */
@@ -137,12 +135,10 @@
         7. Conclusion: The Core Question.
     -->
 </head>
-<body class="antialiased password-locked">
-
-    <!-- Blur Background Overlay (hidden after unlock) -->
+<body class="antialiased">
+    <!-- 
     <div id="qwell-blur-bg"></div>
 
-    <!-- Password Popup (centered card) -->
     <div id="qwell-password-popup" class="fixed inset-0 flex items-center justify-center z-[999]">
         <div class="bg-white rounded-2xl shadow-xl px-7 py-8 max-w-md w-full border border-blue-100 flex flex-col items-center animate-fadeIn">
             <img src="{{ asset('images/logo/app-logo.png') }}" class="w-16 h-16 mb-2 object-contain" style="aspect-ratio:1/1;display:block;" alt="Logo">
@@ -155,6 +151,7 @@
             </form>
         </div>
     </div>
+    -->
 
     <!-- Back to Top Floating Button -->
     <button id="qwell-back-to-top" aria-label="Kembali ke Atas" title="Back to Top">
@@ -177,6 +174,7 @@
         </div>
     </div> -->
 
+    <!--
     <script>
         // Langsung tampilkan blur saat HTML selesai parse (tanpa menunggu loading)
         document.addEventListener('DOMContentLoaded', function() {
@@ -259,25 +257,25 @@
             });
         });
     </script>
+    -->
 
     <!-- Header -->
     @include('qwell.components.header')
-    @include('qwell.components.overview')
-    @include('qwell.components.methodology')
+    @include('qwell.components.welcome')
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-5">
         
         @php
             $sections = [
-                1 => 'Research Objective & Brand Question',
-                2 => 'National Skin & Hair Reality in Indonesia',
-                3 => 'Behavioral & Emotional Tension in Indonesia’s Personal Care Market',
-                4 => 'Consumer Needs, Target Audience & Buyer Personas',
-                5 => 'Market Structure, Trends & Distribution Strategy',
-                6 => 'Competitive Landscape, Benchmarking & White Space',
-                7 => 'Brand Positioning & Reasons-To-Believe Validation',
-                8 => 'Product System, Pricing, and Profitability',
+                1 => 'Strategic Question & Positioning Uncertainty',
+                2 => 'Indonesia’s Skin & Scalp Structural Reality',
+                3 => 'Consumer Risk Psychology & Decision Fatigue',
+                4 => 'Ideal Customer Profile (ICP) & Jobs-To-Be-Done',
+                5 => 'Market Validation & Conservative 2030 Outlook',
+                6 => 'Competitive Structure & Claim Inflation Dynamics',
+                7 => 'Proof Architecture & Regulatory Infrastructure',
+                8 => 'Final Positioning Territory & Strategic Durability',
             ];
         @endphp
 
@@ -313,7 +311,9 @@
                 </div>
             @endif
 
-            @include('qwell_old.contents.section'.$i)
+            <div class="section-{{ $i }}-content">
+                @include('qwell-ind.contents.section'.$i)
+            </div>
         @endforeach
 
     </main>

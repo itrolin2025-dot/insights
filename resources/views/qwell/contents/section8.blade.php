@@ -1,612 +1,383 @@
 
   <style>
-    :root{
-      --c1:#FFCC97; --c2:#FFEBDA; --c3:#CAF1EB; --c4:#65BDAD;
-      --ink:#10332d; --muted:#496962;
-      --bg:#fbfbfc; --card:rgba(255,255,255,.88);
-      --line:rgba(16,51,45,.12);
-      --shadow:0 10px 28px rgba(16,51,45,.08);
-      --r:18px;
+    :root {
+      --primary: #0D2B2A;       /* Deep Forest */
+      --secondary: #164E4D;     /* Dark Teal */
+      --accent: #D4AF37;        /* Gold/Bronze */
+      --paper: #F8F9FA;         /* Gallery Grey */
+      --ink: #111827;           /* Deep Grey */
+      --radius: 2rem;
+      --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0; color:var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background:
-        radial-gradient(1200px 700px at 12% 0%, rgba(255,204,151,.32), transparent 55%),
-        radial-gradient(1200px 700px at 88% 10%, rgba(202,241,235,.32), transparent 58%),
-        var(--bg);
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background-color: var(--paper);
+      scroll-behavior: smooth;
     }
-    .layout{display:flex; min-height:100vh;}
-    .sidebar{
-      width:280px; min-width:280px; flex-shrink:0; padding:18px 14px; position:sticky; top:0; height:100vh; overflow:auto;
-      background:linear-gradient(180deg, rgba(255,235,218,.70), rgba(202,241,235,.35));
-      border-right:1px solid var(--line);
-      backdrop-filter: blur(8px);
+
+    .serif { font-family: 'Playfair Display', serif; }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
-    .brand{
-      display:flex; gap:10px; align-items:center; padding:12px 10px;
-      border-radius:16px; background:rgba(255,255,255,.68); border:1px solid var(--line);
+
+    .sidebar-active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 10px 20px rgba(13, 43, 42, 0.15);
     }
-    .mark{width:36px;height:36px;border-radius:12px;background:conic-gradient(from 210deg,var(--c4),var(--c3),var(--c1),var(--c4)); box-shadow:var(--shadow);}
-    .brand h1{margin:0;font-size:14px;letter-spacing:.2px}
-    .brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
-    .tabs{margin-top:14px; display:flex; flex-direction:column; gap:6px}
-    .tab{
-      cursor:pointer; user-select:none;
-      display:flex; justify-content:space-between; align-items:center;
-      padding:10px 12px; border-radius:14px;
-      border:1px solid transparent; background:transparent; color:var(--ink);
-      font-size:13px;
+
+    .bg-grid {
+      background-size: 80px 80px;
+      background-image: radial-gradient(circle, #00000008 1px, transparent 1px);
     }
-    .tab:hover{background:rgba(255,255,255,.58); border-color:var(--line)}
-    .tab.active{background:rgba(101,189,173,.18); border-color:rgba(101,189,173,.38)}
-    .pill{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.60);color:var(--muted)}
-    .content{flex:1; padding:22px; max-width:1240px; margin:0 auto; min-width:0;}
-    @media (max-width: 980px){ .sidebar{display:none} .content{padding:16px} }
-    .view{display:none}
-    .view.active{display:block}
-    .row{display:grid; gap:14px}
-    .row.two{grid-template-columns:1.2fr .8fr}
-    .row.two.eq{grid-template-columns:1fr 1fr}
-    .row.three{grid-template-columns:repeat(3,1fr)}
-    @media (max-width: 980px){ .row.two,.row.three{grid-template-columns:1fr} }
-    .card{
-      min-width:0;
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--r);
-      box-shadow:var(--shadow);
-      padding:16px;
+
+    /* Positioning Quadrant */
+    .quadrant-line { background: rgba(13, 43, 42, 0.1); }
+    .gold-glow { box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
+
+    /* Animation */
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .card h2{margin:0 0 6px;font-size:16px;letter-spacing:.2px}
-    .card h3{margin:0 0 8px;font-size:13px;color:var(--muted);font-weight:650}
-    .big{font-size:26px;line-height:1.18;margin:0}
-    .sub{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
-    .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-    .tag{font-size:11px;padding:4px 8px;border-radius:999px;background:rgba(202,241,235,.60);border:1px solid rgba(101,189,173,.25);color:#164a43}
-    .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
-    .kpi{padding:12px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.74), rgba(255,255,255,.52))}
-    .kpi .l{font-size:12px;color:var(--muted);margin-bottom:6px}
-    .kpi .v{font-size:16px;font-weight:800}
-    .kpi .n{font-size:12px;color:var(--muted);margin-top:4px}
-    .chart{height:340px; position:relative}
-    .chart.sm{height:260px}
-    canvas{width:100% !important; height:100% !important;}
-    .controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-    .btn{
-      appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.66);
-      padding:8px 10px;border-radius:12px;font-size:12px;color:var(--ink);cursor:pointer;
+    .animate-reveal { animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+
+    .doctrine-pill {
+      border-left: 4px solid var(--accent);
+      transition: all 0.3s ease;
     }
-    .btn:hover{border-color:rgba(101,189,173,.55)}
-    .btn.primary{background:rgba(101,189,173,.18);border-color:rgba(101,189,173,.40)}
-    .callout{
-      margin-top:10px; padding:12px;border-radius:16px;border:1px solid var(--line);
-      background:linear-gradient(135deg, rgba(255,204,151,.32), rgba(202,241,235,.32));
+    .doctrine-pill:hover {
+      background: white;
+      transform: translateX(5px);
     }
-    .callout b{font-size:12px}
-    .callout p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
-    .hr{height:1px;background:var(--line);margin:12px 0}
-    .tableWrap{
-      border:1px solid var(--line); border-radius:16px; overflow:hidden; background:rgba(255,255,255,.70);
-    }
-    .tableScroll{
-      overflow:auto; max-height:430px;
-    }
-    table{border-collapse:separate;border-spacing:0; min-width:980px; width:100%}
-    th,td{padding:10px 12px; border-bottom:1px solid var(--line); font-size:12px; color:var(--muted); vertical-align:top}
-    th{position:sticky; top:0; background:rgba(255,255,255,.92); z-index:2; color:var(--ink); text-align:left}
-    th:first-child, td:first-child{
-      position:sticky; left:0; z-index:3;
-      background:rgba(255,255,255,.92);
-      color:var(--ink);
-      min-width:220px;
-    }
-    tr:hover td{background:rgba(202,241,235,.20)}
-    .note{font-size:12px;color:var(--muted);line-height:1.45}
-    .foot{margin-top:14px;font-size:12px;color:var(--muted)}
   </style>
-<div class="layout">
-  <aside class="sidebar">
+<body class="bg-grid">
 
-    <div class="tabs" id="tabs">
-      <button class="tab active" data-view="v_overview">Overview <span class="pill">Start</span></button>
-      <button class="tab" data-view="v_matrix">Positioning Matrix <span class="pill">Core</span></button>
-      <button class="tab" data-view="v_system">Final System <span class="pill">A–F</span></button>
-      <button class="tab" data-view="v_subs">Anti‑Substitution <span class="pill">S6</span></button>
-      <button class="tab" data-view="v_2030">2030 Durability <span class="pill">S5</span></button>
-      <button class="tab" data-view="v_inputs">Inputs & Notes <span class="pill">Meta</span></button>
+  <!-- Navigation Rail -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
+    <div class="max-w-screen-2xl mx-auto w-full flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-10 bg-[#0D2B2A] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">Q</div>
+        <div class="hidden sm:block">
+          <p class="text-xs font-bold uppercase tracking-widest text-[#0D2B2A]">Final Strategic Synthesis</p>
+          <p class="text-[10px] text-gray-400 uppercase tracking-tight font-medium">Doc Ref: SECTION-08-POSITIONING</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 text-[11px] font-bold">
+        <span class="px-3 py-1 bg-amber-50 text-amber-800 rounded-full border border-amber-100 uppercase">POSITIONING LOCKED</span>
+        <button onclick="window.print()" class="px-5 py-2 bg-[#0D2B2A] text-white rounded-full hover:bg-emerald-900 transition-all text-xs shadow-lg">
+          FINALIZE REPORT
+        </button>
+      </div>
     </div>
+  </nav>
 
-    <div class="foot">
-      Calm, consulting-grade view. Indexes (1–5) are directional, not statistical.
-    </div>
-  </aside>
-
-  <main class="content">
-
-    <!-- OVERVIEW -->
-    <section class="view active" id="v_overview">
-      <div class="row two">
-        <div class="card">
-          <h3>Core Positioning (recalibrated)</h3>
-          <p class="big">A calm, dermatology‑aligned <b>biological stability system</b> for hair & body — built for people who refuse to experiment again.</p>
-          <p class="sub">
-            Premium is justified by <b>structural proof depth</b> (HRIPT per SKU, named lab disclosure, certification integrity, Halal commitment) and a routine-stability promise — not luxury signaling.
-          </p>
-          <div class="tags">
-            <span class="tag">Safety‑led</span>
-            <span class="tag">Dermatology‑aligned</span>
-            <span class="tag">Calm & minimal</span>
-            <span class="tag">Middle‑upper & upper</span>
-            <span class="tag">Premium as risk insurance</span>
-          </div>
-          <div class="callout">
-            <b>Recalibration note (what changed)</b>
-            <p>
-              Section 6 is now premium-weighted and “natural/sensitive” specific. Section 8 therefore anchors positioning against <b>true substitutes</b> (premium proof brands) and treats low-tier claim brands as <b>false substitutes</b> (comparison noise).
-            </p>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Price Anchors (Phase 1)</h3>
-          <div class="kpis">
-            <div class="kpi"><div class="l">Shampoo • 300 ml</div><div class="v">Rp 480.000</div><div class="n">Premium daily routine</div></div>
-            <div class="kpi"><div class="l">Body Wash • 300 ml</div><div class="v">Rp 550.000</div><div class="n">Barrier‑respecting cleanse</div></div>
-            <div class="kpi"><div class="l">Body Cream • 250 ml</div><div class="v">Rp 530.000</div><div class="n">Stability over “actives”</div></div>
-            <div class="kpi"><div class="l">Hair Serum • 30 ml</div><div class="v">Rp 280.000</div><div class="n">Scalp & hair comfort</div></div>
-          </div>
-          <div class="callout">
-            <b>Channel mix (Phase 1)</b>
-            <p>Shopee + Tokopedia • TikTok Shop • Premium offline store • Direct website. No clinic channel in phase 1.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row two eq" style="margin-top:14px">
-        <div class="card">
-          <h2>Non‑negotiable truths (S2–S7)</h2>
-          <h3>What the positioning must obey</h3>
-          <div class="chart"><canvas id="c_truths"></canvas></div>
-        </div>
-        <div class="card">
-          <h2>ICP fit (psychology)</h2>
-          <h3>Why this positioning reduces fear + fatigue</h3>
-          <div class="chart"><canvas id="c_fit"></canvas></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MATRIX -->
-    <section class="view" id="v_matrix">
-      <div class="row two eq">
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-end">
-            <div>
-              <h2>Positioning Territory (recalibrated)</h2>
-              <h3>X: Verification depth • Y: Biological security orientation</h3>
-            </div>
-            <div class="controls">
-              <button class="btn primary" id="btnAll">All archetypes</button>
-              <button class="btn" id="btnFocus">Focus Target</button>
-            </div>
-          </div>
-          <div class="chart"><canvas id="c_pos"></canvas></div>
-          <div class="note">
-            This chart is a structural map. It does not claim exact market shares; it shows where “truth-first premium” sits relative to claim-led tiers.
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Why this territory is defensible</h2>
-          <h3>Premium is sustained by proof + discipline</h3>
-          <ul class="note" style="margin:8px 0 0; padding-left:18px">
-            <li><b>Claim inflation</b> is common; <b>disclosed proof depth</b> is rare.</li>
-            <li>Mid-tier brands may use derm language, but verification depth varies.</li>
-            <li>The core promise is <b>routine stability</b> (predictability), not “fast results.”</li>
-            <li>Adjacent to clinical brands, but stays <b>calm + daily</b>, not treatment-heavy.</li>
+  <div class="max-w-screen-2xl mx-auto pt-24 pb-20 px-6 flex flex-col lg:flex-row gap-12">
+    
+    <!-- Sidebar -->
+    <aside class="w-full lg:w-72 flex-shrink-0">
+      <div class="sticky top-24 space-y-6">
+        <div>
+          <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Strategic Navigation</h3>
+          <ul class="space-y-1">
+            <li><a href="#locked" class="flex items-center gap-3 px-4 py-3 rounded-2xl sidebar-active text-sm font-semibold transition-all"><span>01.</span> Locked Territory</a></li>
+            <li><a href="#doctrine" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>02.</span> Strategic Doctrine</a></li>
+            <li><a href="#rtb" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>03.</span> Proof Stack</a></li>
+            <li><a href="#logic" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>04.</span> Pricing Logic</a></li>
+            <li><a href="#stress" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>05.</span> 2030 Stress Test</a></li>
           </ul>
-          <div class="callout">
-            <b>Decision rule</b>
-            <p>If proof depth + transparency discipline is not maintained, premium price becomes unstable (market will reclassify it into “similar words” space).</p>
+        </div>
+
+        <div class="p-6 bg-[#0D2B2A] rounded-[2rem] text-white overflow-hidden relative">
+          <div class="absolute -bottom-6 -right-6 opacity-10">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="white"><path d="M50 0L61 39L100 50L61 61L50 100L39 61L0 50L39 39L50 0Z"/></svg>
           </div>
+          <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-3">Positioning Essence</p>
+          <p class="text-[11px] leading-relaxed italic opacity-90">"Predictability over experimentation. Stability over viral trends. Trust as the ultimate luxury."</p>
         </div>
       </div>
-    </section>
+    </aside>
 
-    <!-- SYSTEM -->
-    <section class="view" id="v_system">
-      <div class="row two eq">
-        <div class="card">
-          <h2>A. One‑sentence positioning</h2>
-          <p class="sub" style="font-size:15px;color:var(--ink);">
-            The Target Premium Brand is a calm, dermatology‑aligned <b>biological stability system</b> for hair and body, designed for risk‑averse consumers who refuse to experiment with their skin again.
-          </p>
-          <div class="tags">
-            <span class="tag">Routine stability</span>
-            <span class="tag">Safety-first</span>
-            <span class="tag">Verifiable truth</span>
-          </div>
-        </div>
-        <div class="card">
-          <h2>B. Pillars</h2>
-          <h3>What the brand must consistently reinforce</h3>
-          <div class="chart sm"><canvas id="c_pillars"></canvas></div>
-        </div>
-      </div>
+    <!-- Main Content -->
+    <main class="flex-grow space-y-20">
+      
+      <!-- Locked Territory Hero -->
+      <section id="locked" class="animate-reveal">
+        <div class="relative p-1 bg-[#0D2B2A] rounded-[3.5rem] overflow-hidden shadow-2xl">
+          <div class="bg-white rounded-[3.4rem] p-10 sm:p-20 relative overflow-hidden">
+            <span class="inline-block px-4 py-1.5 bg-emerald-50 text-[#0D2B2A] text-[10px] font-bold rounded-full uppercase tracking-widest mb-10 border border-emerald-100">Final Brand Thesis</span>
+            
+            <div class="max-w-4xl">
+              <h1 class="serif text-5xl sm:text-7xl text-emerald-950 leading-tight mb-10">The Biological<br/><span class="italic text-[#D4AF37]">Security</span> Premium</h1>
+              <p class="text-xl text-gray-500 leading-relaxed font-medium mb-16">
+                Q’WELL is not a beauty brand; it is a <strong>Biological Security System</strong>. We provide a structurally verified, dermatology-aligned sanctuary for high-worth Indonesian consumers who prioritize <strong>Predictable Stability</strong> over high-risk aesthetic experimentation.
+              </p>
+            </div>
 
-      <div class="row" style="margin-top:14px">
-        <div class="card">
-          <h2>C–F. RTB, Pricing, Exclusions, Safeguards</h2>
-          <h3>Compact decision table (scroll sideways)</h3>
-          <div class="tableWrap">
-            <div class="tableScroll">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Component</th>
-                    <th>Commitment</th>
-                    <th>Proof / Mechanism</th>
-                    <th>How it avoids comparison traps</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><b>C. Reasons‑To‑Believe</b></td>
-                    <td>Proof-led truth, not wording</td>
-                    <td>BPOM posture • HRIPT per SKU • International lab • Certification stack • Named lab disclosure • Halal commitment</td>
-                    <td>Shifts comparison from “same claims” → “same verification depth”</td>
-                  </tr>
-                  <tr>
-                    <td><b>D. Pricing logic</b></td>
-                    <td>Premium as risk insurance</td>
-                    <td>Testing + certification + documentation + compliance discipline</td>
-                    <td>Prevents “why so expensive?” by tying price to proof infrastructure</td>
-                  </tr>
-                  <tr>
-                    <td><b>E. Exclusions</b></td>
-                    <td>Not for price-first or trend-chasers</td>
-                    <td>Low-SKU routine stability; avoids viral “quick fix” narratives</td>
-                    <td>Filters audiences who force low-tier comparisons</td>
-                  </tr>
-                  <tr>
-                    <td><b>F. 2030 safeguards</b></td>
-                    <td>Protect calm identity + proof discipline</td>
-                    <td>Publish lab & certification details; avoid trend drift; keep SKU restraint</td>
-                    <td>Maintains premium defensibility under claim fatigue & tightening norms</td>
-                  </tr>
-                </tbody>
-              </table>
+            <!-- Positioning Quadrant Visualization -->
+            <div class="bg-gray-50 rounded-[3rem] p-12 sm:p-16 border border-gray-100 relative">
+                <h4 class="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-12 text-center">Competitive Positioning Matrix</h4>
+                
+                <div class="relative w-full aspect-video sm:aspect-[2/1] max-w-4xl mx-auto">
+                    <!-- Axes -->
+                    <div class="absolute inset-0 flex items-center"><div class="w-full h-[1px] quadrant-line"></div></div>
+                    <div class="absolute inset-0 flex justify-center"><div class="h-full w-[1px] quadrant-line"></div></div>
+                    
+                    <!-- Labels -->
+                    <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-gray-400 uppercase">Aspirational Glow / Trend Seekers</span>
+                    <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-gray-400 uppercase">Biological Security / Risk Averse</span>
+                    <span class="absolute left-[-20px] top-1/2 -translate-y-1/2 -rotate-90 text-[10px] font-bold text-gray-400 uppercase">Surface Claims</span>
+                    <span class="absolute right-[-20px] top-1/2 -translate-y-1/2 rotate-90 text-[10px] font-bold text-gray-400 uppercase">Structural Proof</span>
+
+                    <!-- Q'WELL Node -->
+                    <div class="absolute bottom-[15%] right-[10%] group">
+                        <div class="w-24 h-24 bg-[#0D2B2A] rounded-full border-8 border-[#D4AF37] flex items-center justify-center text-white font-black text-2xl gold-glow animate-pulse">Q</div>
+                        <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-[#0D2B2A] text-[#D4AF37] px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shadow-xl">
+                            THE GOLD ZONE
+                        </div>
+                    </div>
+
+                    <!-- Competitor Cluster -->
+                    <div class="absolute top-[20%] left-[20%] flex flex-col items-center">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full border border-gray-300 opacity-40"></div>
+                        <span class="text-[9px] text-gray-400 font-bold uppercase mt-2">Mass Market</span>
+                    </div>
+                    <div class="absolute bottom-[30%] left-[40%] flex flex-col items-center">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full border border-gray-300 opacity-60"></div>
+                        <span class="text-[9px] text-gray-400 font-bold uppercase mt-2">Local Premium</span>
+                    </div>
+                </div>
             </div>
           </div>
-          <div class="foot">Tip: On desktop, scroll the table horizontally if needed; Brand column stays visible.</div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- SUBSTITUTION -->
-    <section class="view" id="v_subs">
-      <div class="row two eq">
-        <div class="card">
-          <h2>Anti‑Substitution Stress Test</h2>
-          <h3>X: Verification depth • Y: Price tier (conceptual)</h3>
-          <div class="chart"><canvas id="c_subs"></canvas></div>
-          <div class="note">
-            Recalibrated logic: premium “natural/sensitive” competitors are the true reference set; low-tier claim brands are primarily <i>false substitutes</i>.
-          </div>
-        </div>
-        <div class="card">
-          <h2>Comparison script</h2>
-          <h3>Calm, non-frontal reframing</h3>
-          <div class="callout">
-            <b>Use this sentence</b>
-            <p>
-              “Some brands use similar words. This brand is priced for a different job: routine predictability backed by disclosed testing infrastructure.
-              Comparisons should be based on verification depth, not claim wording.”
-            </p>
-          </div>
-          <div class="callout">
-            <b>Do not do</b>
-            <p>Do not attack cheap brands by name. Do not argue ingredient lists. Only reframe toward proof infrastructure and risk profile.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2030 -->
-    <section class="view" id="v_2030">
-      <div class="row two eq">
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-end">
+      <!-- Strategic Doctrine -->
+      <section id="doctrine" class="animate-reveal" style="animation-delay: 0.1s;">
+        <div class="grid lg:grid-cols-2 gap-12">
             <div>
-              <h2>2030 durability profile</h2>
-              <h3>Directional pressures (indexed 1–5)</h3>
+                <h2 class="serif text-4xl text-emerald-950 mb-8">The Brand Doctrine</h2>
+                <p class="text-gray-500 text-sm leading-relaxed mb-10">Four non-negotiable pillars that govern all future product, communication, and channel decisions.</p>
+                
+                <div class="space-y-6">
+                    <div class="doctrine-pill p-6 bg-white/50 rounded-2xl">
+                        <h4 class="text-xs font-black text-emerald-900 uppercase mb-2">01. Predictable Reliability</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed italic">The brand refuses to chase "Viral Glow." Our goal is to ensure the consumer's skin is exactly the same—stable and healthy—every morning.</p>
+                    </div>
+                    <div class="doctrine-pill p-6 bg-white/50 rounded-2xl">
+                        <h4 class="text-xs font-black text-emerald-900 uppercase mb-2">02. Structural Stability</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed italic">We focus on barrier health and biological maintenance as a daily healthcare routine, not an aesthetic transformation.</p>
+                    </div>
+                    <div class="doctrine-pill p-6 bg-white/50 rounded-2xl">
+                        <h4 class="text-xs font-black text-emerald-900 uppercase mb-2">03. Calm Discipline</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed italic">Communication is clinical, calm, and non-aggressive. We neutralize "Claim Fatigue" through discipline, not louder promises.</p>
+                    </div>
+                    <div class="doctrine-pill p-6 bg-white/50 rounded-2xl">
+                        <h4 class="text-xs font-black text-emerald-900 uppercase mb-2">04. Transparent Integrity</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed italic">We preempt skepticism by publishing laboratory COAs and HRIPT data proactively. Transparency is our marketing strategy.</p>
+                    </div>
+                </div>
             </div>
-            <div class="controls">
-              <button class="btn primary" id="btnBase">Base</button>
-              <button class="btn" id="btnDown">Downside</button>
+
+            <div class="bg-emerald-950 rounded-[3rem] p-12 text-white flex flex-col justify-center">
+                <h4 class="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.3em] mb-6">Strategic Exclusions</h4>
+                <p class="text-sm font-bold text-emerald-100 mb-8">To maintain the premium ceiling, Q’WELL explicitly refuses to be:</p>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-4 text-xs font-medium text-emerald-200/70">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="text-red-400"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                        A Price-First Option
+                    </li>
+                    <li class="flex items-center gap-4 text-xs font-medium text-emerald-200/70">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="text-red-400"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                        A Viral Trend-Chaser
+                    </li>
+                    <li class="flex items-center gap-4 text-xs font-medium text-emerald-200/70">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="text-red-400"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                        An Aggressive "Active" Brand
+                    </li>
+                    <li class="flex items-center gap-4 text-xs font-medium text-emerald-200/70">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="text-red-400"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                        A Cheap "Natural" Alternative
+                    </li>
+                </ul>
+                <div class="mt-12 p-6 bg-white/5 rounded-3xl border border-white/10">
+                    <p class="text-[11px] italic text-emerald-100 font-medium">Positioning Guardrail: "If a marketing campaign focuses on 'Instant Transformation,' it violates the Q'WELL doctrine."</p>
+                </div>
             </div>
+        </div>
+      </section>
+
+      <!-- Proof Stack Summary -->
+      <section id="rtb" class="animate-reveal" style="animation-delay: 0.2s;">
+        <div class="glass-card p-12">
+            <h2 class="serif text-4xl text-emerald-950 mb-12 text-center">Reasons-To-Believe (RTB) Stack</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+                <div class="p-6 bg-gray-50 rounded-3xl text-center border border-gray-100 hover:border-[#D4AF37] transition-all">
+                    <p class="text-xs font-black text-emerald-900 mb-2">BPOM</p>
+                    <p class="text-[9px] uppercase font-bold text-gray-400">Mandatory Base</p>
+                </div>
+                <div class="p-6 bg-[#0D2B2A] rounded-3xl text-center border border-[#D4AF37] shadow-xl">
+                    <p class="text-xs font-black text-[#D4AF37] mb-2">HRIPT</p>
+                    <p class="text-[9px] uppercase font-bold text-emerald-300">Gold Standard</p>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-3xl text-center border border-gray-100">
+                    <p class="text-xs font-black text-emerald-900 mb-2">VEGAN</p>
+                    <p class="text-[9px] uppercase font-bold text-gray-400">Purity Signal</p>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-3xl text-center border border-gray-100">
+                    <p class="text-xs font-black text-emerald-900 mb-2">HALAL</p>
+                    <p class="text-[9px] uppercase font-bold text-gray-400">Ethical Anchor</p>
+                </div>
+                <div class="p-6 bg-gray-50 rounded-3xl text-center border border-gray-100">
+                    <p class="text-xs font-black text-emerald-900 mb-2">DERM-LED</p>
+                    <p class="text-[9px] uppercase font-bold text-gray-400">Expert Proof</p>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Pricing Logic -->
+      <section id="logic" class="animate-reveal" style="animation-delay: 0.3s;">
+        <div class="bg-white rounded-[3rem] border border-gray-100 shadow-xl p-12 sm:p-16 flex flex-col md:flex-row gap-12 items-center">
+            <div class="md:w-1/2">
+                <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Premium Value Logic</h3>
+                <h2 class="serif text-4xl text-emerald-950 mb-6 italic">Trust Insurance vs. Luxury Signaling</h2>
+                <p class="text-sm text-gray-500 leading-relaxed mb-10">
+                    Q’WELL’s premium price (Rp 400k–800k) is not a vanity markup. It is a <strong>Safety Premium</strong>. The consumer pays for the testing complexity, international verification, and the absence of breakout trauma.
+                </p>
+                <div class="p-6 bg-emerald-50 rounded-[2rem] border border-emerald-100">
+                    <p class="text-xs font-bold text-emerald-900 uppercase mb-2">Economic Moat</p>
+                    <p class="text-[11px] text-emerald-800">"The cost of a bad reaction is higher than the price of a Q'WELL SKU. We sell the avoidance of biological debt."</p>
+                </div>
+            </div>
+            <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                <div class="aspect-square bg-[#0D2B2A] rounded-[2.5rem] p-8 flex flex-col justify-end">
+                    <p class="text-3xl font-black text-white mb-1">0%</p>
+                    <p class="text-[10px] uppercase font-bold text-emerald-300 tracking-widest">Compromise</p>
+                </div>
+                <div class="aspect-square bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-lg flex flex-col justify-end">
+                    <p class="text-3xl font-black text-emerald-950 mb-1">100%</p>
+                    <p class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Verification</p>
+                </div>
+                <div class="aspect-square bg-gray-50 rounded-[2.5rem] p-8 border border-gray-100 flex flex-col justify-end">
+                    <p class="text-3xl font-black text-emerald-950 mb-1">1:1</p>
+                    <p class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Price to Trust</p>
+                </div>
+                <div class="aspect-square bg-[#D4AF37] rounded-[2.5rem] p-8 flex flex-col justify-end">
+                    <p class="text-3xl font-black text-[#0D2B2A] mb-1">2030</p>
+                    <p class="text-[10px] uppercase font-bold text-[#0D2B2A]/60 tracking-widest">Durable</p>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- 2030 Stress Test -->
+      <section id="stress" class="animate-reveal" style="animation-delay: 0.4s;">
+        <div class="glass-card p-12 text-center">
+            <h2 class="serif text-4xl text-emerald-950 mb-12">2030 Strategic Durability Test</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 bg-gray-50 rounded-[2.5rem] border border-gray-100 text-left">
+                    <h5 class="text-[10px] font-black text-emerald-900 uppercase mb-4 tracking-widest">Trend 01: Claim Fatigue</h5>
+                    <p class="text-xs text-gray-500 leading-relaxed italic">"As clean-beauty noise increases, Q'WELL’s HRIPT-first stance becomes the only credible signal left in the premium segment."</p>
+                    <div class="mt-6 flex items-center gap-2 text-[10px] font-black text-emerald-600 uppercase">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> RESILIENT
+                    </div>
+                </div>
+                <div class="p-8 bg-gray-50 rounded-[2.5rem] border border-gray-100 text-left">
+                    <h5 class="text-[10px] font-black text-emerald-900 uppercase mb-4 tracking-widest">Trend 02: Reg. Tightening</h5>
+                    <p class="text-xs text-gray-500 leading-relaxed italic">"Stricter BPOM enforcement of heavy metal and contaminant limits (2025/26) actually benefits Q'WELL by clearing unverified competitors."</p>
+                    <div class="mt-6 flex items-center gap-2 text-[10px] font-black text-emerald-600 uppercase">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> ACCELERATED
+                    </div>
+                </div>
+                <div class="p-8 bg-gray-50 rounded-[2.5rem] border border-gray-100 text-left">
+                    <h5 class="text-[10px] font-black text-emerald-900 uppercase mb-4 tracking-widest">Trend 03: Spending Caution</h5>
+                    <p class="text-xs text-gray-500 leading-relaxed italic">"Middle-upper consumers trade down on luxury signaling but trade UP on biological reliability to avoid medical debt."</p>
+                    <div class="mt-6 flex items-center gap-2 text-[10px] font-black text-emerald-600 uppercase">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> PROTECTED
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Final Strategic Conclusion -->
+      <div class="bg-[#0D2B2A] rounded-[3.5rem] p-16 sm:p-24 text-center text-white relative overflow-hidden">
+          <div class="absolute inset-0 opacity-10">
+              <svg width="100%" height="100%"><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5"/></pattern><rect width="100%" height="100%" fill="url(#grid)" /></svg>
           </div>
-          <div class="chart"><canvas id="c_2030"></canvas></div>
-          <div class="note" id="dur_note"></div>
-        </div>
-        <div class="card">
-          <h2>Channel trust pathways</h2>
-          <h3>Why this mix supports proof-led premium</h3>
-          <div class="chart"><canvas id="c_channels"></canvas></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- INPUTS -->
-    <section class="view" id="v_inputs">
-      <div class="row">
-        <div class="card">
-          <h2>Inputs & notes</h2>
-          <h3>What this dashboard assumes</h3>
-          <ul class="note" style="margin:8px 0 0; padding-left:18px">
-            <li>Price anchors and channel strategy are provided by you.</li>
-            <li>Proof commitments: lab name disclosure = yes; Halal = yes; test summary/protocol disclosure = pending readiness.</li>
-            <li>Sections 2–7 are summarized using conceptual indices when numeric measurements are not present.</li>
-            <li>Section 6 recalibration: premium-weighted, “natural/sensitive” specific competitor logic.</li>
-          </ul>
-          <div class="callout">
-            <b>Upgrade path</b>
-            <p>
-              If you export the updated Section 6 dataset (tiers + verification depth + true substitutes), this dashboard can replace conceptual archetypes with real competitor points.
-            </p>
+          <div class="relative z-10">
+              <h2 class="serif text-4xl sm:text-6xl mb-10 italic">Strategic Conclusion</h2>
+              <p class="max-w-3xl mx-auto text-lg sm:text-xl text-emerald-100 leading-relaxed mb-12">
+                  "Q’WELL does not compete in the luxury or glow space. It occupies the <strong>Biological Security Premium Tier</strong> — A structurally verified, dermatology-aligned, calm stability system that provides predictability over experimentation."
+              </p>
+              <div class="h-[1px] w-24 bg-[#D4AF37] mx-auto mb-10"></div>
+              <p class="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-300">POSITIONING VALIDATED THROUGH 2030</p>
           </div>
-          <div class="foot">Single-file HTML • Chart.js via CDN • Runs locally</div>
-        </div>
       </div>
-    </section>
 
-    <div class="foot">© ROLIN • Section 8 — Recalibrated</div>
-  </main>
-</div>
+      <!-- Footer Refs -->
+      <footer id="sources" class="pt-10 border-t border-gray-200">
+        <div class="flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-400 font-bold uppercase tracking-widest gap-4 text-center md:text-left">
+          <p>© 2026 Q'WELL STRATEGIC INTELLIGENCE UNIT</p>
+          <div class="flex gap-6">
+              <span>CONFIDENTIAL</span>
+              <span>MARKET: INDONESIA</span>
+              <span>STATUS: DECISION-GRADE</span>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
 
-<script>
-  // Global defaults (sharper, consistent)
-  Chart.defaults.devicePixelRatio = window.devicePixelRatio || 1;
-  Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
-  Chart.defaults.color = '#10332d';
-  Chart.defaults.plugins.legend.labels.boxWidth = 10;
-  Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(16,51,45,.92)';
-  Chart.defaults.plugins.tooltip.titleColor = '#fff';
-  Chart.defaults.plugins.tooltip.bodyColor = '#fff';
-
-  const PALETTE = {
-    ink:'rgba(16,51,45,.85)',
-    green:'rgba(101,189,173,.55)',
-    mint:'rgba(202,241,235,.75)',
-    peach:'rgba(255,204,151,.60)',
-    cream:'rgba(255,235,218,.92)',
-    dark:'rgba(16,51,45,.90)'
-  };
-
-  // Data (conceptual indexes)
-  const truths = [
-    ['S2 Structural reality',5],
-    ['S3 Risk psychology',5],
-    ['S4 ICP clarity',4],
-    ['S5 Viability (2030 conservative)',4],
-    ['S6 True vs false substitutes (premium-weighted)',5],
-    ['S7 Proof architecture',5],
-  ];
-
-  const fit = [
-    ['Fear of irritation',5],
-    ['Decision fatigue',4],
-    ['Need for verifiable claims',5],
-    ['Desire for routine stability',4],
-  ];
-
-  // Recalibrated archetypes (less noise; premium-weighted)
-  // X: verification depth (0–5), Y: biological security orientation (0–5)
-  const archetypes = [
-    {name:'Low-tier claim brands (noise)', x:1.3, y:2.2, g:'False substitutes'},
-    {name:'Upper-mass “gentle” + derm language', x:2.8, y:3.0, g:'Mid-tier'},
-    {name:'Premium natural (partial proof)', x:3.8, y:3.7, g:'Premium natural'},
-    {name:'Clinical-adjacent premium', x:4.3, y:4.2, g:'Clinical-adjacent'},
-    {name:'Target Premium Brand', x:4.6, y:4.6, g:'Target'},
-  ];
-
-  // Anti-substitution map: X verification, Y price tier index (1–4)
-  const subs = [
-    {name:'Low-tier claim brands', x:1.4, y:1.6, t:'False'},
-    {name:'Upper-mass derm language', x:2.9, y:2.8, t:'Mixed'},
-    {name:'Premium natural', x:3.8, y:3.3, t:'Partial'},
-    {name:'Clinical-adjacent premium', x:4.2, y:3.8, t:'True'},
-    {name:'Target Premium Brand', x:4.6, y:4.0, t:'Target'},
-  ];
-
-  const pillars = [
-    ['Structural safety',5],
-    ['Biological stability',5],
-    ['Calm discipline',4],
-    ['Transparent integrity',4],
-    ['Halal readiness',4],
-  ];
-
-  const durability = {
-    base: {
-      labels:['Reg tightening','Transparency demand','Claim fatigue','Consumer maturity','Channel noise'],
-      values:[4,4,4,4,3],
-      note:'Base case: positioning strengthens with regulation + maturity; noise manageable with discipline.'
-    },
-    down: {
-      labels:['Reg tightening','Transparency demand','Claim fatigue','Consumer maturity','Channel noise'],
-      values:[4,5,5,4,4],
-      note:'Downside: transparency expectations + fatigue accelerate; discipline must increase.'
-    }
-  };
-
-  const channels = [
-    ['E‑commerce (Shopee/Tokopedia)',4],
-    ['Social commerce (TikTok Shop)',3],
-    ['Premium offline store',4],
-    ['Direct website (proof hosting)',5],
-  ];
-
-  function mkBar(canvasId, items, color){
-    const ctx = document.getElementById(canvasId).getContext('2d');
-    return new Chart(ctx,{
-      type:'bar',
-      data:{ labels: items.map(x=>x[0]), datasets:[{ data: items.map(x=>x[1]), backgroundColor: color, borderColor:'rgba(16,51,45,.14)', borderWidth:1, borderRadius:10 }]},
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        plugins:{legend:{display:false}},
-        scales:{ y:{beginAtZero:true, max:5, ticks:{stepSize:1}}, x:{ticks:{color:'#496962'}}}
-      }
-    });
-  }
-
-  let posChart, durChart;
-
-  function buildPos(focus=false){
-    const ctx = document.getElementById('c_pos').getContext('2d');
-    const groups = {
-      'False substitutes': {c:PALETTE.peach},
-      'Mid-tier': {c:PALETTE.cream},
-      'Premium natural': {c:PALETTE.mint},
-      'Clinical-adjacent': {c:PALETTE.green},
-      'Target': {c:PALETTE.dark},
-    };
-    const ds = Object.keys(groups).map(g=>({
-      label:g,
-      data: archetypes.filter(a=>a.g===g && (!focus || g==='Target' || g==='Clinical-adjacent')).map(a=>({x:a.x,y:a.y,name:a.name})),
-      pointRadius:(c)=> (c.raw && c.raw.name==='Target Premium Brand') ? 10 : 7,
-      pointHoverRadius:11,
-      pointBackgroundColor:groups[g].c,
-      pointBorderColor:'rgba(16,51,45,.22)',
-      pointBorderWidth:1
-    }));
-    if(posChart) posChart.destroy();
-    posChart = new Chart(ctx,{
-      type:'scatter',
-      data:{datasets:ds},
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        scales:{
-          x:{min:0,max:5,title:{display:true,text:'Verification depth →'},ticks:{stepSize:1}},
-          y:{min:0,max:5,title:{display:true,text:'Biological security orientation ↑'},ticks:{stepSize:1}}
-        },
-        plugins:{
-          legend:{position:'bottom', labels:{usePointStyle:true}},
-          tooltip:{callbacks:{label:(c)=>`${c.raw.name} (x ${c.raw.x.toFixed(1)}, y ${c.raw.y.toFixed(1)})`}}
+  <script>
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 100,
+            behavior: 'smooth'
+          });
         }
-      }
-    });
-  }
-
-  function buildSubs(){
-    const ctx = document.getElementById('c_subs').getContext('2d');
-    const colorBy=(t)=>{
-      if(t==='Target') return PALETTE.dark;
-      if(t==='True') return PALETTE.green;
-      if(t==='Partial') return PALETTE.mint;
-      if(t==='Mixed') return PALETTE.peach;
-      return PALETTE.cream;
-    };
-    return new Chart(ctx,{
-      type:'scatter',
-      data:{datasets:[{
-        data: subs.map(p=>({x:p.x,y:p.y,name:p.name,t:p.t})),
-        pointBackgroundColor:(c)=>colorBy(c.raw.t),
-        pointBorderColor:'rgba(16,51,45,.22)',
-        pointBorderWidth:1,
-        pointRadius:(c)=> (c.raw.t==='Target') ? 10 : 7,
-        pointHoverRadius:11
-      }]},
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        scales:{
-          x:{min:0,max:5,title:{display:true,text:'Verification depth →'},ticks:{stepSize:1}},
-          y:{min:0,max:4.5,title:{display:true,text:'Price tier ↑ (index)'},ticks:{stepSize:1}}
-        },
-        plugins:{legend:{display:false}, tooltip:{callbacks:{label:(c)=>`${c.raw.name} • ${c.raw.t}`}}}
-      }
-    });
-  }
-
-  function buildDur(which){
-    const ctx = document.getElementById('c_2030').getContext('2d');
-    const d = (which==='down') ? durability.down : durability.base;
-    document.getElementById('dur_note').textContent = d.note + ' (Indexed 1–5; directional).';
-    if(durChart) durChart.destroy();
-    durChart = new Chart(ctx,{
-      type:'radar',
-      data:{
-        labels:d.labels,
-        datasets:[{
-          label: which==='down' ? 'Downside profile' : 'Base profile',
-          data:d.values,
-          backgroundColor:'rgba(255,204,151,.28)',
-          borderColor:'rgba(16,51,45,.35)',
-          pointBackgroundColor:'rgba(101,189,173,.80)',
-          pointBorderColor:'#fff',
-          pointBorderWidth:1
-        }]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        scales:{ r:{min:0,max:5,ticks:{stepSize:1}, grid:{color:'rgba(16,51,45,.12)'}}},
-        plugins:{legend:{position:'bottom'}}
-      }
-    });
-  }
-
-  function buildChannels(){
-    const ctx = document.getElementById('c_channels').getContext('2d');
-    return mkBar('c_channels', channels, PALETTE.mint);
-  }
-
-  // Tabs navigation
-  const tabs = Array.from(document.querySelectorAll('.tab'));
-  const views = Array.from(document.querySelectorAll('.view'));
-  tabs.forEach(t=>{
-    t.addEventListener('click', ()=>{
-      tabs.forEach(x=>x.classList.remove('active'));
-      t.classList.add('active');
-      const id = t.dataset.view;
-      views.forEach(v=>{
-        v.classList.remove('active');
-        if(v.id === id) v.classList.add('active');
       });
     });
-  });
 
-  // Buttons
-  document.getElementById('btnAll')?.addEventListener('click', ()=>{
-    document.getElementById('btnAll').classList.add('primary');
-    document.getElementById('btnFocus').classList.remove('primary');
-    buildPos(false);
-  });
-  document.getElementById('btnFocus')?.addEventListener('click', ()=>{
-    document.getElementById('btnFocus').classList.add('primary');
-    document.getElementById('btnAll').classList.remove('primary');
-    buildPos(true);
-  });
-  document.getElementById('btnBase')?.addEventListener('click', ()=>{
-    document.getElementById('btnBase').classList.add('primary');
-    document.getElementById('btnDown').classList.remove('primary');
-    buildDur('base');
-  });
-  document.getElementById('btnDown')?.addEventListener('click', ()=>{
-    document.getElementById('btnDown').classList.add('primary');
-    document.getElementById('btnBase').classList.remove('primary');
-    buildDur('down');
-  });
+    // Sidebar active state logic
+    const navSections = ['locked', 'doctrine', 'rtb', 'logic', 'stress'];
+    window.addEventListener('scroll', () => {
+      let activeSection = '';
+      navSections.forEach(sectionId => {
+        const sec = document.getElementById(sectionId);
+        if (sec && window.pageYOffset >= sec.offsetTop - 150) {
+          activeSection = sectionId;
+        }
+      });
 
-  // Init
-  window.addEventListener('load', ()=>{
-    mkBar('c_truths', truths, PALETTE.green);
-    mkBar('c_fit', fit, PALETTE.peach);
-    buildPos(false);
-    mkBar('c_pillars', pillars, PALETTE.green);
-    buildSubs();
-    buildDur('base');
-    buildChannels();
-  });
-</script>
+      document.querySelectorAll('aside a').forEach(a => {
+        a.classList.remove('sidebar-active');
+        a.classList.add('text-gray-600');
+        if (a.getAttribute('href') === `#${activeSection}`) {
+          a.classList.add('sidebar-active');
+          a.classList.remove('text-gray-600');
+        }
+      });
+    });
+  </script>
+</body>

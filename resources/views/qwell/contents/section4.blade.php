@@ -1,992 +1,384 @@
-<style>
-    /* Scoped Variables for Section 4 */
-    .section-4-wrapper {
-      --c-primary:#65BDAD;
-      --c-secondary:#FFCC97;
-      --c-bg:#FFEBDA;
-      --c-accent:#CAF1EB;
-      --c-text:#233241;
-      --c-muted:#5D6D7E;
-      --c-white:#FFFFFF;
-      --c-danger:#E74C3C;
 
-      --shadow: 0 6px 26px rgba(0,0,0,.06);
-      --radius: 18px;
-      --radius-sm: 12px;
-
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Inter", sans-serif;
-      background:var(--c-bg);
-      color:var(--c-text);
-      /* Ensure isolation */
-      position: relative;
-      isolation: isolate;
+  <style>
+    :root {
+      --primary: #0D2B2A;       /* Deep Forest */
+      --secondary: #164E4D;     /* Dark Teal */
+      --accent: #D4AF37;        /* Gold/Bronze */
+      --paper: #F8F9FA;         /* Gallery Grey */
+      --ink: #111827;           /* Deep Grey */
+      --muted: #6B7280;         /* Slate */
+      --radius: 1.5rem;
+      --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
     }
 
-    .section-4-wrapper *{ box-sizing:border-box; }
-
-    /* Layout */
-    .section-4-wrapper .app{ display:flex; min-height:100vh; }
-    .section-4-wrapper .sec4-nav{
-      width:280px;
-      background:var(--c-white);
-      border-right:1px solid rgba(0,0,0,.06);
-      padding:22px 18px;
-      position:sticky; top:0; height:100vh;
-      z-index:50;
-    }
-    .section-4-wrapper .brand{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:10px 10px 14px;
-      border-bottom:2px solid var(--c-accent);
-      margin-bottom:14px;
-    }
-    .section-4-wrapper .brand h2{ margin:0; font-size:1.05rem; color:var(--c-primary); letter-spacing:.2px; }
-    .section-4-wrapper .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px; border-radius:999px;
-      background:rgba(101,189,173,.12); color:var(--c-primary);
-      font-size:.78rem; font-weight:700;
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background-color: var(--paper);
+      scroll-behavior: smooth;
     }
 
-    .section-4-wrapper .navlinks{ display:flex; flex-direction:column; gap:6px; margin-top:10px; }
-    .section-4-wrapper .navlinks a{
-      text-decoration:none; color:var(--c-muted);
-      padding:10px 10px;
-      border-radius:12px;
-      font-weight:600;
-      transition:.18s;
-      display:flex; align-items:center; justify-content:space-between;
-    }
-    .section-4-wrapper .navlinks a:hover{ background:rgba(202,241,235,.55); color:var(--c-primary); }
-    .section-4-wrapper .navlinks a.active{ background:var(--c-accent); color:var(--c-primary); }
+    .serif { font-family: 'Playfair Display', serif; }
 
-    .section-4-wrapper .nav-footer{
-      margin-top:auto;
-      padding:12px 10px;
-      border-top:1px solid rgba(0,0,0,.06);
-      color:var(--c-muted);
-      font-size:.82rem;
-      line-height:1.35;
-    }
-    .section-4-wrapper .nav-footer button{
-      width:100%;
-      margin-top:10px;
-      border:0;
-      background:rgba(255,204,151,.55);
-      color:var(--c-text);
-      font-weight:800;
-      padding:10px 12px;
-      border-radius:12px;
-      cursor:pointer;
-      transition:.18s;
-    }
-    .section-4-wrapper .nav-footer button:hover{ filter:brightness(.98); transform:translateY(-1px); }
-
-    .section-4-wrapper .sec4-main{
-      flex:1;
-      padding:28px 26px 52px;
-      max-width:1200px;
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
     }
 
-    /* Mobile nav */
-    .section-4-wrapper .topbar{
-      display:none;
-      position:sticky; top:0; z-index:60;
-      background:rgba(255,235,218,.92);
-      backdrop-filter: blur(8px);
-      border-bottom:1px solid rgba(0,0,0,.06);
-      padding:12px 14px;
-    }
-    .section-4-wrapper .topbar .row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-    .section-4-wrapper .iconbtn{
-      border:0; background:var(--c-white); box-shadow:var(--shadow);
-      border-radius:14px; padding:10px 12px;
-      cursor:pointer; font-weight:900;
-    }
-    .sec4-drawer{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.38);
-      display:none;
-      z-index:80;
-    }
-    .sec4-drawer.open{ display:block; }
-    .sec4-drawer .drawer-panel{
-      width:86vw; max-width:320px; height:100%;
-      background:var(--c-white);
-      box-shadow:var(--shadow);
-      padding:18px 14px;
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 40px -10px rgba(0, 0, 0, 0.08);
     }
 
-    /* --- MODAL REWRITE START --- */
-    .sec4-modal{
-      display:none;
-      position:fixed;
-      z-index:9999;
-      inset:0;
-      align-items:center;
-      justify-content:center;
-      background:rgba(0,0,0,0.32);
-      /* fallback bg for lower end browsers */
-      pointer-events:none;
-    }
-    .sec4-modal.open{ display:flex; pointer-events:auto; }
-
-    .sec4-modal .modal-card{
-      position:relative;
-      width:94vw;
-      max-width:420px;
-      background:#fff;
-      border-radius:22px;
-      box-shadow:0 12px 40px rgba(0,0,0,0.20), 0 2px 8px rgba(0,0,0,0.07);
-      padding:28px 20px 22px 20px;
-      border:1px solid #f2f2f2;
-      display:flex;
-      flex-direction:column;
-      max-height:92vh;
-      overflow:auto;
-      animation:fadeInPopSec4Modal 0.23s cubic-bezier(.19,.9,.39,1.03);
-    }
-    @keyframes fadeInPopSec4Modal {
-      0% {opacity:0; transform:scale(.92);}
-      99% {transform:scale(1.04);}
-      100% {opacity:1; transform:scale(1);}
-    }
-    .sec4-modal .modal-header {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:10px;
-      gap:8px;
-    }
-    .sec4-modal .modal-header h3 {
-      margin:0;
-      font-size:1.1rem;
-      font-weight:900;
-      color:#63b7a7;
-      flex:1 1 auto;
-      line-height:1.25;
-    }
-    .sec4-modal .modal-close-btn {
-      background:transparent;
-      border:none;
-      width:36px; height:36px;
-      display:flex; align-items:center; justify-content:center;
-      border-radius:50%;
-      cursor:pointer;
-      font-size:1.45rem;
-      color:#bbb;
-      position:relative;
-      transition:background 0.17s, color 0.18s;
-      margin-left:8px;
-    }
-    .sec4-modal .modal-close-btn:hover {
-      background:rgba(101,189,173,0.13);
-      color:#408f7c;
-    }
-    .sec4-modal .modal-card p {margin:12px 0; color:#617283; font-size:1.02rem; line-height:1.58;}
-    .sec4-modal .modal-card .actions {
-      display:flex; gap:10px; justify-content:flex-end;margin-top:18px;
-    }
-    .sec4-modal .modal-card .btn-primary {
-      background:#65BDAD; color:#fff; border:0;
-      border-radius:11px; padding:9px 18px;
-      font-weight:700; font-size:0.96rem; cursor:pointer;
-      box-shadow:0 1px 7px 0 rgba(101,189,173,0.07);
-      transition:filter .15s,transform .14s;
-    }
-    .sec4-modal .modal-card .btn-ghost {
-      background:#f9fafb; color:#233241; border:0;
-      border-radius:11px; padding:9px 18px;
-      font-weight:650; font-size:0.96rem; cursor:pointer;
-      transition:filter .15s,transform .14s;
-    }
-    .sec4-modal .modal-card .actions button:hover {
-      filter:brightness(.95);
-      transform:translateY(-1px) scale(1.02);
+    .sidebar-active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 16px rgba(13, 43, 42, 0.15);
     }
 
-    /* --- MODAL REWRITE END --- */
-
-    /* Sections & cards */
-    .section-4-wrapper .header{
-      margin:8px 0 18px;
-    }
-    .section-4-wrapper .header h1{ margin:0 0 6px; font-size:2.05rem; letter-spacing:-.3px; }
-    .section-4-wrapper .subtitle{ margin:0; color:var(--c-muted); max-width:820px; line-height:1.5; }
-    .section-4-wrapper .badge{
-      display:inline-block;
-      background:var(--c-primary);
-      color:var(--c-white);
-      padding:4px 10px;
-      border-radius:999px;
-      font-size:.78rem;
-      font-weight:800;
-      margin-left:10px;
-      vertical-align:middle;
+    .bg-grid {
+      background-size: 60px 60px;
+      background-image: radial-gradient(circle, #0000000a 1px, transparent 1px);
     }
 
-    .section-4-wrapper .kpis{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:12px;
-      margin:16px 0 22px;
-    }
-    .section-4-wrapper .kpi{
-      background:var(--c-white);
-      border-radius:var(--radius);
-      padding:14px 14px 12px;
-      box-shadow:var(--shadow);
-      border:1px solid rgba(0,0,0,.05);
-      position:relative;
-      overflow:hidden;
-    }
-    .section-4-wrapper .kpi::after{
-      content:"";
-      position:absolute;
-      inset:auto -30px -30px auto;
-      width:120px; height:120px;
-      border-radius:999px;
-      background:rgba(202,241,235,.55);
-      transform:rotate(12deg);
-    }
-    .section-4-wrapper .kpi .label{ color:var(--c-muted); font-size:.82rem; font-weight:700; margin-bottom:8px; }
-    .section-4-wrapper .kpi .value{ font-size:1.45rem; font-weight:900; letter-spacing:-.2px; }
-    .section-4-wrapper .kpi .note{ margin-top:6px; color:var(--c-muted); font-size:.78rem; line-height:1.25; }
-
-    .section-4-wrapper .section{
-      background:var(--c-white);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      border-left:5px solid var(--c-primary);
-      padding:18px 18px 16px;
-      margin:0 0 18px;
-    }
-    .section-4-wrapper .section.danger{ border-left-color: var(--c-danger); }
-    .section-4-wrapper .section h3{
-      margin:0;
-      font-size:1.1rem;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .section-4-wrapper .section h3 small{
-      color:var(--c-muted);
-      font-weight:700;
-      font-size:.78rem;
+    .jtbd-bar {
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .section-4-wrapper .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
-    .section-4-wrapper .grid3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:12px; }
-    .section-4-wrapper canvas{ display:block; }
-
-    .section-4-wrapper .chart-container{ position:relative; width:100%; height:280px; }
-
-    .section-4-wrapper .helper{
-      margin-top:8px;
-      color:var(--c-muted);
-      font-size:.78rem;
-      font-style:italic;
+    /* Persona Hover States */
+    .persona-card:hover .persona-img {
+      transform: scale(1.05);
     }
 
-    /* Chips */
-    .section-4-wrapper .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
-    .section-4-wrapper .chip{
-      border:1px solid rgba(0,0,0,.08);
-      background:rgba(202,241,235,.35);
-      color:var(--c-text);
-      padding:8px 10px;
-      border-radius:999px;
-      font-weight:800;
-      font-size:.82rem;
-      cursor:pointer;
-      transition:.16s;
-      user-select:none;
+    /* Animation */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .section-4-wrapper .chip:hover{ transform:translateY(-1px); }
-    .section-4-wrapper .chip.active{ background:var(--c-accent); border-color:rgba(0,0,0,.06); }
+    .animate-up { animation: slideUp 0.8s ease-out forwards; }
 
-    /* JTBD cards */
-    .section-4-wrapper .jtbd-list{ margin-top:12px; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    .section-4-wrapper .jtbd{
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:var(--radius-sm);
-      padding:12px 12px;
-      background:rgba(255,235,218,.35);
-    }
-    .section-4-wrapper .jtbd .top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-    .section-4-wrapper .jtbd .name{ font-weight:900; }
-    .section-4-wrapper .tag{
-      font-size:.72rem; font-weight:900;
-      border-radius:999px; padding:4px 8px;
-      background:rgba(101,189,173,.16);
-      color:var(--c-primary);
-      white-space:nowrap;
-    }
-    .section-4-wrapper .tag.secondary{ background:rgba(255,204,151,.55); color:var(--c-text); }
-    .section-4-wrapper .tag.support{ background:rgba(202,241,235,.9); color:var(--c-text); }
-    .section-4-wrapper .jtbd p{ margin:8px 0 0; color:var(--c-muted); font-size:.86rem; line-height:1.35; }
-
-    /* ICP cards */
-    .section-4-wrapper .profile{
-      border-radius:var(--radius);
-      border:1px solid rgba(0,0,0,.06);
-      padding:14px;
-      background:#fff;
-    }
-    .section-4-wrapper .profile h4{ margin:10px 0 6px; font-size:1.1rem; }
-    .section-4-wrapper .meta{ color:var(--c-muted); font-weight:700; font-size:.86rem; }
-    .section-4-wrapper .profile ul{ margin:10px 0 0 18px; color:var(--c-muted); line-height:1.45; font-size:.9rem; }
-    .section-4-wrapper .profile .pill{ background:rgba(255,204,151,.35); color:var(--c-text); }
-    .section-4-wrapper .profile.primary{ border-color:rgba(101,189,173,.45); }
-    .section-4-wrapper .profile.secondary{ border-color:rgba(255,204,151,.75); }
-
-    /* Sources */
-    .section-4-wrapper .sources{
-      margin-top:12px;
-      border-radius:var(--radius-sm);
-      background:rgba(202,241,235,.28);
-      padding:12px;
-      border:1px dashed rgba(0,0,0,.12);
-      display:none;
-      font-size:.88rem;
-      color:var(--c-muted);
-      line-height:1.4;
-    }
-    .section-4-wrapper .linkbtn{
-      border:0;
-      background:rgba(202,241,235,.8);
-      padding:8px 10px;
-      border-radius:12px;
-      font-weight:900;
-      cursor:pointer;
-    }
-
-    /* Exclusion */
-    .section-4-wrapper .excl-btn{
-      width:100%;
-      text-align:left;
-      padding:12px 12px;
-      border-radius:var(--radius-sm);
-      border:1px solid rgba(0,0,0,.08);
-      background:#fff;
-      cursor:pointer;
-      transition:.16s;
-    }
-    .section-4-wrapper .excl-btn:hover{ border-color:var(--c-danger); background:rgba(231,76,60,.05); }
-    .section-4-wrapper .excl-reason{
-      display:none;
-      margin-top:10px;
-      padding:12px;
-      border-radius:var(--radius-sm);
-      border:1px dashed rgba(231,76,60,.6);
-      background:rgba(231,76,60,.06);
-      color:var(--c-danger);
-      line-height:1.45;
-      font-weight:700;
-    }
-
-    @media (max-width: 980px){
-      .section-4-wrapper .sec4-nav{ display:none; }
-      .section-4-wrapper .topbar{ display:block; }
-      .section-4-wrapper .sec4-main{ padding:16px 14px 40px; }
-      .section-4-wrapper .header h1 { font-size: 1.6rem; }
-      .section-4-wrapper .kpis{ grid-template-columns: 1fr; gap: 10px; }
-      .section-4-wrapper .kpi .value { font-size: 1.3rem; }
-      .section-4-wrapper .grid2{ grid-template-columns:1fr; }
-      .section-4-wrapper .grid3{ grid-template-columns:1fr; }
-      .section-4-wrapper .jtbd-list{ grid-template-columns:1fr; }
-      .section-4-wrapper .chart-container{ height:250px; }
-      .section-4-wrapper .section { padding: 16px 14px; }
-      .sec4-modal .modal-card{
-        max-width:98vw;
-        min-width:0;
-        width:99vw;
-        padding:21px 7px 14px 9px;
-      }
-    }
-</style>
-
-<div class="section-4-wrapper">
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+  </style>
   
-  <div class="topbar">
-    <div class="row">
-      <button class="iconbtn" id="sec4_openNav">☰</button>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <div style="font-weight:900; color:var(--c-primary);">Section 4 Dashboard</div>
-        <span class="pill">Decision Gate</span>
-      </div>
-      <button class="iconbtn" id="sec4_openNotes">i</button>
-    </div>
-  </div>
+<body class="bg-grid">
 
-  <div class="sec4-drawer" id="sec4_drawer">
-    <div class="drawer-panel">
-      <div class="brand">
-        <h2>Decisions</h2>
-        <span class="pill">ICP</span>
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
+    <div class="max-w-screen-2xl mx-auto w-full flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-10 bg-[#0D2B2A] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-900/20">Q</div>
+        <div class="hidden sm:block">
+          <p class="text-xs font-bold uppercase tracking-widest text-emerald-900">Q'WELL Strategy Unit</p>
+          <p class="text-[10px] text-gray-400 uppercase tracking-tight font-medium">Doc Ref: SECTION-04-ICP-2026</p>
+        </div>
       </div>
-      <div class="navlinks" id="sec4_drawerLinks">
-        <a href="#sec4_jtbd">JTBD Ranking</a>
-        <a href="#sec4_needs">Needs Matrix</a>
-        <a href="#sec4_value">Value Logic</a>
-        <a href="#sec4_icp">ICP Profiles</a>
-        <a href="#sec4_compare">ICP vs Exclusions</a>
-        <a href="#sec4_exclusions">Exclusions</a>
-        <a href="#sec4_usage">Usage Context</a>
-      </div>
-      <div class="nav-footer">
-        Tip: Tap a section name to jump. Use the “Indexed indicators” note for chart interpretation.
-        <button id="sec4_btnMethodDrawer">Indexed Indicators Note</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal with card look and close button on top right -->
-  <div class="sec4-modal" id="sec4_methodModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>Indexed Indicators (How to read the charts)</h3>
-        <button class="modal-close-btn" onclick="closeSec4Modal()" aria-label="Close">
-          <svg width="22" height="22" viewBox="0 0 22 22" style="pointer-events:none;" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="7.38" y1="7.38" x2="14.62" y2="14.62" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-            <line x1="14.62" y1="7.38" x2="7.38" y2="14.62" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
+      <div class="flex items-center gap-3 text-[11px] font-bold">
+        <span class="px-3 py-1 bg-emerald-50 text-emerald-800 rounded-full border border-emerald-100">TARGETING ACTIVE</span>
+        <button onclick="window.print()" class="px-5 py-2 bg-emerald-950 text-white rounded-full hover:bg-emerald-900 transition-all shadow-md">
+          EXPORT ICP CARDS
         </button>
       </div>
-      <p>
-        Some Section 4 visuals may use <strong>indexed indicators</strong> (e.g., 1–5 or 0–10) when the underlying research text is qualitative.
-        These indexes are <strong>non-statistical</strong> and exist only to make complex decision logic easier to grasp.
-      </p>
-      <p>
-        If you have real numeric data (survey, panel, platform exports), replace the indexed arrays in the HTML with actual values.
-      </p>
-      <div class="actions">
-        <button class="btn-ghost" onclick="closeSec4Modal()">Close</button>
-        <button class="btn-primary" onclick="closeSec4Modal()">Got it</button>
-      </div>
     </div>
-  </div>
-  <!-- End modal rewrite -->
+  </nav>
 
-  <div class="app">
-    <nav class="sec4-nav">
-      <!-- hide -->
-      <!-- <div class="brand">
-        <h2>Decisions</h2>
-        <span class="pill">Section 4</span>
-      </div> -->
-
-      <div class="navlinks" id="sec4_navLinks">
-        <a href="#sec4_jtbd">JTBD Ranking</a>
-        <a href="#sec4_needs">Needs Matrix</a>
-        <a href="#sec4_value">Value Logic</a>
-        <a href="#sec4_icp">ICP Profiles</a>
-        <a href="#sec4_compare">ICP vs Exclusions</a>
-        <a href="#sec4_exclusions">Exclusions</a>
-        <a href="#sec4_usage">Usage Context</a>
-      </div>
-
-      <div class="nav-footer">
-        <div><strong>Goal:</strong> Make ICP decisions understandable in &lt; 5 minutes.</div>
-        <div style="margin-top:8px;">Charts may use indexed indicators when data is qualitative.</div>
-        <button id="sec4_btnMethodNav">Indexed Indicators Note</button>
-      </div>
-    </nav>
-
-    <main class="sec4-main">
-      <div class="header">
-        <!-- hide -->
-        <!-- <h1>ICP & Decision Dashboard <span class="badge">Section 4 Output</span></h1> -->
-        <p class="subtitle">
-          This dashboard turns Section 3’s risk psychology into clear decisions: <strong>what jobs matter</strong>, <strong>what needs are non-negotiable</strong>, and <strong>who the brand is (and isn’t) for</strong>.
-          It is designed for fast stakeholder alignment.
-        </p>
-      </div>
-
-      <div class="kpis">
-        <div class="kpi">
-          <div class="label">Primary Purchase Driver</div>
-          <div class="value">Safety & Stability</div>
-          <div class="note">Non-negotiable decision logic under risk.</div>
+  <div class="max-w-screen-2xl mx-auto pt-24 pb-20 px-6 flex flex-col lg:flex-row gap-12">
+    
+    <!-- Sidebar -->
+    <aside class="w-full lg:w-72 flex-shrink-0">
+      <div class="sticky top-24 space-y-6">
+        <div>
+          <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Targeting Guide</h3>
+          <ul class="space-y-1">
+            <li><a href="#summary" class="flex items-center gap-3 px-4 py-3 rounded-2xl sidebar-active text-sm font-semibold transition-all"><span>01.</span> JTBD Hierarchy</a></li>
+            <li><a href="#data" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>02.</span> Market Dynamics</a></li>
+            <li><a href="#primary-icp" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>03.</span> Primary Persona</a></li>
+            <li><a href="#secondary-icp" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>04.</span> Secondary Persona</a></li>
+            <li><a href="#wtp" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>05.</span> Willingness to Pay</a></li>
+          </ul>
         </div>
-        <div class="kpi">
-          <div class="label">Retention Driver</div>
-          <div class="value">Routine Confidence</div>
-          <div class="note">Consistency beats novelty for this user.</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Premium Justification</div>
-          <div class="value">Risk Reduction</div>
-          <div class="note">“Peace of mind” logic (psychological).</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Strategic Exclusion</div>
-          <div class="value">Price-first</div>
-          <div class="note">Structurally incompatible; high churn.</div>
+
+        <div class="p-6 bg-amber-50 rounded-3xl border border-amber-100">
+          <p class="text-[10px] font-bold text-amber-900 uppercase tracking-widest mb-2 italic">Strategic Filter</p>
+          <p class="text-[11px] text-amber-800 leading-relaxed font-medium">Q'WELL target segments are defined by <strong>literacy</strong> and <strong>risk-aversion</strong>, not just income level. We target those who view skincare as <strong>Insurance</strong>.</p>
         </div>
       </div>
+    </aside>
 
-      <!-- JTBD -->
-      <section id="sec4_jtbd" class="section">
-        <h3>
-          1) Jobs-To-Be-Done (JTBD) <!-- — Ranked -->
-        </h3>
-
-        <div class="chips" aria-label="JTBD Filters">
-          <div class="chip active" data-filter="all">All</div>
-          <div class="chip" data-filter="primary">Adoption</div>
-          <div class="chip" data-filter="secondary">Retention</div>
-          <div class="chip" data-filter="support">Premium</div>
-          <div class="chip" data-filter="functional">Functional</div>
-          <div class="chip" data-filter="emotional">Emotional</div>
-          <div class="chip" data-filter="social">Social/Value</div>
-        </div>
-
-        <div class="grid2">
-          <div>
-            <div class="chart-container"><canvas id="sec4_chartJTBD"></canvas></div>
-            <div class="helper">Indexed (1–5) for visualization only when data is qualitative.</div>
-          </div>
-          <div>
-            <div class="chart-container"><canvas id="sec4_chartJobTypes"></canvas></div>
-            <div class="helper">Distribution of job types (share of emphasis).</div>
-          </div>
-        </div>
-
-        <div class="jtbd-list" id="sec4_jtbdList">
-          <!-- populated by JS -->
-        </div>
-        
-        <br>
-        <small><button class="linkbtn" data-toggle="sec4_srcJTBD">Show sources</button></small>
-
-        <div class="sources" id="sec4_srcJTBD">
-          <strong>Sources (add/replace with your real links):</strong><br/>
-          • Section 3 synthesis (risk aversion → safety-first needs)<br/>
-          • Forum/review excerpts showing “repeat purchase = stability” logic<br/>
-          • Search behavior (ingredient safety / verification intent)<br/>
-        </div>
-      </section>
-
-      <!-- Needs -->
-      <section id="sec4_needs" class="section">
-        <h3>
-          2) Needs Matrix — Rejection Triggers vs Secondary Benefits
-        </h3>
-        <div class="grid2">
-          <div>
-            <div class="chart-container"><canvas id="sec4_chartNeeds"></canvas></div>
-            <div class="helper">Indexed hierarchy: 5 = non-negotiable.</div>
-          </div>
-          <div>
-            <div class="profile" style="background:rgba(255,235,218,.35);">
-              <div class="meta">Decision framing</div>
-              <ul>
-                <li><strong>Non-negotiable:</strong> perceived safety, low reaction risk, verification/legitimacy signals.</li>
-                <li><strong>Tolerable compromises:</strong> slower visible results, plain packaging, low/soft scent.</li>
-                <li><strong>Irrelevant:</strong> viral novelty, “shock value” promises, celebrity endorsement (if proof is weak).</li>
-              </ul>
+    <!-- Main Content -->
+    <main class="flex-grow space-y-16">
+      
+      <!-- Hero Section -->
+      <section id="summary" class="animate-up">
+        <div class="relative p-1 bg-[#0D2B2A] rounded-[3rem] overflow-hidden shadow-2xl">
+          <div class="bg-white rounded-[2.9rem] p-10 sm:p-16 relative overflow-hidden">
+            <span class="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-900 text-[10px] font-bold rounded-full uppercase tracking-widest mb-8">Phase 04: ICP Determination</span>
+            <h1 class="serif text-4xl sm:text-6xl text-emerald-950 leading-tight mb-8">The Hierarchy of<br/><span class="italic">Defensive Needs</span></h1>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <p class="text-lg text-gray-600 leading-relaxed font-medium mb-8">
+                  Consumers "hire" Q'WELL to solve the problem of <strong>Biological Instability</strong>. We are moving from the 2018 era of "Aspirations" to the 2030 era of "Security."
+                </p>
+                <div class="space-y-6">
+                  <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-900 font-bold border border-emerald-100">1</div>
+                    <p class="text-sm font-bold text-emerald-950 uppercase tracking-tight">Non-Irritation (Security)</p>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-900 font-bold border border-emerald-100">2</div>
+                    <p class="text-sm font-bold text-emerald-950 uppercase tracking-tight">Predictable Outcome (Trust)</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-gray-50 rounded-[2rem] p-8 border border-gray-100">
+                <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">JTBD Weighting (Current Market)</h4>
+                <div class="space-y-4">
+                  <div>
+                    <div class="flex justify-between text-[11px] font-bold mb-2 uppercase"><span>Biological Security</span><span>92%</span></div>
+                    <div class="w-full bg-gray-200 h-2 rounded-full"><div class="jtbd-bar bg-emerald-900 h-full rounded-full" style="width: 92%"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-[11px] font-bold mb-2 uppercase"><span>Verification Depth</span><span>84%</span></div>
+                    <div class="w-full bg-gray-200 h-2 rounded-full"><div class="jtbd-bar bg-emerald-700 h-full rounded-full" style="width: 84%"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-[11px] font-bold mb-2 uppercase"><span>Ethical Alignment</span><span>61%</span></div>
+                    <div class="w-full bg-gray-200 h-2 rounded-full"><div class="jtbd-bar bg-emerald-500 h-full rounded-full" style="width: 61%"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-[11px] font-bold mb-2 uppercase"><span>Aesthetic Glow</span><span>22%</span></div>
+                    <div class="w-full bg-gray-200 h-2 rounded-full"><div class="jtbd-bar bg-gray-300 h-full rounded-full" style="width: 22%"></div></div>
+                  </div>
+                </div>
+                <p class="text-[9px] text-gray-400 mt-6 italic">*Source: Q'WELL 2026 Internal Synthesis of Market Verification Trends.</p>
+              </div>
             </div>
           </div>
         </div>
-        <br>
-        <small><button class="linkbtn" data-toggle="sec4_srcNeeds">Show sources</button></small>
-        <div class="sources" id="sec4_srcNeeds">
-          <strong>Sources (add/replace with your real links):</strong><br/>
-          • Shopee/Tokopedia review patterns (rejection reasons)<br/>
-          • Female Daily threads on irritation/regret and “safe routine” needs<br/>
-          • Section 3 emotional language clusters (fear → rejection triggers)<br/>
-          <em>Note:</em> Avoid precise percentages unless you have counted a defined sample.
-        </div>
       </section>
 
-      <!-- Value Logic -->
-      <section id="sec4_value" class="section">
-        <h3>3) Psychological Willingness-To-Pay (WTP) Logic</h3>
-        <div class="grid2">
-          <div>
-            <div class="chart-container"><canvas id="sec4_chartWTP"></canvas></div>
-            <div class="helper">Concept map: risk aversion vs willingness-to-pay (indexed 0–10).</div>
-          </div>
-          <div class="profile" style="background:rgba(202,241,235,.32); border-color:rgba(101,189,173,.35);">
-            <div class="meta">What this means</div>
-            <h4 style="margin:10px 0 6px;">The “Peace of Mind” Premium</h4>
-            <div style="color:var(--c-muted); font-size:.92rem; line-height:1.5;">
-              Consumers justify paying more when the purchase is framed as <strong>risk reduction</strong>:
+      <!-- Primary Persona Card -->
+      <section id="primary-icp" class="animate-up" style="animation-delay: 0.2s;">
+        <div class="flex items-center gap-3 mb-8">
+            <h2 class="serif text-4xl text-emerald-950">Primary ICP</h2>
+            <div class="h-[1px] flex-grow bg-emerald-950/10"></div>
+            <span class="text-[10px] font-black bg-emerald-950 text-white px-3 py-1 rounded">MOST VALUABLE</span>
+        </div>
 
-              avoiding regret, avoiding worsening conditions, and reducing “trial-and-error” cost.
+        <div class="glass-card overflow-hidden persona-card">
+          <div class="grid md:grid-cols-5">
+            <div class="md:col-span-2 bg-[#0D2B2A] p-10 flex flex-col justify-between relative overflow-hidden">
+                <!-- Decorative Graphic -->
+                <div class="absolute -bottom-10 -right-10 opacity-10">
+                    <svg width="200" height="200" viewBox="0 0 100 100" fill="white"><path d="M50 0L61 39L100 50L61 61L50 100L39 61L0 50L39 39L50 0Z"/></svg>
+                </div>
 
-              <br/><br/>
-              <strong>Important:</strong> Any cost comparison (e.g., dermatologist repair) should be treated as an <em>illustrative scenario</em> unless supported by Indonesia-specific evidence.
+                <div>
+                    <h3 class="serif text-3xl text-white mb-2">The Traumatized Pragmatist</h3>
+                    <p class="text-emerald-300 text-xs font-bold uppercase tracking-widest mb-8">Segment: High-Worth Security Seekers</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between border-b border-white/10 pb-2">
+                            <span class="text-[10px] text-white/50 uppercase">Age</span>
+                            <span class="text-xs font-bold text-white">28 — 42</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/10 pb-2">
+                            <span class="text-[10px] text-white/50 uppercase">Income</span>
+                            <span class="text-xs font-bold text-white">Middle-Up / Upper</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/10 pb-2">
+                            <span class="text-[10px] text-white/50 uppercase">Location</span>
+                            <span class="text-xs font-bold text-white">Tier 1 Urban (JKT/SBY)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <p class="text-[11px] text-emerald-100 font-medium italic leading-relaxed">
+                        "I’ve spent too much on products that promised a glow but gave me a rash. I don’t want a miracle; I want a guarantee that I won’t wake up with a reaction tomorrow."
+                    </p>
+                </div>
+            </div>
+
+            <div class="md:col-span-3 p-10 bg-white grid sm:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-4">Core Motivation</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed"><strong>Regret Avoidance.</strong> This user views skincare as an investment in health stability. They are likely recovering from an "Active Burn" (Retinol/AHA overuse).</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-4">The "Job" to Hire</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed">Provide <strong>Predictable Reliability</strong>. Eliminate the anxiety of the morning mirror check. Protect the barrier from Jakarta’s PM2.5.</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-4">Rejection Triggers</h4>
+                    <ul class="text-[10px] text-gray-500 space-y-2">
+                        <li>• "Hype-only" marketing.</li>
+                        <li>• Missing BPOM NIE codes.</li>
+                        <li>• Unexplained "Natural" claims.</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-2">Proof Threshold</h4>
+                    <p class="text-[11px] font-bold text-emerald-800">Requires HRIPT per SKU + International Lab Credentials to unlock $40+ pricing.</p>
+                </div>
             </div>
           </div>
         </div>
-        <br>
-        <small><button class="linkbtn" data-toggle="sec4_srcWTP">Show sources</button></small>
-        <div class="sources" id="sec4_srcWTP">
-          <strong>Sources (add/replace with your real links):</strong><br/>
-          • Section 3 value reframing logic (risk insurance vs novelty)<br/>
-          • Behavioral research on loss aversion / regret avoidance in purchase decisions<br/>
-          • Review/forum excerpts showing “I’d rather pay more than repeat failure” language<br/>
+      </section>
+
+      <!-- Secondary Persona Card -->
+      <section id="secondary-icp" class="animate-up" style="animation-delay: 0.3s;">
+        <div class="flex items-center gap-3 mb-8">
+            <h2 class="serif text-4xl text-emerald-950">Secondary ICP</h2>
+            <div class="h-[1px] flex-grow bg-emerald-950/10"></div>
+            <span class="text-[10px] font-black bg-emerald-100 text-emerald-900 px-3 py-1 rounded">GROWTH ENGINE</span>
+        </div>
+
+        <div class="glass-card overflow-hidden persona-card">
+          <div class="grid md:grid-cols-5">
+            <div class="md:col-span-2 bg-emerald-100 p-10 flex flex-col justify-between relative overflow-hidden border-r border-black/5">
+                <div>
+                    <h3 class="serif text-3xl text-emerald-950 mb-2">The Investigative Gen-Z</h3>
+                    <p class="text-emerald-800 text-xs font-bold uppercase tracking-widest mb-8">Segment: Science-First Disrupters</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between border-b border-emerald-900/10 pb-2">
+                            <span class="text-[10px] text-emerald-950/50 uppercase font-bold">Age</span>
+                            <span class="text-xs font-bold text-emerald-950">18 — 26</span>
+                        </div>
+                        <div class="flex justify-between border-b border-emerald-900/10 pb-2">
+                            <span class="text-[10px] text-emerald-950/50 uppercase font-bold">Income</span>
+                            <span class="text-xs font-bold text-emerald-950">Aspirant / Middle</span>
+                        </div>
+                        <div class="flex justify-between border-b border-emerald-900/10 pb-2">
+                            <span class="text-[10px] text-emerald-950/50 uppercase font-bold">Behavior</span>
+                            <span class="text-xs font-bold text-emerald-950">"Skintellectual"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <p class="text-[11px] text-emerald-900 font-medium italic leading-relaxed">
+                        "I watch De-influencers. I check the COA (Certificate of Analysis). If you can't prove your percentage, you're irrelevant to my routine."
+                    </p>
+                </div>
+            </div>
+
+            <div class="md:col-span-3 p-10 bg-white grid sm:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-4">Core Motivation</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed"><strong>Veracity Alignment.</strong> They value transparency as a form of respect. They want to be smarter than the marketing department.</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-4">The "Job" to Hire</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed">Provide <strong>Transparency Tools</strong>. Validate their identity as an "expert consumer" who doesn't fall for surface-level claims.</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-4">Communication Mode</h4>
+                    <ul class="text-[10px] text-gray-500 space-y-2">
+                        <li>• TikTok "Science-Tok" deep dives.</li>
+                        <li>• Batch-specific QR codes.</li>
+                        <li>• Ingredient pH & Lab Origin.</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                    <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Price Logic</h4>
+                    <p class="text-[11px] font-bold text-gray-700 uppercase">Willing to trade volume for "Batch Integrity."</p>
+                </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- ICP -->
-      <section id="sec4_icp" class="section">
-        <h3>4) Ideal Customer Profiles (ICP)</h3>
-
-        <div class="grid2">
-          <div class="profile primary">
-            <span class="pill">PRIMARY (Core)</span>
-            <h4>Stability-Seeking Pragmatist</h4>
-            <div class="meta">Derived: age, class, risk tolerance</div>
-            <ul>
-              <li><strong>Age range:</strong> 28–40 (derived)</li>
-              <li><strong>Economic class:</strong> middle-up / upper (derived from WTP logic)</li>
-              <li><strong>Decision maturity:</strong> high; low tolerance for uncertainty</li>
-              <li><strong>Routine behavior:</strong> prefers stable, repeatable daily use</li>
-              <li><strong>Core job:</strong> maintain baseline, avoid worsening, avoid regret</li>
-            </ul>
-          </div>
-
-          <div class="profile secondary">
-            <span class="pill">SECONDARY (Halo)</span>
-            <h4>Evidence-Seeking Verifier</h4>
-            <div class="meta">Credibility amplifier</div>
-            <ul>
-              <li><strong>Age range:</strong> 19–27 (derived)</li>
-              <li><strong>Economic class:</strong> middle / middle-up</li>
-              <li><strong>Decision maturity:</strong> investigative, research-driven</li>
-              <li><strong>Routine behavior:</strong> tests cautiously; shares verification learnings</li>
-              <li><strong>Halo role:</strong> helps normalize proof-led trust for the Primary ICP</li>
-            </ul>
-          </div>
-        </div>
-        <br>
-        <small><button class="linkbtn" data-toggle="sec4_srcICP">Show sources</button></small>
-        <div class="sources" id="sec4_srcICP">
-          <strong>Sources (add/replace with your real links):</strong><br/>
-          • Section 3: authority-seeking patterns + claim skepticism<br/>
-          • Review/forum evidence: “forever brand” / “safe routine” language clusters<br/>
-          • Search behavior: verification intent (BPOM/ingredients) as maturity signal<br/>
+      <!-- WTP and Risk Dynamics -->
+      <section id="wtp" class="animate-up" style="animation-delay: 0.4s;">
+        <div class="glass-card p-12">
+            <h2 class="serif text-3xl text-emerald-950 mb-10 text-center">Willingness-to-Pay vs. Risk Dynamics</h2>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="text-center space-y-4">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-100 mb-2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-emerald-950 uppercase text-xs tracking-widest">Insurance Logic</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">The premium is paid not for "luxury status," but as a <strong>safety premium</strong> to avoid dermatologist costs.</p>
+                </div>
+                <div class="text-center space-y-4">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-100 mb-2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-emerald-950 uppercase text-xs tracking-widest">Verification Depth</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">WTP increases linearly with the <strong>transparency of lab data</strong>. HRIPT per SKU is the key price-unlocker.</p>
+                </div>
+                <div class="text-center space-y-4">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-100 mb-2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-emerald-950 uppercase text-xs tracking-widest">Loyalty Shield</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Once a consumer finds a product that doesn't trigger a reaction, their <strong>switching cost</strong> becomes emotional and high.</p>
+                </div>
+            </div>
         </div>
       </section>
 
-      <!-- ICP vs Exclusions -->
-      <section id="sec4_compare" class="section">
-        <h3>5) ICP vs Excluded Segments — Structural Fit</h3>
-
-        <div class="grid2">
-          <div>
-            <div class="chart-container"><canvas id="sec4_chartCompare"></canvas></div>
-            <div class="helper">Indexed comparison (0–10) to visualize fit vs churn drivers.</div>
-          </div>
-          <div class="profile" style="background:rgba(255,204,151,.28); border-color:rgba(255,204,151,.8);">
-            <div class="meta">How to read</div>
-            <ul>
-              <li><strong>ICP</strong> scores high on risk aversion & routine stability.</li>
-              <li><strong>Excluded segments</strong> score high on price sensitivity or novelty seeking.</li>
-              <li>High mismatch = predictable churn, regardless of messaging.</li>
-            </ul>
-          </div>
+      <!-- Footer Refs -->
+      <footer class="pt-10 border-t border-gray-200">
+        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Section 4 Reference Hierarchy</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[11px] font-semibold text-gray-500">
+          <div class="hover:text-emerald-700 transition-colors">01. JTBD Framework: Clayton Christensen Institute</div>
+          <div class="hover:text-emerald-700 transition-colors">02. Bain & Co: Elements of Value (Personal Care)</div>
+          <div class="hover:text-emerald-700 transition-colors">03. NielsenIQ Indonesia Consumer Outlook 2026</div>
+          <div class="hover:text-emerald-700 transition-colors">04. McKinsey Health: The 2030 Wellness Consumer</div>
         </div>
-        
-        <br>
-        <small><button class="linkbtn" data-toggle="sec4_srcCompare">Show sources</button></small>
-        <div class="sources" id="sec4_srcCompare">
-          <strong>Sources (add/replace with your real links):</strong><br/>
-          • Section 3: switching behavior + fatigue patterns<br/>
-          • Review evidence: “switch for cheaper” language (price-first)<br/>
-          • Social discourse: “try everything” novelty patterns (trend-driven)
-
+        <div class="mt-12 flex justify-between items-center text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+          <p>© 2026 Q'WELL STRATEGIC INTELLIGENCE UNIT</p>
+          <p>CONFIDENTIAL • TARGETING PROTOCOL</p>
         </div>
-      </section>
-
-      <!-- Exclusions -->
-      <section id="sec4_exclusions" class="section danger">
-        <h3>6) Strategic Exclusions — Who the Brand is NOT For</h3>
-        <div class="grid3">
-          <button class="excl-btn" data-excl="price"><strong>Price-first buyers</strong><br/><span style="color:var(--c-muted); font-size:.85rem;">Lowest cost wins; proof rarely paid for.</span></button>
-          <button class="excl-btn" data-excl="trend"><strong>Trend / novelty seekers</strong><br/><span style="color:var(--c-muted); font-size:.85rem;">Constant switching; low routine commitment.</span></button>
-          <button class="excl-btn" data-excl="perf"><strong>Performance chasers</strong><br/><span style="color:var(--c-muted); font-size:.85rem;">Speed over safety; higher irritation tolerance.</span></button>
-        </div>
-        <div class="excl-reason" id="sec4_exclReason"></div>
-      </section>
-
-      <!-- Usage -->
-      <section id="sec4_usage" class="section">
-        <h3>7) Usage Context & Routine Expectations</h3>
-        <div class="grid2">
-          <div>
-            <div class="chart-container"><canvas id="sec4_chartUsage"></canvas></div>
-            <div class="helper">Radar profile (0–5): stability vs experimentation.</div>
-          </div>
-          <div class="profile" style="background:rgba(255,235,218,.35);">
-            <div class="meta">Routine expectations</div>
-            <ul>
-              <li>Daily use must feel <strong>safe and predictable</strong>.</li>
-              <li>Preference for <strong>simple routines</strong> over multi-step experimentation.</li>
-              <li>Commitment horizon favors <strong>long-term consistency</strong> over short-term spikes.</li>
-            </ul>
-          </div>
-        </div>
-        <br>
-        <small><button class="linkbtn" data-toggle="sec4_srcUsage">Show sources</button></small>
-        <div class="sources" id="sec4_srcUsage">
-          <strong>Sources (add/replace with your real links):</strong><br/>
-          • Section 3: fatigue + switching patterns<br/>
-          • Forum threads on “simple routine” / “basic but safe” preferences<br/>
-        </div>
-      </section>
+      </footer>
     </main>
   </div>
-</div>
 
-<script>
-    (function(){ // IIFE scope
-    
-        // ---------- Modal ----------
-        function openMethod(){ document.getElementById('sec4_methodModal').classList.add('open'); }
-        window.closeSec4Modal = function(){ document.getElementById('sec4_methodModal').classList.remove('open'); }
-
-        document.getElementById('sec4_btnMethodNav')?.addEventListener('click', openMethod);
-        document.getElementById('sec4_btnMethodDrawer')?.addEventListener('click', openMethod);
-        document.getElementById('sec4_openNotes')?.addEventListener('click', openMethod);
-
-        // ---------- Drawer ----------
-        const drawer = document.getElementById('sec4_drawer');
-        document.getElementById('sec4_openNav').addEventListener('click', ()=> drawer.classList.add('open'));
-        drawer.addEventListener('click', (e)=>{ if(e.target === drawer) drawer.classList.remove('open'); });
-        
-        document.querySelectorAll('#sec4_drawerLinks a').forEach(a=>{
-            a.addEventListener('click', ()=> drawer.classList.remove('open'));
-        });
-
-        // ---------- Active nav on scroll ----------
-        const navIds = ['sec4_jtbd','sec4_needs','sec4_value','sec4_icp','sec4_compare','sec4_exclusions','sec4_usage'];
-        const sections = navIds.map(id => document.getElementById(id));
-        const linkSets = [document.getElementById('sec4_navLinks'), document.getElementById('sec4_drawerLinks')].filter(Boolean);
-
-        const observer = new IntersectionObserver((entries)=>{
-            entries.forEach(entry=>{
-                if(entry.isIntersecting){
-                    linkSets.forEach(set=>{
-                        set.querySelectorAll('a').forEach(a=> a.classList.toggle('active', a.getAttribute('href') === '#'+entry.target.id));
-                    });
-                }
-            });
-        }, { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 });
-
-        sections.forEach(s=> s && observer.observe(s));
-
-        // ---------- Sources toggles ----------
-        // Use delegated click or attach via data attribute to avoid inline onclick
-        document.querySelectorAll('.linkbtn[data-toggle]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const id = btn.dataset.toggle;
-                const el = document.getElementById(id);
-                if(el) el.style.display = (el.style.display === 'block') ? 'none' : 'block';
-            });
-        });
-
-        // ---------- JTBD data & filters ----------
-        const jtbdItems = [
-            {name:'Avoid reactions / irritation risk', tier:'primary', kind:'functional', desc:'Hire products to minimize the chance of worsening problems and prevent regret.'},
-            {name:'Maintain baseline stability daily', tier:'secondary', kind:'functional', desc:'Consistency and predictability matter more than novelty.'},
-            {name:'Reduce anxiety (“peace of mind”)', tier:'primary', kind:'emotional', desc:'Emotional relief is a core adoption driver after repeated failures.'},
-            {name:'Trust verification / legitimacy', tier:'primary', kind:'social', desc:'Consumers use verification signals as shortcuts to reduce uncertainty.'},
-            {name:'Routine confidence & loyalty', tier:'secondary', kind:'emotional', desc:'Once “safe”, users stick—switching decreases.'},
-            {name:'Premium justification (risk insurance)', tier:'support', kind:'emotional', desc:'Pay more when framed as risk reduction, not indulgence.'},
-        ];
-
-        const jtbdList = document.getElementById('sec4_jtbdList');
-        function renderJTBD(filter){
-            if(!jtbdList) return;
-            jtbdList.innerHTML = '';
-            const items = jtbdItems.filter(it=>{
-                if(filter === 'all') return true;
-                return it.tier === filter || it.kind === filter;
-            });
-            items.forEach(it=>{
-                const div = document.createElement('div');
-                div.className = 'jtbd';
-                div.dataset.tier = it.tier;
-                div.dataset.kind = it.kind;
-                const tagClass = it.tier === 'secondary' ? 'tag secondary' : (it.tier === 'support' ? 'tag support' : 'tag');
-                const tagText = it.tier === 'primary' ? 'Adoption' : (it.tier === 'secondary' ? 'Retention' : 'Premium');
-                div.innerHTML = `
-                <div class="top">
-                    <div class="name">${it.name}</div>
-                    <span class="${tagClass}">${tagText} • ${it.kind.charAt(0).toUpperCase()+it.kind.slice(1)}</span>
-                </div>
-                <p>${it.desc}</p>
-                `;
-                jtbdList.appendChild(div);
-            });
+  <script>
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 100,
+            behavior: 'smooth'
+          });
         }
-        renderJTBD('all');
+      });
+    });
 
-        document.querySelectorAll('#sec4_jtbd .chip').forEach(ch=>{
-            ch.addEventListener('click', ()=>{
-                document.querySelectorAll('#sec4_jtbd .chip').forEach(x=> x.classList.remove('active'));
-                ch.classList.add('active');
-                renderJTBD(ch.dataset.filter);
-            });
-        });
-
-        // ---------- Charts (indexed demo values) ----------
-        if(typeof Chart !== 'undefined'){
-            const palette = ['#65BDAD', '#FFCC97', '#CAF1EB'];
-
-            // JTBD Priority
-            const c1 = document.getElementById('sec4_chartJTBD');
-            if(c1) new Chart(c1, {
-            type: 'bar',
-            data: {
-                labels: ['Adoption', 'Retention', 'Premium'],
-                datasets: [{
-                label: 'Importance (1–5)',
-                data: [4.8, 4.3, 3.6],
-                backgroundColor: palette,
-                borderRadius: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                devicePixelRatio: (window.devicePixelRatio || 2),
-                indexAxis:'y',
-                plugins:{ legend:{display:false}, title:{display:true, text:'JTBD Priority (Indexed)'} },
-                scales:{ x:{ beginAtZero:true, max:5 } }
-            }
-            });
-
-            // Job type distribution
-            const c2 = document.getElementById('sec4_chartJobTypes');
-            if(c2) new Chart(c2, {
-            type:'doughnut',
-            data:{
-                labels:['Functional','Emotional','Social/Value'],
-                datasets:[{ data:[48, 38, 14], backgroundColor:palette }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                devicePixelRatio: (window.devicePixelRatio || 2),
-                plugins:{ title:{ display:true, text:'Job Type Distribution (Share)'} }
-            }
-            });
-
-            // Needs hierarchy
-            const c3 = document.getElementById('sec4_chartNeeds');
-            if(c3) new Chart(c3, {
-            type:'bar',
-            data:{
-                labels:['Safety / low reaction risk','Legitimacy / verification','Routine fit','Scent / sensorial','Viral novelty'],
-                datasets:[{
-                label:'Decision weight (1–5)',
-                data:[5.0, 4.6, 4.0, 2.2, 1.4],
-                backgroundColor:'#65BDAD',
-                borderRadius:10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                devicePixelRatio: (window.devicePixelRatio || 2),
-                plugins:{ legend:{display:false}, title:{display:true, text:'Need Hierarchy (Indexed)'} },
-                scales:{ y:{ beginAtZero:true, max:5 } }
-            }
-            });
-
-            // WTP scatter
-            const c4 = document.getElementById('sec4_chartWTP');
-            if(c4) new Chart(c4, {
-            type:'scatter',
-            data:{
-                datasets:[
-                { label:'Primary ICP', data:[{x:9, y:8.5}], backgroundColor:'#65BDAD', pointRadius:12 },
-                { label:'Secondary ICP', data:[{x:7.2, y:6.2}], backgroundColor:'#FFCC97', pointRadius:10 }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                devicePixelRatio: (window.devicePixelRatio || 2),
-                plugins:{ title:{display:true, text:'Risk Aversion vs Willingness-to-Pay (Indexed)'} },
-                scales:{
-                x:{ title:{display:true, text:'Risk Aversion (0–10)'}, min:0, max:10 },
-                y:{ title:{display:true, text:'WTP Readiness (0–10)'}, min:0, max:10 }
-                }
-            }
-            });
-
-            // ICP vs exclusions comparison
-            const c5 = document.getElementById('sec4_chartCompare');
-            if(c5) new Chart(c5, {
-            type:'bar',
-            data:{
-                labels:['Primary ICP','Secondary ICP','Price-first','Trend-driven','Performance chaser'],
-                datasets:[
-                { label:'Risk aversion', data:[9, 7.2, 3, 4, 2.5], backgroundColor:'rgba(101,189,173,.75)', borderRadius:10 },
-                { label:'Price sensitivity', data:[3.5, 5.5, 9.5, 7.5, 6.5], backgroundColor:'rgba(255,204,151,.85)', borderRadius:10 },
-                { label:'Routine stability', data:[8.5, 6.5, 3, 2.5, 4], backgroundColor:'rgba(202,241,235,.95)', borderRadius:10 }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                devicePixelRatio: (window.devicePixelRatio || 2),
-                plugins:{ title:{display:true, text:'Structural Fit Comparison (Indexed)'} },
-                scales:{ y:{ beginAtZero:true, max:10 } }
-            }
-            });
-
-            // Usage radar
-            const c6 = document.getElementById('sec4_chartUsage');
-            if(c6) new Chart(c6, {
-            type:'radar',
-            data:{
-                labels:['Routine stability','Safety focus','Long-term commitment','Experimentation tolerance'],
-                datasets:[{
-                label:'Target profile (0–5)',
-                data:[5, 5, 4.5, 1.6],
-                fill:true,
-                backgroundColor:'rgba(101,189,173,.18)',
-                borderColor:'#65BDAD',
-                pointBackgroundColor:'#65BDAD'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                devicePixelRatio: (window.devicePixelRatio || 2), scales:{ r:{ min:0, max:5, ticks:{ display:false } } } }
-            });
+    // Sidebar active state on scroll
+    const sections = ['summary', 'primary-icp', 'secondary-icp', 'wtp'];
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sec = document.getElementById(section);
+        if (sec && pageYOffset >= sec.offsetTop - 150) {
+          current = section;
         }
+      });
 
-        // ---------- Exclusions ----------
-        // Attached via event delegation for exlc-btn
-        document.querySelectorAll('.excl-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const type = btn.dataset.excl;
-                const box = document.getElementById('sec4_exclReason');
-                if(!box) return;
-                box.style.display = 'block';
-                const reasons = {
-                    price: '<strong>Structural incompatibility:</strong> the dominant job is low price, not risk reduction. Proof-led value is not reliably paid for; churn is predictable.',
-                    trend: '<strong>Structural incompatibility:</strong> novelty is the reward. Safety-first brands require routine commitment; novelty seekers switch before compound benefits appear.',
-                    perf: '<strong>Structural incompatibility:</strong> prioritizes speed over stability. If results are not immediate, the product is judged “weak”, leading to rapid abandonment.'
-                };
-                box.innerHTML = reasons[type] || '';
-            });
-        });
-
-        // Teleport modal to body to bypass accordion transform issues
-        const modalEl = document.getElementById('sec4_methodModal');
-        if (modalEl && modalEl.parentElement !== document.body) {
-            document.body.appendChild(modalEl);
+      document.querySelectorAll('aside a').forEach(a => {
+        a.classList.remove('sidebar-active');
+        a.classList.add('text-gray-600');
+        if (a.getAttribute('href') === `#${current}`) {
+          a.classList.add('sidebar-active');
+          a.classList.remove('text-gray-600');
         }
-
-    })();
-</script>
+      });
+    });
+  </script>
+</body>

@@ -1,956 +1,417 @@
 
+  <style>
+    :root {
+      --primary: #0D2B2A;       /* Deep Forest */
+      --secondary: #164E4D;     /* Dark Teal */
+      --accent: #D4AF37;        /* Gold/Bronze */
+      --paper: #F8F9FA;         /* Gallery Grey */
+      --ink: #111827;           /* Deep Grey */
+      --muted: #6B7280;         /* Slate */
+      --radius: 1.5rem;
+      --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'brand-orange': '#FFCC97',
-                        'brand-cream': '#FFEBDA',
-                        'brand-mint': '#CAF1EB',
-                        'brand-teal': '#65BDAD',
-                        'brand-dark': '#2D3748',
-                        'brand-gray': '#F7FAFC'
-                    },
-                    fontFamily: {
-                        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    /* Scoped Styles for Section 6 */
+    #section6-root {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background-color: var(--paper);
+      /* scroll-behavior: smooth; - Removed to prevent conflicts with parent */
+    }
 
-    <style>
-        /* Chart Container Strict Styling */
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 100%; /* Let grid handle max width */
-            height: 300px;
-            max-height: 350px;
-            margin: 0 auto;
-        }
-        
-        /* Custom Scrollbar for Table */
-        .custom-scrollbar::-webkit-scrollbar {
-            height: 8px;
-            width: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #CBD5E0;
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #A0AEC0;
-        }
+    .serif { font-family: 'Playfair Display', serif; }
 
-        /* Utility for badge dots */
-        .dot {
-            height: 10px;
-            width: 10px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-    </style>
-    <!-- 
-        Pallete Used:
-        Orange: #FFCC97
-        Cream: #FFEBDA
-        Mint: #CAF1EB
-        Teal: #65BDAD
-        
-        NO SVG USED.
-        NO MERMAID JS USED.
-    -->
-</head>
-<body class="bg-gray-50 text-slate-800 font-sans antialiased">
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
 
-    <!-- Top Navigation / Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-20 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                <!-- <div>
-                    <h1 class="text-xl font-bold text-slate-900 tracking-tight">SECTION 6 — Competitive Landscape</h1>
-                    <p class="text-xs text-slate-500 uppercase tracking-wider mt-1">Natural & Sensitive Claim Analysis</p>
-                </div> -->
-                
-                <div class="flex items-center space-x-3">
-                    <!-- <button onclick="resetFilters()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                        Reset Filters
-                    </button> -->
-                    <!-- <button onclick="exportCSV()" class="px-4 py-2 text-sm font-medium text-white bg-brand-teal hover:bg-teal-600 rounded-lg shadow-sm transition-colors">
-                        Download CSV
-                    </button> -->
-                </div>
-            </div>
+    .sidebar-active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 16px rgba(13, 43, 42, 0.15);
+    }
 
-            <!-- Filters Toolbar -->
-            <div class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
-                <select id="filterTier" onchange="filterData()" class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-brand-teal focus:ring focus:ring-brand-teal focus:ring-opacity-50 p-2 bg-gray-50">
-                    <option value="All">All Price Tiers</option>
-                    <option value="Mass">Mass (<150k)</option>
-                    <option value="Upper-Mass">Upper-Mass (150-350k)</option>
-                    <option value="Premium">Premium (350-600k)</option>
-                    <option value="Clinical">Clinical-Adjacent (>600k)</option>
-                </select>
+    .bg-grid {
+      background-size: 60px 60px;
+      background-image: radial-gradient(circle, #0000000a 1px, transparent 1px);
+    }
 
-                <select id="filterDepth" onchange="filterData()" class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-brand-teal focus:ring focus:ring-brand-teal focus:ring-opacity-50 p-2 bg-gray-50">
-                    <option value="All">All Verification Depths</option>
-                    <option value="Low">Low (Surface)</option>
-                    <option value="Medium">Medium (Semi)</option>
-                    <option value="High">High (Structural)</option>
-                </select>
+    /* Comparison Bar Chart */
+    .bar-animate {
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-                <select id="filterClaim" onchange="filterData()" class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-brand-teal focus:ring focus:ring-brand-teal focus:ring-opacity-50 p-2 bg-gray-50">
-                    <option value="All">All Claim Types</option>
-                    <option value="Surface-Level">Surface-Level</option>
-                    <option value="Semi-Specific">Semi-Specific</option>
-                    <option value="Structural">Structural</option>
-                </select>
+    /* Competitive Quadrant */
+    .quadrant-label {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #94a3b8;
+    }
 
-                <select id="filterSub" onchange="filterData()" class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-brand-teal focus:ring focus:ring-brand-teal focus:ring-opacity-50 p-2 bg-gray-50">
-                    <option value="All">All Substitutability</option>
-                    <option value="True Substitute">True Substitute</option>
-                    <option value="Partial Substitute">Partial Substitute</option>
-                    <option value="False Substitute">False Substitute</option>
-                </select>
+    /* Animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-up { animation: fadeInUp 0.7s ease-out forwards; }
 
-                <button onclick="resetFilters()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                    Reset Filters
-                </button>
-                <!-- <input type="text" id="searchBrand" onkeyup="filterData()" placeholder="Search Brand..." class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-brand-teal focus:ring focus:ring-brand-teal focus:ring-opacity-50 p-2 bg-white"> -->
-            </div>
+    /* Custom Scrollbar */
+    #section6-root ::-webkit-scrollbar { width: 6px; }
+    #section6-root ::-webkit-scrollbar-track { background: transparent; }
+    #section6-root ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+  </style>
+<div id="section6-root" class="bg-grid w-full relative">
+
+  <!-- Section Header / Nav -->
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6 w-full">
+    <div class="w-full flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-10 bg-[#0D2B2A] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">Q</div>
+        <div class="hidden sm:block">
+          <p class="text-xs font-bold uppercase tracking-widest text-[#0D2B2A]">Competitive Intelligence</p>
+          <p class="text-[10px] text-gray-400 uppercase tracking-tight font-medium">Doc Ref: SECTION-06-BATTLEMAP</p>
         </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- Top Row: Executive Summary & KPIs -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            
-            <!-- Executive Summary -->
-            <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <h2 class="text-lg font-bold text-slate-800 mb-3 border-l-4 border-brand-teal pl-3">Executive Summary</h2>
-                <div class="prose prose-sm text-slate-600 space-y-2">
-                    <p>• <span class="font-semibold text-slate-800">Landscape Saturation:</span> The "Natural" claim space is heavily saturated in the Mass/Upper-Mass tiers, primarily driven by surface-level marketing rather than structural verification.</p>
-                    <p>• <span class="font-semibold text-slate-800">The "Trust Gap":</span> A significant divergence exists between price and verification depth. Many "Premium" priced brands lack the structural certification (HRIPT, International Labs) to justify their price point purely on safety grounds.</p>
-                    <p>• <span class="font-semibold text-slate-800">Opportunity:</span> The Target Premium Brand occupies a distinct high-verification / high-premium quadrant, offering a clinical-grade safety profile that is scarce among lifestyle-natural competitors.</p>
-                </div>
-                <div class="mt-4 p-3 bg-brand-cream rounded-lg border border-brand-orange text-xs text-orange-900 flex items-start">
-                    <span class="text-lg mr-2">💡</span>
-                    <div>
-                        <strong>Key Takeaway:</strong> Identical claim wording (e.g., "Hypoallergenic") does not correlate with identical verification infrastructure across tiers.
-                    </div>
-                </div>
-            </div>
-
-            <!-- KPIs -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-sm font-semibold text-slate-500 uppercase">Total Universe</h3>
-                    <div class="text-3xl font-bold text-slate-900 mt-1" id="kpiTotal">0</div>
-                </div>
-                <div class="grid grid-cols-2 gap-4 mt-6">
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-500 uppercase">True Substitutes</h3>
-                        <div class="text-xl font-bold text-brand-teal mt-1" id="kpiTrueSub">0</div>
-                    </div>
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-500 uppercase">Structural Claims</h3>
-                        <div class="text-xl font-bold text-slate-900 mt-1" id="kpiStructural">0%</div>
-                    </div>
-                </div>
-                <div class="mt-6 pt-4 border-t border-gray-100">
-                    <p class="text-xs text-slate-400 italic">Interpretation note: Indexes are directional, not statistical. Analysis based on secondary sources.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Middle Row: Charts & Logic -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            
-            <!-- Scatter Plot (Primary Visual) -->
-            <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-lg font-bold text-slate-800">Price vs. Verification Depth Matrix</h2>
-                    <span class="text-xs bg-brand-mint text-teal-800 px-2 py-1 rounded-full font-medium">Core Visual</span>
-                </div>
-                <div class="chart-container">
-                    <canvas id="scatterChart"></canvas>
-                </div>
-                <div class="mt-4 flex justify-center space-x-6 text-xs text-slate-500">
-                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-slate-300 mr-1"></span> Mass/Upper</div>
-                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-brand-teal mr-1"></span> Premium</div>
-                    <div class="flex items-center"><span class="w-3 h-3 rounded-full border-2 border-brand-orange bg-white mr-1"></span> Target Brand</div>
-                </div>
-            </div>
-
-            <!-- Brand Detail Panel (Sticky-ish) -->
-            <div class="bg-white rounded-xl shadow-sm border border-brand-teal border-t-4 p-6 row-span-2 h-fit">
-                <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Brand Detail View</h3>
-                
-                <div id="brandDetailContent" class="space-y-4">
-                    <!-- Default State -->
-                    <div class="text-center py-10 opacity-50">
-                        <div class="text-4xl mb-2">👆</div>
-                        <p class="text-sm">Click a dot on the chart<br>or a row in the table<br>to view details.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Claim Inflation -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <h2 class="text-sm font-bold text-slate-800 mb-4">Claim Inflation Lens</h2>
-                <div class="chart-container" style="height: 250px;">
-                    <canvas id="barChart"></canvas>
-                </div>
-                <div class="mt-4 text-xs text-slate-500">
-                    <p class="mb-1"><strong>Observation:</strong> "Sensitive" claims are prevalent in Mass tiers but often lack specific protocol disclosure (HRIPT).</p>
-                </div>
-            </div>
-
-            <!-- Structural Cost Logic -->
-            <div class="bg-brand-gray rounded-xl shadow-sm border border-gray-200 p-6">
-                <h2 class="text-sm font-bold text-slate-800 mb-3">Structural Cost Logic</h2>
-                <ul class="space-y-3 text-xs text-slate-600">
-                    <li class="flex items-start">
-                        <span class="mr-2 text-brand-teal font-bold">1.</span>
-                        <span><strong>Testing Depth:</strong> Single-patch test (Mass) vs. HRIPT on 50+ subjects (Premium) drives 10x-20x cost difference per SKU.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-brand-teal font-bold">2.</span>
-                        <span><strong>Lab Location:</strong> International labs (Europe/Korea) incur higher fees & logistics than local generic verification.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-brand-teal font-bold">3.</span>
-                        <span><strong>Scale:</strong> Mass brands amortize compliance costs over millions of units; Niche Premium brands absorb them over thousands.</span>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-
-        <!-- Premium Shortlist (Horizontal Card) -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
-            <h2 class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-brand-orange pl-3">Premium Shortlist: True Substitutes</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="shortlistContainer">
-                <!-- Shortlist items injected by JS -->
-            </div>
-        </div>
-
-        <!-- Data Table -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                <h2 class="text-lg font-bold text-slate-800">Master Competitor Validation</h2>
-                <span class="text-xs text-slate-400">Scroll horizontally for more columns</span>
-            </div>
-            <div class="overflow-x-auto custom-scrollbar">
-                <div style="max-height:400px;overflow-y:auto;">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50 sticky top-0 z-10">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Brand</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Tier</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Claim Type</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Verif. Depth</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Substitutability</th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider bg-gray-50">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200" id="tableBody">
-                            <!-- Table rows injected by JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Guardrails -->
-        <div class="mt-8 text-center max-w-2xl mx-auto">
-            <p class="text-xs text-slate-400">
-                <strong>Disclaimer:</strong> Analysis based on publicly available secondary data as of October 2023. "Not disclosed" does not definitively mean a test was not performed, only that it is not marketed. Price tiers are approximate based on retail listings.
-            </p>
-        </div>
-
-    </main>
-
-    <!-- Source Modal -->
-    <div id="sourceModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[80vh] flex flex-col">
-            <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-lg">
-                <h3 class="font-bold text-slate-800" id="modalTitle">Sources</h3>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
-            </div>
-            <div class="p-6 overflow-y-auto" id="modalContent">
-                <!-- Sources list -->
-            </div>
-            <div class="p-4 border-t border-gray-100 bg-gray-50 rounded-b-lg text-right">
-                <button onclick="closeModal()" class="px-4 py-2 bg-white border border-gray-300 rounded text-sm text-slate-600 hover:bg-gray-50">Close</button>
-            </div>
-        </div>
+      </div>
+      <div class="flex items-center gap-4 text-[11px] font-bold">
+        <span class="px-3 py-1 bg-amber-50 text-amber-800 rounded-full border border-amber-100 uppercase tracking-widest">Strategy: Disruptive Premium</span>
+        <button onclick="window.print()" class="px-5 py-2 bg-[#0D2B2A] text-white rounded-full hover:bg-emerald-900 transition-all text-xs">
+          EXPORT COMPETITIVE AUDIT
+        </button>
+      </div>
     </div>
+  </nav>
 
-    <script>
-        // =========================================================================
-        // DATASET - PASTE SECTION 6 DATA HERE
-        // =========================================================================
-        
-        // NOTE TO USER: Replace this array with your final research output.
-        const DATA = [
-            {
-                id: "target",
-                brand: "Target Premium Brand",
-                tier: "Premium",
-                priceIndex: 3.2, // Visual Y-axis (1-4)
-                depthIndex: 2.9, // Visual X-axis (1-3)
-                claimType: "Structural",
-                verificationDepth: "High",
-                substitutability: "Target",
-                channels: ["Online", "Clinic"],
-                certifications: { vegan: "Traceable", cruelty: "Traceable", halal: "Yes" },
-                notes: "HRIPT, International Lab, Sensitive-first positioning. The benchmark.",
-                sources: ["Internal Brief", "Lab Reports"]
-            },
-            {
-                id: "sensatia",
-                brand: "Sensatia Botanicals",
-                tier: "Premium",
-                priceIndex: 2.8,
-                depthIndex: 2.7,
-                claimType: "Structural",
-                verificationDepth: "High",
-                substitutability: "True Substitute",
-                channels: ["Offline Stores", "Shopee", "Website"],
-                certifications: { vegan: "Documented", cruelty: "Documented", halal: "Yes" },
-                notes: "Strongest structural competitor. GMP certified facility in Bali. Explicit ingredient transparency.",
-                sources: ["https://sensatia.com", "Product Packaging"]
-            },
-            {
-                id: "puresia",
-                brand: "Puresia",
-                tier: "Premium",
-                priceIndex: 2.6,
-                depthIndex: 2.1,
-                claimType: "Semi-Specific",
-                verificationDepth: "Medium",
-                substitutability: "Partial Substitute",
-                channels: ["Shopee", "Tokopedia"],
-                certifications: { vegan: "Icon-only", cruelty: "Icon-only", halal: "No" },
-                notes: "High aesthetic alignment but less structural testing disclosure than Sensatia.",
-                sources: ["Official Shopee Store", "Social Media"]
-            },
-            {
-                id: "biotalk",
-                brand: "Biotalk",
-                tier: "Upper-Mass",
-                priceIndex: 2.1,
-                depthIndex: 2.3,
-                claimType: "Semi-Specific",
-                verificationDepth: "Medium",
-                substitutability: "Partial Substitute",
-                channels: ["Shopee", "TikTok Shop"],
-                certifications: { vegan: "No", cruelty: "Icon-only", halal: "Yes" },
-                notes: "Sensitive-skin focused (eczema), but price point is lower. Clinical claims present but less rigorous disclosure.",
-                sources: ["Biotalk.id", "User Reviews"]
-            },
-            {
-                id: "bodyshop",
-                brand: "The Body Shop",
-                tier: "Upper-Mass",
-                priceIndex: 2.4,
-                depthIndex: 2.2,
-                claimType: "Surface-Level",
-                verificationDepth: "Medium",
-                substitutability: "False Substitute",
-                channels: ["Malls", "Website", "Marketplace"],
-                certifications: { vegan: "Documented", cruelty: "Documented", halal: "No" },
-                notes: "Huge scale, vegan certified, but often relies on fragrance which limits true sensitive-skin substitutability.",
-                sources: ["The Body Shop Indo Website"]
-            },
-            {
-                id: "sukin",
-                brand: "Sukin",
-                tier: "Premium",
-                priceIndex: 2.7,
-                depthIndex: 2.0,
-                claimType: "Surface-Level",
-                verificationDepth: "Medium",
-                substitutability: "False Substitute",
-                channels: ["Sociolla", "Watson"],
-                certifications: { vegan: "Documented", cruelty: "Documented", halal: "No" },
-                notes: "Import brand. Carbon neutral focus. 'Natural' claims are standard, not clinical-grade.",
-                sources: ["Sukin Labels", "Sociolla"]
-            },
-            {
-                id: "cahaya",
-                brand: "Cahaya Naturals",
-                tier: "Upper-Mass",
-                priceIndex: 1.9,
-                depthIndex: 2.2,
-                claimType: "Semi-Specific",
-                verificationDepth: "Medium",
-                substitutability: "Partial Substitute",
-                channels: ["Marketplace"],
-                certifications: { vegan: "No", cruelty: "Icon-only", halal: "Yes" },
-                notes: "Local natural brand. Eczema focus. Good community trust but smaller verification footprint.",
-                sources: ["Official Website"]
-            },
-            {
-                id: "cetaphil",
-                brand: "Cetaphil",
-                tier: "Upper-Mass",
-                priceIndex: 1.8,
-                depthIndex: 2.8,
-                claimType: "Structural",
-                verificationDepth: "High",
-                substitutability: "False Substitute",
-                channels: ["Pharmacies", "Supermarkets"],
-                certifications: { vegan: "No", cruelty: "No", halal: "Yes" },
-                notes: "Clinical gold standard but NOT 'Natural' positioned. The 'Proof' anchor for the category.",
-                sources: ["Dermatology recommendations"]
-            },
-            {
-                id: "klenkind",
-                brand: "Klen and Kind",
-                tier: "Premium",
-                priceIndex: 2.9,
-                depthIndex: 2.0,
-                claimType: "Semi-Specific",
-                verificationDepth: "Medium",
-                substitutability: "Partial Substitute",
-                channels: ["Website", "Marketplace"],
-                certifications: { vegan: "Icon-only", cruelty: "Icon-only", halal: "No" },
-                notes: "Very aesthetic, aromatherapy focus. Less clinical language.",
-                sources: ["Website"]
-            },
-            {
-                id: "utama",
-                brand: "Utama Spice",
-                tier: "Upper-Mass",
-                priceIndex: 2.2,
-                depthIndex: 2.0,
-                claimType: "Surface-Level",
-                verificationDepth: "Medium",
-                substitutability: "False Substitute",
-                channels: ["Bali Stores", "Online"],
-                certifications: { vegan: "Icon-only", cruelty: "Icon-only", halal: "No" },
-                notes: "Traditional herbal focus. Not directly competing on 'clinical safety'.",
-                sources: ["Website"]
-            },
-            {
-                id: "npure",
-                brand: "N'PURE",
-                tier: "Mass",
-                priceIndex: 1.4,
-                depthIndex: 1.5,
-                claimType: "Surface-Level",
-                verificationDepth: "Low",
-                substitutability: "False Substitute",
-                channels: ["Mass Retail", "Online"],
-                certifications: { vegan: "No", cruelty: "Icon-only", halal: "Yes" },
-                notes: "Mass market natural. Ingredients highlighted but low disclosure on testing specifics.",
-                sources: ["Packaging"]
-            },
-            {
-                id: "bhumi",
-                brand: "Bhumi",
-                tier: "Premium",
-                priceIndex: 3.0,
-                depthIndex: 2.5,
-                claimType: "Structural",
-                verificationDepth: "High",
-                substitutability: "True Substitute",
-                channels: ["Online"],
-                certifications: { vegan: "Icon-only", cruelty: "Icon-only", halal: "Yes" },
-                notes: "Uses active ingredients heavily. 'Nutrition' angle similar to Target Brand.",
-                sources: ["Website"]
-            },
-            {
-                id: "serenitree",
-                brand: "Serenitree",
-                tier: "Premium",
-                priceIndex: 2.7,
-                depthIndex: 2.3,
-                claimType: "Semi-Specific",
-                verificationDepth: "Medium",
-                substitutability: "Partial Substitute",
-                channels: ["Online"],
-                certifications: { vegan: "No", cruelty: "Icon-only", halal: "No" },
-                notes: "Gentle/Natural positioning. Good overlap in target audience.",
-                sources: ["Website"]
-            }
-        ];
+  <div class="w-full flex flex-col lg:flex-row gap-12 pt-10 pb-32">
+    
+    <!-- Navigation Sidebar -->
+    <aside class="w-full lg:w-72 flex-shrink-0 pl-6">
+      <div class="space-y-6 lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
+        <div>
+          <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Audit Navigation</h3>
+          <ul class="space-y-1">
+            <li><a href="#universe" class="flex items-center gap-3 px-4 py-3 rounded-2xl sidebar-active text-sm font-semibold transition-all"><span>01.</span> Mandatory Universe</a></li>
+            <li><a href="#price-ladder" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>02.</span> Pricing Ladder</a></li>
+            <li><a href="#verification" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>03.</span> Verification Depth</a></li>
+            <li><a href="#whitespace" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>04.</span> Strategic White Space</a></li>
+            <li><a href="#playbook" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>05.</span> Offensive Playbook</a></li>
+          </ul>
+        </div>
 
-        // Global State
-        let filteredData = [...DATA];
-        let scatterChartInstance = null;
-        let barChartInstance = null;
+        <div class="p-6 bg-amber-50 rounded-3xl border border-amber-100">
+          <p class="text-[10px] font-bold text-amber-900 uppercase tracking-widest mb-3 italic">Competitive Insight</p>
+          <p class="text-[11px] leading-relaxed text-amber-800 font-medium">Local incumbents (Sensatia, etc.) lead in <strong>Accessibility</strong> and <strong>Storytelling</strong>, but lag in <strong>Verification Depth</strong>. This is where Q'WELL wins.</p>
+        </div>
+      </div>
+    </aside>
 
-        // =========================================================================
-        // INITIALIZATION
-        // =========================================================================
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            initDashboard();
-        });
-
-        function initDashboard() {
-            renderKPIs();
-            renderCharts();
-            renderTable();
-            renderShortlist();
+    <!-- Main Dashboard -->
+    <main class="flex-grow min-w-0 space-y-16 pr-6">
+      
+      <!-- Mandatory Universe -->
+      <section id="universe" class="animate-up">
+        <div class="relative p-1 bg-[#0D2B2A] rounded-[3rem] overflow-hidden shadow-2xl">
+          <div class="bg-white rounded-[2.9rem] p-10 sm:p-16 relative overflow-hidden">
+            <span class="inline-block px-4 py-1.5 bg-emerald-50 text-[#0D2B2A] text-[10px] font-bold rounded-full uppercase tracking-widest mb-8 border border-emerald-100">Mandatory Universe Validation</span>
             
-            // Render Target Brand in Detail View by default
-            handleBrandClick('target');
-        }
-
-        // =========================================================================
-        // FILTER LOGIC
-        // =========================================================================
-
-        function filterData() {
-            const tierVal = document.getElementById('filterTier').value;
-            const depthVal = document.getElementById('filterDepth').value;
-            const claimVal = document.getElementById('filterClaim').value;
-            const subVal = document.getElementById('filterSub').value;
-            const searchVal = document.getElementById('searchBrand').value.toLowerCase();
-
-            filteredData = DATA.filter(item => {
-                const matchTier = tierVal === 'All' || item.tier === tierVal;
-                const matchDepth = depthVal === 'All' || item.verificationDepth === depthVal;
-                const matchClaim = claimVal === 'All' || item.claimType === claimVal;
-                const matchSub = subVal === 'All' || item.substitutability === subVal;
-                const matchSearch = item.brand.toLowerCase().includes(searchVal);
-                return matchTier && matchDepth && matchClaim && matchSub && matchSearch;
-            });
-
-            updateDashboard();
-        }
-
-        function resetFilters() {
-            document.getElementById('filterTier').value = 'All';
-            document.getElementById('filterDepth').value = 'All';
-            document.getElementById('filterClaim').value = 'All';
-            document.getElementById('filterSub').value = 'All';
-            document.getElementById('searchBrand').value = '';
-            filterData();
-        }
-
-        function updateDashboard() {
-            renderKPIs();
-            updateCharts();
-            renderTable();
-        }
-
-        // =========================================================================
-        // RENDERING
-        // =========================================================================
-
-        function renderKPIs() {
-            document.getElementById('kpiTotal').innerText = filteredData.length;
-            
-            const trueSubs = filteredData.filter(i => i.substitutability === 'True Substitute' || i.substitutability === 'Target').length;
-            document.getElementById('kpiTrueSub').innerText = trueSubs;
-
-            const structCount = filteredData.filter(i => i.claimType === 'Structural').length;
-            const structPct = filteredData.length ? Math.round((structCount / filteredData.length) * 100) : 0;
-            document.getElementById('kpiStructural').innerText = structPct + '%';
-        }
-
-        function renderShortlist() {
-            const container = document.getElementById('shortlistContainer');
-            const substitutes = DATA.filter(i => (i.substitutability === 'True Substitute' || i.substitutability === 'Target') && i.id !== 'target'); // Exclude target from list if desired, or keep it. Let's keep distinct.
-            
-            // Actually, let's just show "True Substitute" tagged items
-            const listItems = substitutes.map(item => `
-                <div class="bg-gray-50 rounded p-4 border border-gray-200 hover:border-brand-teal transition-colors cursor-pointer" onclick="handleBrandClick('${item.id}')">
-                    <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-slate-800 text-sm">${item.brand}</h4>
-                        <span class="text-xs font-mono bg-brand-cream text-orange-900 px-1 rounded">${item.tier}</span>
+            <div class="grid lg:grid-cols-2 gap-16">
+              <div>
+                <h1 class="serif text-4xl sm:text-6xl text-emerald-950 leading-tight mb-8">Incumbent <span class="italic text-[#D4AF37]">Benchmarking</span></h1>
+                <p class="text-lg text-gray-600 leading-relaxed font-medium mb-10">
+                  The Indonesian premium hair and body landscape is maturing. We benchmark Q'WELL against the "Mandatory Universe"—brands currently occupying the psychological and retail space of our target ICP.
+                </p>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="w-2 h-2 bg-emerald-900 rounded-full"></span>
+                        <p class="text-sm font-bold text-emerald-950 uppercase tracking-tight">Local Premium: <span class="text-gray-400 font-medium">Sensatia, Cahaya Naturals, Eucalie</span></p>
                     </div>
-                    <p class="text-xs text-slate-500 line-clamp-2 mb-2">${item.notes}</p>
-                    <div class="flex gap-1 flex-wrap">
-                        ${item.claimType === 'Structural' ? '<span class="text-[10px] px-1 bg-brand-mint text-teal-800 rounded">Structural</span>' : ''}
-                        ${item.verificationDepth === 'High' ? '<span class="text-[10px] px-1 bg-blue-100 text-blue-800 rounded">High Verif</span>' : ''}
+                    <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                        <p class="text-sm font-bold text-emerald-950 uppercase tracking-tight">International Lifestyle: <span class="text-gray-400 font-medium">Aesop, L'Occitane, Sukin</span></p>
+                    </div>
+                    <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                        <p class="text-sm font-bold text-emerald-950 uppercase tracking-tight">Clinical-Adjacent: <span class="text-gray-400 font-medium">Kiehl's, Drunk Elephant</span></p>
                     </div>
                 </div>
-            `).join('');
-
-            container.innerHTML = listItems || '<p class="text-sm text-slate-400 p-4">No True Substitutes found in current filter.</p>';
-        }
-
-        function renderTable() {
-            const tbody = document.getElementById('tableBody');
-            if (filteredData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No brands match filters</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = filteredData.map(item => `
-                <tr class="hover:bg-brand-gray transition-colors cursor-pointer" onclick="handleBrandClick('${item.id}')">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
-                        ${item.brand}
-                        ${item.id === 'target' ? '<span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-brand-orange text-orange-900">YOU</span>' : ''}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">${item.tier}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getClaimBadgeClass(item.claimType)}">
-                            ${item.claimType}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                        <div class="flex items-center">
-                            <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
-                                <div class="bg-brand-teal h-2 rounded-full" style="width: ${item.depthIndex * 33}%"></div>
-                            </div>
-                            <span class="text-xs">${item.verificationDepth}</span>
+              </div>
+              
+              <!-- Market Presence Grid -->
+              <div class="bg-[#0D2B2A] rounded-[2.5rem] p-10 text-white relative">
+                <h4 class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-8">Retail Presence Matrix</h4>
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold">Shopee / Tokopedia Mall</span>
+                        <div class="flex gap-1">
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
                         </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">${item.substitutability}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button onclick="event.stopPropagation(); showSources('${item.id}')" class="text-brand-teal hover:text-teal-900">Sources</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function getClaimBadgeClass(type) {
-            if (type === 'Structural') return 'bg-brand-mint text-teal-800';
-            if (type === 'Semi-Specific') return 'bg-yellow-100 text-yellow-800';
-            return 'bg-gray-100 text-gray-800';
-        }
-
-        // =========================================================================
-        // BRAND DETAIL PANEL LOGIC
-        // =========================================================================
-
-        function handleBrandClick(brandId) {
-            const brand = DATA.find(b => b.id === brandId);
-            if (!brand) return;
-
-            const panel = document.getElementById('brandDetailContent');
-            
-            // Safe helper for arrays
-            const formatList = (arr) => arr.length ? arr.join(', ') : 'None';
-
-            panel.innerHTML = `
-                <div class="border-b border-gray-100 pb-4 mb-4">
-                    <h2 class="text-xl font-bold text-slate-800">${brand.brand}</h2>
-                    <div class="flex items-center mt-1 space-x-2">
-                        <span class="px-2 py-1 bg-gray-100 text-slate-600 text-xs rounded font-medium">${brand.tier}</span>
-                        <span class="px-2 py-1 bg-gray-100 text-slate-600 text-xs rounded font-medium">${brand.substitutability}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold">Premium Offline (Grand Indonesia/PI)</span>
+                        <div class="flex gap-1">
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                            <div class="w-2 h-2 bg-white/20 rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold">E-Commerce Search Dominance</span>
+                        <div class="flex gap-1">
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                            <div class="w-2 h-2 bg-white/20 rounded-full"></div>
+                            <div class="w-2 h-2 bg-white/20 rounded-full"></div>
+                        </div>
                     </div>
                 </div>
+                <div class="mt-12 p-6 bg-white/5 rounded-3xl border border-white/10">
+                    <p class="text-[11px] text-emerald-100 font-medium leading-relaxed">Incumbents lead in "Mall Status" and Offline ubiquity. Q'WELL must lead in <strong>Verification Intensity</strong> to justify entry.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <p class="text-xs text-slate-400 uppercase">Verification</p>
-                        <p class="font-medium text-slate-800">${brand.verificationDepth}</p>
+      <!-- Pricing Ladder -->
+      <section id="price-ladder" class="animate-up" style="animation-delay: 0.1s;">
+        <div class="glass-card p-12">
+            <h2 class="serif text-4xl text-emerald-950 mb-4">The Premium Pricing Ladder</h2>
+            <p class="text-gray-500 text-sm mb-12">Price per 100ml Benchmarking (Shampoo & Body Wash Categories)</p>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-end">
+                <!-- Hair Care Ladder -->
+                <div class="space-y-8">
+                    <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-6">Hair Care (Rp / 100ml)</h4>
+                    <div class="space-y-6">
+                        <div class="group">
+                            <div class="flex justify-between text-[11px] font-bold mb-2"><span>Aesop / L'Occitane</span><span>Rp 450k - 650k</span></div>
+                            <div class="w-full bg-gray-100 h-2.5 rounded-full"><div class="bar-animate bg-gray-400 h-full rounded-full" style="width: 100%"></div></div>
+                        </div>
+                        <div class="group">
+                            <div class="flex justify-between text-[11px] font-bold mb-2 text-emerald-900"><span>Q'WELL (Target)</span><span>Rp 180k - 320k</span></div>
+                            <div class="w-full bg-emerald-100 h-2.5 rounded-full"><div class="bar-animate bg-[#D4AF37] h-full rounded-full shadow-[0_0_15px_rgba(212,175,55,0.4)]" style="width: 55%"></div></div>
+                        </div>
+                        <div class="group">
+                            <div class="flex justify-between text-[11px] font-bold mb-2"><span>Sensatia Botanicals</span><span>Rp 120k - 180k</span></div>
+                            <div class="w-full bg-gray-100 h-2.5 rounded-full"><div class="bar-animate bg-emerald-900 h-full rounded-full" style="width: 32%"></div></div>
+                        </div>
+                        <div class="group">
+                            <div class="flex justify-between text-[11px] font-bold mb-2"><span>Sukin / Cahaya Naturals</span><span>Rp 80k - 120k</span></div>
+                            <div class="w-full bg-gray-100 h-2.5 rounded-full"><div class="bar-animate bg-emerald-700 h-full rounded-full" style="width: 22%"></div></div>
+                        </div>
                     </div>
-                    <div>
-                        <p class="text-xs text-slate-400 uppercase">Claim Type</p>
-                        <p class="font-medium text-slate-800">${brand.claimType}</p>
+                </div>
+                
+                <!-- Insight Box -->
+                <div class="bg-gray-50 rounded-[2.5rem] p-10 border border-gray-100">
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Strategic Logic</h4>
+                    <p class="text-sm text-gray-600 leading-relaxed italic mb-6">
+                        "Q'WELL occupies the <strong>Price Sweet Spot</strong>: Significantly higher than local incumbents to signal superior verification (HRIPT), but lower than international luxury to remain an 'accessible daily essential' for the high-worth urbanite."
+                    </p>
+                    <div class="p-4 bg-emerald-950 rounded-2xl text-white">
+                        <p class="text-[10px] uppercase font-bold text-emerald-300 mb-1">Value Logic</p>
+                        <p class="text-[11px] font-bold">Positioning: The most verified choice under Rp 400k.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+      </section>
 
-                <div class="mb-4">
-                    <p class="text-xs text-slate-400 uppercase mb-1">Certifications</p>
-                    <div class="flex flex-wrap gap-2 text-xs">
-                        <div class="bg-brand-cream px-2 py-1 rounded text-orange-900">Vegan: ${brand.certifications.vegan}</div>
-                        <div class="bg-brand-cream px-2 py-1 rounded text-orange-900">Cruelty: ${brand.certifications.cruelty}</div>
-                        <div class="bg-brand-cream px-2 py-1 rounded text-orange-900">Halal: ${brand.certifications.halal}</div>
+      <!-- Verification Depth Benchmarking -->
+      <section id="verification" class="animate-up" style="animation-delay: 0.2s;">
+        <div class="glass-card p-12 overflow-x-auto">
+            <h2 class="serif text-4xl text-emerald-950 mb-10">Verification Signal Density</h2>
+            
+            <table class="w-full text-left border-collapse min-w-[800px]">
+                <thead>
+                    <tr class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-100">
+                        <th class="pb-6 px-4">Competitor / Signal</th>
+                        <th class="pb-6 px-4 text-center">BPOM NIE</th>
+                        <th class="pb-6 px-4 text-center">Natural/Vegan</th>
+                        <th class="pb-6 px-4 text-center">HRIPT Per SKU</th>
+                        <th class="pb-6 px-4 text-center">COA Transparency</th>
+                    </tr>
+                </thead>
+                <tbody class="text-xs">
+                    <tr class="border-b border-gray-50 hover:bg-emerald-50 transition-colors">
+                        <td class="py-6 px-4 font-bold text-emerald-950">Sensatia Botanicals</td>
+                        <td class="py-6 px-4 text-center text-emerald-600">●</td>
+                        <td class="py-6 px-4 text-center text-emerald-600">●</td>
+                        <td class="py-6 px-4 text-center text-gray-300">○</td>
+                        <td class="py-6 px-4 text-center text-gray-300">○</td>
+                    </tr>
+                    <tr class="border-b border-gray-50 hover:bg-emerald-50 transition-colors">
+                        <td class="py-6 px-4 font-bold text-emerald-950">Cahaya Naturals</td>
+                        <td class="py-6 px-4 text-center text-emerald-600">●</td>
+                        <td class="py-6 px-4 text-center text-emerald-600">●</td>
+                        <td class="py-6 px-4 text-center text-gray-300">○</td>
+                        <td class="py-6 px-4 text-center text-gray-300">○</td>
+                    </tr>
+                    <tr class="border-b border-gray-50 hover:bg-emerald-50 transition-colors">
+                        <td class="py-6 px-4 font-bold text-emerald-950">Sukin (International)</td>
+                        <td class="py-6 px-4 text-center text-emerald-600">●</td>
+                        <td class="py-6 px-4 text-center text-emerald-600">●</td>
+                        <td class="py-6 px-4 text-center text-gray-300">○</td>
+                        <td class="py-6 px-4 text-center text-gray-300">○</td>
+                    </tr>
+                    <tr class="border-b border-emerald-950 bg-emerald-50/50">
+                        <td class="py-6 px-4 font-black text-emerald-900 flex items-center gap-2">
+                            Q'WELL
+                            <span class="text-[8px] bg-[#D4AF37] text-white px-1.5 py-0.5 rounded">LEADER</span>
+                        </td>
+                        <td class="py-6 px-4 text-center text-emerald-950 font-black">●</td>
+                        <td class="py-6 px-4 text-center text-emerald-950 font-black">●</td>
+                        <td class="py-6 px-4 text-center text-[#D4AF37] font-black text-lg">★</td>
+                        <td class="py-6 px-4 text-center text-[#D4AF37] font-black text-lg">★</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mt-8 flex gap-8 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                <div class="flex items-center gap-2"><span class="text-emerald-600">●</span> Verified</div>
+                <div class="flex items-center gap-2"><span class="text-gray-300">○</span> Generic / Surface Only</div>
+                <div class="flex items-center gap-2"><span class="text-[#D4AF37]">★</span> Structural Differentiator</div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Strategic White Space -->
+      <section id="whitespace" class="animate-up" style="animation-delay: 0.3s;">
+        <div class="grid lg:grid-cols-2 gap-8">
+            <div class="bg-emerald-950 rounded-[3rem] p-12 text-white relative overflow-hidden">
+                <h3 class="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.3em] mb-4">The Defensibility Map</h3>
+                <h2 class="serif text-4xl leading-tight mb-8">Identifying the<br/>Verification Gap</h2>
+                
+                <div class="relative h-64 w-full flex items-center justify-center border-l border-b border-white/20 mt-12">
+                    <span class="absolute bottom-2 right-2 quadrant-label text-white/40">Verification Depth</span>
+                    <span class="absolute top-2 left-2 quadrant-label text-white/40">Premium Status</span>
+                    
+                    <!-- Q'WELL Quadrant -->
+                    <div class="absolute top-4 right-4 text-center">
+                        <div class="w-16 h-16 bg-[#D4AF37] rounded-full border-4 border-white/20 flex items-center justify-center font-black text-emerald-950 shadow-2xl animate-pulse">Q</div>
+                        <p class="text-[9px] font-black uppercase mt-2 tracking-widest">Clinical-Adjacent</p>
+                    </div>
+
+                    <!-- Competitor Dots -->
+                    <div class="absolute bottom-[20%] left-[40%] group">
+                        <div class="w-8 h-8 bg-white/10 rounded-full border border-white/20 flex items-center justify-center text-[8px] font-bold">Local</div>
+                    </div>
+                    <div class="absolute top-[30%] left-[20%] group">
+                        <div class="w-8 h-8 bg-white/10 rounded-full border border-white/20 flex items-center justify-center text-[8px] font-bold">Lux</div>
                     </div>
                 </div>
-
-                <div class="mb-4">
-                    <p class="text-xs text-slate-400 uppercase mb-1">Channels</p>
-                    <p class="text-sm text-slate-600">${formatList(brand.channels)}</p>
+            </div>
+            
+            <div class="glass-card p-12 flex flex-col justify-center">
+                <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-6">Offensive Opportunity</h4>
+                <div class="space-y-8">
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center shrink-0 text-emerald-900 font-bold border border-emerald-100">1</div>
+                        <div>
+                            <h5 class="font-bold text-emerald-950 mb-1 uppercase text-xs tracking-tight">The "Claim Fatigue" Inoculation</h5>
+                            <p class="text-[11px] text-gray-500 leading-relaxed">Most brands use "Natural" as a marketing tag. Q'WELL uses <strong>HRIPT-backed clinical data</strong> as a structural truth, inoculating the brand against superficial comparisons.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center shrink-0 text-emerald-900 font-bold border border-emerald-100">2</div>
+                        <div>
+                            <h5 class="font-bold text-emerald-950 mb-1 uppercase text-xs tracking-tight">Post-Mercury Trust Vacuum</h5>
+                            <p class="text-[11px] text-gray-500 leading-relaxed">Following recent scandals (Blue Label/Mercury scares), the market is in a "Trust Vacuum." Q'WELL fills this with <strong>Transparent Integrity</strong>.</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+      </section>
 
-                <div class="bg-gray-50 p-3 rounded border border-gray-100 mb-4">
-                    <p class="text-xs font-bold text-slate-500 mb-1">Analyst Notes</p>
-                    <p class="text-sm text-slate-700 italic">"${brand.notes}"</p>
+      <!-- Offensive Playbook -->
+      <section id="playbook" class="animate-up" style="animation-delay: 0.4s;">
+        <div class="glass-card p-12 text-center bg-[#0D2B2A] text-white">
+            <span class="inline-block px-4 py-1.5 bg-white/5 text-emerald-300 text-[10px] font-bold rounded-full uppercase tracking-widest mb-6 border border-white/10">Strategic Playbook 2026</span>
+            <h2 class="serif text-4xl mb-12 italic">How Q'WELL Wins Against Incumbents</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 text-left">
+                    <h5 class="text-[10px] font-black text-[#D4AF37] uppercase mb-4 tracking-widest">Reframing Value</h5>
+                    <p class="text-xs text-emerald-100/60 leading-relaxed italic">"Don't sell a body wash; sell <strong>Biological Security</strong>. Frame lower-priced competitors as 'Unverified Biological Risks'."</p>
                 </div>
+                <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 text-left">
+                    <h5 class="text-[10px] font-black text-[#D4AF37] uppercase mb-4 tracking-widest">Structural Trust</h5>
+                    <p class="text-xs text-emerald-100/60 leading-relaxed italic">"Deploy the <strong>HRIPT Signal</strong> in all upper-funnel communication to instantly separate from generic 'Clean' noise."</p>
+                </div>
+                <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 text-left">
+                    <h5 class="text-[10px] font-black text-[#D4AF37] uppercase mb-4 tracking-widest">Transparency as PR</h5>
+                    <p class="text-xs text-emerald-100/60 leading-relaxed italic">"Preempt investigative de-influencers by publishing <strong>Laboratory COAs</strong> before they are requested."</p>
+                </div>
+            </div>
+        </div>
+      </section>
 
-                <button onclick="showSources('${brand.id}')" class="w-full py-2 border border-brand-teal text-brand-teal rounded hover:bg-brand-mint transition-colors text-sm font-medium">
-                    View Verified Sources
-                </button>
-            `;
+      <!-- Reference Hierarchy -->
+      <footer id="sources" class="pt-10 border-t border-gray-200">
+        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Competitive Audit Sources</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[11px] font-semibold text-gray-500">
+          <div class="hover:text-emerald-700 transition-colors">01. Shopee Mall Official Store Price Audit (Sensatia, Sukin)</div>
+          <div class="hover:text-emerald-700 transition-colors">02. Tokopedia Premium Segment Benchmarking 2024</div>
+          <div class="hover:text-emerald-700 transition-colors">03. BPOM Notifkos Database Verification Check</div>
+          <div class="hover:text-emerald-700 transition-colors">04. Mintel Indonesia Personal Care Competitive Audit</div>
+          <div class="hover:text-emerald-700 transition-colors">05. Sociolla Premium Hair Care Portfolio Analysis</div>
+          <div class="hover:text-emerald-700 transition-colors">06. Competitor Label Claim Scrutiny (HRIPT vs. Basic Patch)</div>
+          <div class="hover:text-emerald-700 transition-colors">07. Jakarta Urban Consumer Focus: Switching Barriers</div>
+          <div class="hover:text-emerald-700 transition-colors">08. Strategic White Space Analysis: Clinical-Adjacent Tiers</div>
+        </div>
+        <div class="mt-12 flex justify-between items-center text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+          <p>© 2026 Q'WELL STRATEGIC INTELLIGENCE UNIT</p>
+          <p>CONFIDENTIAL • COMPETITIVE AUDIT</p>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 100,
+            behavior: 'smooth'
+          });
         }
+      });
+    });
 
-        // =========================================================================
-        // CHART.JS IMPLEMENTATION
-        // =========================================================================
-
-        function renderCharts() {
-            renderScatterChart();
-            renderBarChart();
+    // Sidebar active state logic
+    const navSections = ['universe', 'price-ladder', 'verification', 'whitespace', 'playbook'];
+    window.addEventListener('scroll', () => {
+      let activeSection = '';
+      navSections.forEach(sectionId => {
+        const sec = document.getElementById(sectionId);
+        if (sec && window.pageYOffset >= sec.offsetTop - 150) {
+          activeSection = sectionId;
         }
+      });
 
-        function updateCharts() {
-            // Update Scatter
-            if (scatterChartInstance) {
-                scatterChartInstance.data.datasets = getScatterDatasets();
-                scatterChartInstance.update();
-            }
-            // Update Bar
-            if (barChartInstance) {
-                const barData = getBarData();
-                barChartInstance.data.labels = barData.labels;
-                barChartInstance.data.datasets = barData.datasets;
-                barChartInstance.update();
-            }
+      document.querySelectorAll('aside a').forEach(a => {
+        a.classList.remove('sidebar-active');
+        a.classList.add('text-gray-600');
+        if (a.getAttribute('href') === `#${activeSection}`) {
+          a.classList.add('sidebar-active');
+          a.classList.remove('text-gray-600');
         }
-
-        // --- Scatter Chart Logic ---
-
-        function getScatterDatasets() {
-            // We want to differentiate "Target" visual style
-            const targetPoint = filteredData.find(d => d.id === 'target');
-            const competitors = filteredData.filter(d => d.id !== 'target');
-
-            const datasets = [
-                {
-                    label: 'Competitors',
-                    data: competitors.map(d => ({
-                        x: d.depthIndex + (Math.random() * 0.1 - 0.05), // Jitter
-                        y: d.priceIndex + (Math.random() * 0.1 - 0.05), // Jitter
-                        brand: d.brand,
-                        tier: d.tier,
-                        depth: d.verificationDepth
-                    })),
-                    backgroundColor: competitors.map(d => {
-                        if (d.substitutability === 'True Substitute') return '#65BDAD'; // Teal
-                        if (d.tier === 'Mass') return '#CBD5E0'; // Gray
-                        return '#A0AEC0'; // Darker Gray
-                    }),
-                    pointRadius: 6,
-                    pointHoverRadius: 8
-                }
-            ];
-
-            if (targetPoint) {
-                datasets.push({
-                    label: 'Target Brand',
-                    data: [{
-                        x: targetPoint.depthIndex,
-                        y: targetPoint.priceIndex,
-                        brand: targetPoint.brand,
-                        tier: targetPoint.tier,
-                        depth: targetPoint.verificationDepth
-                    }],
-                    backgroundColor: '#FFFFFF',
-                    borderColor: '#FF9F43', // Strong Orange
-                    borderWidth: 3,
-                    pointRadius: 10,
-                    pointHoverRadius: 12,
-                    pointStyle: 'rectRot' // Distinct shape
-                });
-            }
-
-            return datasets;
-        }
-
-        function renderScatterChart() {
-            const ctx = document.getElementById('scatterChart').getContext('2d');
-            
-            scatterChartInstance = new Chart(ctx, {
-                type: 'scatter',
-                data: { datasets: getScatterDatasets() },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            titleColor: '#1a202c',
-                            bodyColor: '#4a5568',
-                            borderColor: '#e2e8f0',
-                            borderWidth: 1,
-                            callbacks: {
-                                label: function(context) {
-                                    const point = context.raw;
-                                    return [
-                                        `${point.brand}`,
-                                        `Tier: ${point.tier}`,
-                                        `Verif: ${point.depth}`
-                                    ];
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            title: { display: true, text: 'Verification Depth (Low → High)' },
-                            min: 0.5,
-                            max: 3.5,
-                            ticks: {
-                                callback: function(val) {
-                                    if(val===1) return 'Low';
-                                    if(val===2) return 'Med';
-                                    if(val===3) return 'High';
-                                    return '';
-                                }
-                            }
-                        },
-                        y: {
-                            title: { display: true, text: 'Price Tier (Mass → Clinical)' },
-                            min: 0.5,
-                            max: 4.5,
-                            ticks: {
-                                callback: function(val) {
-                                    if(val===1) return 'Mass';
-                                    if(val===2) return 'Upper';
-                                    if(val===3) return 'Prem';
-                                    if(val===4) return 'Clinic';
-                                    return '';
-                                }
-                            }
-                        }
-                    },
-                    onClick: (e, activeElements) => {
-                        if (activeElements.length > 0) {
-                            const datasetIndex = activeElements[0].datasetIndex;
-                            const index = activeElements[0].index;
-                            // Find brand based on dataset
-                            let brandName = scatterChartInstance.data.datasets[datasetIndex].data[index].brand;
-                            const brandObj = DATA.find(b => b.brand === brandName);
-                            if(brandObj) handleBrandClick(brandObj.id);
-                        }
-                    }
-                }
-            });
-        }
-
-        // --- Bar Chart Logic ---
-
-        function getBarData() {
-            // Aggregate Claim Types per Price Tier
-            const tiers = ['Mass', 'Upper-Mass', 'Premium', 'Clinical'];
-            const types = ['Surface-Level', 'Semi-Specific', 'Structural'];
-            
-            // Init counters
-            const data = {
-                'Surface-Level': [0,0,0,0],
-                'Semi-Specific': [0,0,0,0],
-                'Structural': [0,0,0,0]
-            };
-
-            filteredData.forEach(d => {
-                const tIndex = tiers.indexOf(d.tier); // Note: "Clinical" might not match "Clinical-Adjacent" perfectly if strings differ.
-                // Normalize tier string mapping
-                let normTierIndex = -1;
-                if(d.tier === 'Mass') normTierIndex = 0;
-                else if(d.tier === 'Upper-Mass') normTierIndex = 1;
-                else if(d.tier === 'Premium') normTierIndex = 2;
-                else if(d.tier === 'Clinical-Adjacent' || d.tier === 'Clinical') normTierIndex = 3;
-
-                if (normTierIndex !== -1 && data[d.claimType]) {
-                    data[d.claimType][normTierIndex]++;
-                }
-            });
-
-            return {
-                labels: ['Mass', 'Upper-Mass', 'Premium', 'Clinical'],
-                datasets: [
-                    { label: 'Surface', data: data['Surface-Level'], backgroundColor: '#CBD5E0' }, // Gray
-                    { label: 'Semi-Specific', data: data['Semi-Specific'], backgroundColor: '#FFCC97' }, // Orange
-                    { label: 'Structural', data: data['Structural'], backgroundColor: '#65BDAD' } // Teal
-                ]
-            };
-        }
-
-        function renderBarChart() {
-            const ctx = document.getElementById('barChart').getContext('2d');
-            const initialData = getBarData();
-
-            barChartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: initialData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { stacked: true },
-                        y: { stacked: true, beginAtZero: true, ticks: { precision: 0 } }
-                    },
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        tooltip: {
-                            callbacks: {
-                                title: (items) => {
-                                    // Requirement: Tooltip multiline handler
-                                    const item = items[0];
-                                    let label = item.chart.data.labels[item.dataIndex];
-                                    return Array.isArray(label) ? label.join(' ') : label;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // =========================================================================
-        // UTILITIES & MODALS
-        // =========================================================================
-
-        function showSources(brandId) {
-            const brand = DATA.find(b => b.id === brandId);
-            if (!brand) return;
-
-            document.getElementById('modalTitle').innerText = `Sources: ${brand.brand}`;
-            const list = document.getElementById('modalContent');
-            
-            if (brand.sources && brand.sources.length > 0) {
-                list.innerHTML = `<ul class="list-disc pl-5 space-y-2 text-sm text-slate-600">
-                    ${brand.sources.map(s => `<li>${s.startsWith('http') ? `<a href="${s}" target="_blank" class="text-brand-teal underline">External Link</a>` : s}</li>`).join('')}
-                </ul>`;
-            } else {
-                list.innerHTML = '<p class="text-sm text-slate-400">No specific sources listed in dataset.</p>';
-            }
-
-            document.getElementById('sourceModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('sourceModal').classList.add('hidden');
-        }
-
-        function exportCSV() {
-            // Header
-            let csv = 'Brand,Tier,ClaimType,VerificationDepth,Substitutability,Notes\n';
-            
-            // Rows
-            filteredData.forEach(row => {
-                // Escape commas in text
-                const notes = row.notes.replace(/,/g, ';');
-                csv += `${row.brand},${row.tier},${row.claimType},${row.verificationDepth},${row.substitutability},"${notes}"\n`;
-            });
-
-            // Trigger Download
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.setAttribute('hidden', '');
-            a.setAttribute('href', url);
-            a.setAttribute('download', 'competitor_landscape.csv');
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-
-        // Close modal on outside click
-        window.onclick = function(event) {
-            const modal = document.getElementById('sourceModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-    </script>
-</body> 
+      });
+    });
+  </script>
+</div>

@@ -25,4 +25,8 @@ Route::get('/qwell-old', function () {
     return view('qwell_old/index');
 });
 
+Route::get('/qwell-ind', function () {
+    return view('qwell-ind/index');
+});
+
 

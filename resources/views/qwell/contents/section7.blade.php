@@ -1,682 +1,428 @@
 
-<style>
-    /* Section 7 Scoped Theme */
-    .sec7-wrapper {
-        --s7-primary: #65BDAD;
-        --s7-accent: #FFCC97;
-        --s7-bg1: #CAF1EB;
-        --s7-bg2: #FFEBDA;
-        --s7-ink: #1f2a2b;
-        --s7-muted: #516064;
-        --s7-card: #ffffff;
-        --s7-border: rgba(0,0,0,.08);
-        --s7-shadow: 0 10px 30px rgba(0,0,0,.06);
-        --s7-radius: 18px;
-
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        color: var(--s7-ink);
-        background: linear-gradient(180deg, var(--s7-bg1), #eaf8f5 40%, #f7fbfa);
-        min-height: 100vh;
-        position: relative;
-        isolation: isolate;
-        padding-bottom: 60px;
+  <style>
+    :root {
+      --primary: #0D2B2A;       /* Deep Forest */
+      --secondary: #164E4D;     /* Dark Teal */
+      --accent: #D4AF37;        /* Gold/Bronze */
+      --paper: #F8F9FA;         /* Gallery Grey */
+      --ink: #111827;           /* Deep Grey */
+      --muted: #6B7280;         /* Slate */
+      --radius: 1.5rem;
+      --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
     }
 
-    .sec7-wrapper * { box-sizing: border-box; }
-
-    .sec7-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 28px 20px 60px;
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background-color: var(--paper);
+      scroll-behavior: smooth;
     }
 
-    /* Brand Header */
-    .sec7-header {
-        margin-bottom: 24px;
-    }
-    .sec7-header h1 { margin: 0; font-size: 30px; letter-spacing: -0.02em; }
-    .sec7-subtitle { margin: 6px 0 0; color: var(--s7-muted); max-width: 720px; line-height: 1.55; }
-    .sec7-kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--s7-muted); margin-bottom: 4px; }
+    .serif { font-family: 'Playfair Display', serif; }
 
-    /* Navigation */
-    .sec7-nav-wrap {
-        position: sticky;
-        top: 70px; 
-        z-index: 40;
-        background: rgba(255,255,255,0.9);
-        backdrop-filter: blur(8px);
-        margin: 0 -20px 24px;
-        padding: 12px 20px;
-        border-bottom: 1px solid var(--s7-border);
-    }
-    .sec7-nav {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-        overflow-x: auto;
-        scrollbar-width: none;
-    }
-    .sec7-nav::-webkit-scrollbar { display: none; }
-
-    .sec7-tab {
-        white-space: nowrap;
-        border: 1px solid var(--s7-border);
-        background: rgba(255,255,255,.8);
-        padding: 9px 16px;
-        border-radius: 999px;
-        font-weight: 650;
-        font-size: 13px;
-        color: var(--s7-muted);
-        cursor: pointer;
-        user-select: none;
-        transition: 0.2s;
-    }
-    .sec7-tab:hover { transform: translateY(-1px); background: #fff; }
-    .sec7-tab.active {
-        background: var(--s7-primary);
-        color: white;
-        border-color: transparent;
-        box-shadow: 0 4px 12px rgba(101,189,173,0.25);
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
     }
 
-    /* Mobile Controls */
-    .sec7-mobile-bar {
-        display: none;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-        padding: 12px 16px;
-        background: #fff;
-        border-radius: 12px;
-        border: 1px solid var(--s7-border);
-    }
-    .sec7-burger {
-        width: 38px; height: 38px;
-        display: flex; align-items: center; justify-content: center;
-        background: var(--s7-bg1);
-        color: var(--s7-ink);
-        border-radius: 8px;
-        cursor: pointer;
+    .sidebar-active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 16px rgba(13, 43, 42, 0.15);
     }
 
-    @media (max-width: 960px) {
-        .sec7-nav-wrap {
-            display: none; /* Hidden on mobile, shown via burger */
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.98);
-            margin: 0;
-            padding: 80px 20px 20px;
-            flex-direction: column;
-            z-index: 2000;
-        }
-        .sec7-nav-wrap.open { display: flex; }
-        .sec7-nav { flex-direction: column; width: 100%; gap: 14px; }
-        .sec7-tab { width: 100%; text-align: center; padding: 14px; font-size: 16px; }
-        .sec7-mobile-bar { display: flex; }
-        
-        .sec7-close-nav {
-            position: absolute;
-            top: 24px; right: 24px;
-            font-size: 28px;
-            cursor: pointer;
-            color: var(--s7-muted);
-        }
+    .bg-grid {
+      background-size: 60px 60px;
+      background-image: radial-gradient(circle, #0000000a 1px, transparent 1px);
     }
 
-    /* Layout */
-    .sec7-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
-    .sec7-card {
-        background: var(--s7-card);
-        border: 1px solid var(--s7-border);
-        border-radius: var(--s7-radius);
-        box-shadow: var(--s7-shadow);
-        padding: 18px;
+    /* Proof Ladder Steps */
+    .step-node {
+      position: relative;
+      transition: all 0.4s ease;
     }
-    .sec7-card h2 { margin: 0 0 12px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--s7-muted); }
-    .sec7-card h3 { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
-    
-    .sec7-split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; }
-    @media (max-width: 960px){ .sec7-split { grid-template-columns: 1fr; } }
-
-    .sec7-mini { font-size: 13px; color: var(--s7-muted); line-height: 1.55; }
-    .sec7-hr { height: 1px; background: var(--s7-border); margin: 14px 0; }
-    .sec7-hidden { display: none !important; }
-
-    /* Components */
-    .sec7-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-    .sec7-kpi {
-        background: linear-gradient(180deg, rgba(202,241,235,.55), rgba(255,255,255,.9));
-        border: 1px solid var(--s7-border);
-        border-radius: 16px;
-        padding: 12px 14px;
+    .step-node::before {
+      content: '';
+      position: absolute;
+      left: 1.25rem;
+      top: 2.5rem;
+      bottom: -2.5rem;
+      width: 2px;
+      background: #e2e8f0;
+      z-index: 0;
     }
-    .sec7-kpi .v { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: var(--s7-ink); }
-    .sec7-kpi .l { font-size: 11px; color: var(--s7-muted); margin-top: 4px; font-weight: 600; text-transform: uppercase; }
-    @media (max-width: 600px) { .sec7-kpis { grid-template-columns: 1fr 1fr; } }
+    .step-node:last-child::before { display: none; }
 
-    .sec7-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-    .sec7-badge {
-        font-size: 12px; font-weight: 650; color: var(--s7-ink);
-        border: 1px solid var(--s7-border);
-        background: rgba(255,235,218,.75);
-        padding: 6px 12px; border-radius: 999px;
+    /* Animation */
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
     }
-    .sec7-badge.green { background: rgba(202,241,235,.75); }
+    .animate-step { animation: slideInRight 0.6s ease-out forwards; }
 
-    .sec7-btn {
-        border: 1px solid var(--s7-border);
-        background: rgba(255,255,255,.9);
-        padding: 10px 14px; border-radius: 12px;
-        cursor: pointer; font-weight: 650; font-size: 13px;
-        transition: 0.2s;
-    }
-    .sec7-btn.primary { background: var(--s7-primary); color: #fff; border-color: transparent; }
-    .sec7-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
 
-    .sec7-note {
-        border-left: 4px solid var(--s7-accent);
-        background: rgba(255,235,218,.45);
-        padding: 16px; border-radius: 12px;
-        font-size: 13px; color: var(--s7-muted); line-height: 1.6;
-    }
+    .gold-glow { box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+  </style>
+<body class="bg-grid">
 
-    .sec7-canvas-wrap { height: 320px; position: relative; width: 100%; }
-    .sec7-table-wrap { overflow-x: auto; border: 1px solid var(--s7-border); border-radius: 16px; }
-    
-    table.sec7-table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 800px; background: white; }
-    table.sec7-table th {
-        position: sticky; top: 0; z-index: 2;
-        background: linear-gradient(180deg,#ffffff,#fbfdfd);
-        border-bottom: 1px solid var(--s7-border);
-        font-size: 12px; color: var(--s7-muted); letter-spacing: .08em; text-transform: uppercase;
-        padding: 12px 14px; text-align: left;
-    }
-    table.sec7-table td {
-        border-bottom: 1px solid rgba(0,0,0,.06);
-        padding: 12px 14px; font-size: 13px; color: var(--s7-ink); vertical-align: top;
-    }
-    .sec7-sticky-col { position: sticky; left: 0; z-index: 1; background: white; border-right: 1px solid var(--s7-border); box-shadow: 4px 0 12px rgba(0,0,0,0.04); }
-
-    /* Modal */
-    .sec7-backdrop {
-        position: fixed; inset: 0; background: rgba(0,0,0,.4);
-        backdrop-filter: blur(4px);
-        display: flex; align-items: center; justify-content: center;
-        padding: 20px; z-index: 9999;
-        opacity: 0; pointer-events: none; transition: opacity 0.2s;
-    }
-    .sec7-backdrop.open { opacity: 1; pointer-events: auto; }
-    
-    .sec7-modal {
-        width: min(800px, 100%);
-        background: white; border: 1px solid var(--s7-border);
-        border-radius: 24px; box-shadow: 0 24px 80px rgba(0,0,0,.22);
-        overflow: hidden; transform: scale(0.95); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-        display: flex; flex-direction: column; max-height: 85vh;
-    }
-    .sec7-backdrop.open .sec7-modal { transform: scale(1); }
-
-    .sec7-modal-header {
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 16px 24px; background: #fff; border-bottom: 1px solid var(--s7-border);
-    }
-    .sec7-modal-content { padding: 24px; overflow-y: auto; }
-    .sec7-modal-content ul { margin: 0; padding-left: 20px; }
-    .sec7-modal-content li { margin-bottom: 8px; line-height: 1.5; }
-    .sec7-modal-content a { color: var(--s7-primary); text-decoration: none; font-weight: 600; }
-    .sec7-modal-content a:hover { text-decoration: underline; }
-</style>
-
-<div class="sec7-wrapper">
-<div class="sec7-container">
-
-    <!-- Header -->
-    <div class="sec7-header">
-        <!-- <div class="sec7-kicker">Section 7</div>
-        <h1>Proof Architecture & Verification</h1>
-        <p class="sec7-subtitle">
-            Defining the verification standards and structural proof signals needed to justify premium safety-led positioning in the Indonesia market.
-        </p> -->
-    </div>
-
-    <!-- Mobile Burger Bar (Above Content) -->
-    <div class="sec7-mobile-bar">
-        <!-- <div style="font-weight: 700; color: var(--s7-ink);">SECTION 7 MENU</div> -->
-        <div class="sec7-burger" id="sec7_burger">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
+    <div class="max-w-screen-2xl mx-auto w-full flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-10 bg-[#0D2B2A] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">Q</div>
+        <div class="hidden sm:block">
+          <p class="text-xs font-bold uppercase tracking-widest text-[#0D2B2A]">Proof Intelligence</p>
+          <p class="text-[10px] text-gray-400 uppercase tracking-tight font-medium">Doc Ref: SECTION-07-TRUST-ARCH</p>
         </div>
+      </div>
+      <div class="flex items-center gap-3 text-[11px] font-bold">
+        <span class="px-3 py-1 bg-emerald-50 text-emerald-800 rounded-full border border-emerald-100 uppercase tracking-widest">Protocol: HRIPT Gold-Standard</span>
+        <button onclick="window.print()" class="px-5 py-2 bg-[#0D2B2A] text-white rounded-full hover:bg-emerald-900 transition-all text-xs">
+          EXPORT TRUST ARCHITECTURE
+        </button>
+      </div>
     </div>
+  </nav>
 
-    <!-- Nav (Horizontal Desktop, Drawer Mobile) -->
-    <div class="sec7-nav-wrap" id="sec7_nav_wrap" style="border-radius:18px; padding:30px 24px 24px 24px; margin-bottom: 32px;">
-        <div class="sec7-nav">
-            <div class="sec7-tab active" data-view="overview">Overview</div>
-            <div class="sec7-tab" data-view="calibration">Competitive Calibration</div>
-            <div class="sec7-tab" data-view="pyramid">Testing Pyramid</div>
-            <div class="sec7-tab" data-view="stack">Proof Stack</div>
-            <div class="sec7-tab" data-view="transparency">Transparency</div>
-            <div class="sec7-tab" data-view="sources">Sources</div>
-        </div>
-    </div>
-
-    <!-- CONTENT VIEWS -->
+  <div class="max-w-screen-2xl mx-auto pt-24 pb-20 px-6 flex flex-col lg:flex-row gap-12">
     
-    <!-- OVERVIEW -->
-    <section id="sec7_view_overview" class="sec7-view">
-        <div class="sec7-grid">
-            <div class="sec7-card" style="grid-column: span 12;">
-                <h2>Executive takeaway</h2>
-                <div class="sec7-split">
-                    <div>
-                        <div class="sec7-kpis">
-                            <div class="sec7-kpi"><div class="v">Low-Trust</div><div class="l">DEFAULT STANCE</div></div>
-                            <div class="sec7-kpi"><div class="v">High-Proof</div><div class="l">DEMANDED CUE</div></div>
-                            <div class="sec7-kpi"><div class="v">Premium</div><div class="l">PRICE ANCHOR</div></div>
-                            <div class="sec7-kpi"><div class="v">Defensible</div><div class="l">SUBSTITUTE GAP</div></div>
-                        </div>
-                        <div class="sec7-badges">
-                            <span class="sec7-badge green">BPOM legality is a gate — not a differentiator</span>
-                            <span class="sec7-badge">HRIPT + named lab = credibility lift</span>
-                            <span class="sec7-badge green">Transparency converts skepticism into trust</span>
-                        </div>
-                        <div class="sec7-hr"></div>
-                        <p class="sec7-mini">
-                            This section defines the proof layers needed to justify a safety-led premium position.
-                            After the Section 6 correction, the benchmark is no longer “all brands” — it is the
-                            <b>premium natural / sensitive-claim competitors</b> that are plausible substitutes.
-                        </p>
-                    </div>
-                    <div class="sec7-note">
-                        <b>Recalibration note (Section 6)</b><br/>
-                        The competitor set is now constrained to brands that compete on <i>natural</i>, <i>sensitive skin</i>, and <i>dermatology</i> signals.
-                        Therefore, the proof architecture must be built to:
-                        <ol style="margin:8px 0 0 18px;padding:0">
-                            <li>Outrank <b>surface-level</b> claims (claim inflation)</li>
-                            <li>Differentiate from <b>semi-specific</b> “tested” wording</li>
-                            <li>Stand shoulder-to-shoulder with <b>structural</b> proof in the premium tier</li>
-                        </ol>
-                        <div class="sec7-hr"></div>
-                        <div style="display:flex; gap:10px;" hidden>
-                            <button class="sec7-btn primary" onclick="sec7_openSources('core')" hidden>Key regulatory sources</button>
-                            <button class="sec7-btn" onclick="sec7_switchView('calibration')" hidden>Go to Calibration</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Sidebar Navigation -->
+    <aside class="w-full lg:w-72 flex-shrink-0">
+      <div class="sticky top-24 space-y-6">
+        <div>
+          <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Proof Hierarchy</h3>
+          <ul class="space-y-1">
+            <li><a href="#summary" class="flex items-center gap-3 px-4 py-3 rounded-2xl sidebar-active text-sm font-semibold transition-all"><span>01.</span> Veracity Crisis</a></li>
+            <li><a href="#ladder" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>02.</span> The Proof Ladder</a></li>
+            <li><a href="#regulatory" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>03.</span> Regulatory Foundation</a></li>
+            <li><a href="#claims" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>04.</span> Claim Guardrails</a></li>
+            <li><a href="#hript" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>05.</span> HRIPT Advantage</a></li>
+          </ul>
+        </div>
 
-            <div class="sec7-card" style="grid-column: span 7;">
-                <h2>What “proof” must do</h2>
-                <p class="sec7-mini">
-                    Proof is not marketing decoration. It is a <b>risk-management system</b> that reduces biological harm probability, reduces reputational exposure,
-                    and creates price confidence. In Indonesia’s current environment, consumers reward brands that:
+        <div class="p-6 bg-[#0D2B2A] rounded-3xl text-white">
+          <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-3">Strategic Mandate</p>
+          <p class="text-[11px] leading-relaxed opacity-80 italic">"In Indonesia, proof is not a marketing feature; it is a <strong>structural requirement</strong>. Trust must be built in layers, from mandatory BPOM to voluntary HRIPT."</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-grow space-y-16">
+      
+      <!-- Veracity Crisis Summary -->
+      <section id="summary" class="animate-step">
+        <div class="relative p-1 bg-[#0D2B2A] rounded-[3rem] overflow-hidden shadow-2xl">
+          <div class="bg-white rounded-[2.9rem] p-10 sm:p-16 relative overflow-hidden">
+            <span class="inline-block px-4 py-1.5 bg-emerald-50 text-[#0D2B2A] text-[10px] font-bold rounded-full uppercase tracking-widest mb-8 border border-emerald-100">Market Realignment</span>
+            
+            <div class="grid lg:grid-cols-2 gap-16">
+              <div>
+                <h1 class="serif text-4xl sm:text-6xl text-emerald-950 leading-tight mb-8">The <span class="italic text-[#D4AF37]">Architecture</span> of Trust</h1>
+                <p class="text-lg text-gray-600 leading-relaxed font-medium mb-10">
+                  The "Veracity Crisis" has turned Indonesian consumers into investigative truth-seekers. Q’WELL’s proof system is designed to navigate this skepticism by layering <strong>Mandatory Compliance</strong> with <strong>High-Impact Verification</strong>.
                 </p>
-                <ul class="sec7-mini" style="margin:10px 0 0 18px">
-                    <li>Provide <b>verifiable truth</b> (traceable claims)</li>
-                    <li>Reduce “trial-and-error” anxiety (routine safety)</li>
-                    <li>Demonstrate humility (no medical overclaims)</li>
-                    <li>Offer clarity without information overload</li>
-                </ul>
-            </div>
-
-            <div class="sec7-card" style="grid-column: span 5;">
-                <h2>Decision checklist</h2>
-                <div class="sec7-mini">
-                    Lock these commitments (they become your proof ceiling):
-                    <div class="sec7-hr"></div>
-                    <ul style="margin:0 0 0 18px">
-                        <li><b>Named lab disclosure:</b> Yes (already decided)</li>
-                        <li><b>Publish test summary:</b> recommended (short, digestible)</li>
-                        <li><b>Explain HRIPT protocol:</b> recommended (one-page decoding)</li>
-                        <li><b>Halal pathway:</b> committed (timeline + proof)</li>
-                    </ul>
+                
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <h4 class="text-[10px] font-black text-gray-400 uppercase mb-2">Claim Fatigue</h4>
+                    <p class="text-xs text-emerald-950 font-bold">Labels are ignored until verified.</p>
+                  </div>
+                  <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <h4 class="text-[10px] font-black text-gray-400 uppercase mb-2">Verification Gap</h4>
+                    <p class="text-xs text-emerald-950 font-bold">HRIPT sets the price ceiling.</p>
+                  </div>
                 </div>
+              </div>
+              
+              <div class="flex flex-col justify-center">
+                 <div class="p-8 bg-gray-50 rounded-[2.5rem] border border-gray-100 relative">
+                    <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Trust Signal Distribution</h4>
+                    <!-- Simple SVG Donut Chart -->
+                    <div class="flex items-center gap-10">
+                        <svg width="120" height="120" viewBox="0 0 36 36" class="shrink-0">
+                            <circle cx="18" cy="18" r="16" fill="none" stroke="#e2e8f0" stroke-width="4"></circle>
+                            <circle cx="18" cy="18" r="16" fill="none" stroke="#0D2B2A" stroke-width="4" stroke-dasharray="75, 100" stroke-linecap="round"></circle>
+                            <circle cx="18" cy="18" r="16" fill="none" stroke="#D4AF37" stroke-width="4" stroke-dasharray="35, 100" stroke-linecap="round"></circle>
+                        </svg>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-2"><div class="w-3 h-3 bg-[#0D2B2A] rounded-full"></div> <span class="text-[10px] font-bold text-gray-600 uppercase">Verification Depth (HRIPT)</span></div>
+                            <div class="flex items-center gap-2"><div class="w-3 h-3 bg-[#D4AF37] rounded-full"></div> <span class="text-[10px] font-bold text-gray-600 uppercase">Regulatory (BPOM/Halal)</span></div>
+                            <div class="flex items-center gap-2"><div class="w-3 h-3 bg-gray-200 rounded-full"></div> <span class="text-[10px] font-bold text-gray-600 uppercase">Marketing Claims</span></div>
+                        </div>
+                    </div>
+                    <p class="text-[9px] text-gray-400 mt-8 italic">Verification depth is now the primary driver of high-tier conversion.</p>
+                 </div>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- CALIBRATION -->
-    <section id="sec7_view_calibration" class="sec7-view sec7-hidden">
-        <div class="sec7-grid">
-            <div class="sec7-card" style="grid-column: span 12;">
-                <h2>Competitive calibration (Updated Section 6)</h2>
-                <div class="sec7-split">
-                    <div>
-                        <h3>Claim tiers vs proof tiers</h3>
-                        <p class="sec7-mini">
-                            This dashboard assumes Section 6 now focuses on <b>premium natural competitors</b>.
-                            Use this view to explain to the owner why “same wording” does not mean “same infrastructure.”
-                        </p>
-                        <div class="sec7-canvas-wrap">
-                            <canvas id="sec7_calibrationChart"></canvas>
-                        </div>
-                        <div style="display:flex; gap:10px; margin-top:10px">
-                            <button class="sec7-btn" onclick="sec7_openSources('claims')">Claim & labeling sources</button>
-                            <button class="sec7-btn" onclick="sec7_openSources('testing')">HRIPT/testing sources</button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="sec7-note">
-                            <b>How to read this</b><br/>
-                            <ul style="margin:8px 0 0 18px">
-                                <li><b>Surface-level</b>: generic “natural / gentle” wording, little disclosure</li>
-                                <li><b>Semi-specific</b>: “dermatologically tested” without lab/protocol detail</li>
-                                <li><b>Structural</b>: test type + lab/protocol/cert body disclosed</li>
-                            </ul>
-                            <div class="sec7-hr"></div>
-                            <b>Owner objection handler</b><br/>
-                            When comparing to cheap “natural” brands, the correct response is:
-                            “They sell <i>wording</i>; we sell <i>verification</i>.”
+      <!-- The Proof Ladder -->
+      <section id="ladder" class="animate-step" style="animation-delay: 0.1s;">
+        <div class="glass-card p-12">
+            <h2 class="serif text-4xl text-emerald-950 mb-10 text-center">The Structural Proof Ladder</h2>
+            
+            <div class="max-w-3xl mx-auto space-y-0">
+                <!-- Tier 1 -->
+                <div class="step-node flex gap-8 pb-12">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-900 font-bold border border-emerald-200 shrink-0 z-10">1</div>
+                    <div class="flex-grow pt-1">
+                        <h4 class="text-xs font-black text-[#0D2B2A] uppercase tracking-widest mb-2">Tier 1: Regulatory Baseline (The "License to Operate")</h4>
+                        <p class="text-xs text-gray-500 mb-4">Mandatory foundation to avoid instant rejection by retailers and consumers.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold text-emerald-950 uppercase">BPOM NIE (QR Code)</span>
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold text-emerald-950 uppercase">Halal 2026 Ready</span>
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold text-emerald-950 uppercase">Reg 18/2024 Labels</span>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="sec7-card" style="grid-column: span 12;">
-                <h2>Proof signal library (what “structural” looks like)</h2>
-                <div class="sec7-table-wrap">
-                    <table class="sec7-table">
-                        <thead>
-                            <tr>
-                                <th class="sec7-sticky-col">Signal</th>
-                                <th>What it proves</th>
-                                <th>Typical disclosure</th>
-                                <th>Common failure mode</th>
-                                <th>Owner-friendly explanation</th>
-                            </tr>
-                        </thead>
-                        <tbody id="sec7_signalRows"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PYRAMID -->
-    <section id="sec7_view_pyramid" class="sec7-view sec7-hidden">
-        <div class="sec7-grid">
-            <div class="sec7-card" style="grid-column: span 12;">
-                <h2>Testing pyramid</h2>
-                <div class="sec7-split">
-                    <div>
-                        <h3>From legality → safety → credibility</h3>
-                        <p class="sec7-mini">
-                            In a premium safety-led strategy, testing is staged. The key is to communicate the right layer
-                            to the right consumer maturity level, without implying medical treatment.
-                        </p>
-                        <div class="sec7-canvas-wrap">
-                            <canvas id="sec7_pyramidChart"></canvas>
-                        </div>
-                        <div style="display:flex; gap:10px; margin-top:10px">
-                            <button class="sec7-btn" onclick="sec7_openSources('reg')">Regulatory sources</button>
-                            <button class="sec7-btn" onclick="sec7_openSources('testing')">Testing sources</button>
+                <!-- Tier 2 -->
+                <div class="step-node flex gap-8 pb-12">
+                    <div class="w-10 h-10 rounded-full bg-emerald-950 flex items-center justify-center text-white font-bold shrink-0 z-10 shadow-lg gold-glow">2</div>
+                    <div class="flex-grow pt-1">
+                        <h4 class="text-xs font-black text-[#0D2B2A] uppercase tracking-widest mb-2">Tier 2: Safety Infrastructure (The "Risk Insurance")</h4>
+                        <p class="text-xs text-gray-500 mb-4">The primary differentiator. Transforms an "optional wash" into "Mandatory Reliability."</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-emerald-950 text-[#D4AF37] rounded-full text-[10px] font-bold uppercase border border-[#D4AF37]/30">HRIPT Per SKU (Int. Lab)</span>
+                            <span class="px-3 py-1 bg-emerald-50 text-emerald-900 rounded-full text-[10px] font-bold uppercase border border-emerald-100">Dermatologist-Led R&D</span>
                         </div>
                     </div>
-                    <div class="sec7-note">
-                        <b>Key rule:</b><br/>
-                        BPOM NA is a consider-gate. It doesn’t win trust on its own.<br/><br/>
-                        <b>Premium win condition:</b><br/>
-                        “Named lab + HRIPT per SKU” creates a clear gap vs semi-specific competitors.
+                </div>
+                <!-- Tier 3 -->
+                <div class="step-node flex gap-8 pb-12">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-900 font-bold border border-emerald-200 shrink-0 z-10">3</div>
+                    <div class="flex-grow pt-1">
+                        <h4 class="text-xs font-black text-[#0D2B2A] uppercase tracking-widest mb-2">Tier 3: Ethical Certifications (The "Identity Alignment")</h4>
+                        <p class="text-xs text-gray-500 mb-4">Verification of manufacturing purity and lifestyle alignment for the Investigative consumer.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold text-emerald-950 uppercase">Vegan Certified</span>
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold text-emerald-950 uppercase">Cruelty-Free Status</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tier 4 -->
+                <div class="step-node flex gap-8">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-900 font-bold border border-emerald-200 shrink-0 z-10">4</div>
+                    <div class="flex-grow pt-1">
+                        <h4 class="text-xs font-black text-[#0D2B2A] uppercase tracking-widest mb-2">Tier 4: Dynamic Transparency (The "Trust Shortcut")</h4>
+                        <p class="text-xs text-gray-500 mb-4">Digital proof that bypasses de-influencer skepticism through batch-specific data.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold text-emerald-950 uppercase">Batch-specific COA Access</span>
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold text-emerald-950 uppercase">Independent Lab Portals</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+      </section>
 
-    <!-- STACK -->
-    <section id="sec7_view_stack" class="sec7-view sec7-hidden">
-        <div class="sec7-grid">
-            <div class="sec7-card" style="grid-column: span 12;">
-                <h2>Layered proof stack</h2>
-                <div class="sec7-split">
-                    <div>
-                        <h3>Five layers (what each layer does)</h3>
-                        <div id="sec7_stackCards"></div>
-                    </div>
-                    <div class="sec7-note">
-                        <b>Alignment to updated Section 6</b><br/>
-                        Your proof architecture must beat:
-                        <ul style="margin:8px 0 0 18px">
-                            <li>Surface-level natural competitors (claim inflation)</li>
-                            <li>Semi-specific “tested” brands (no disclosure)</li>
-                            <li>Premium natural substitutes (your real benchmark)</li>
-                        </ul>
-                        <div class="sec7-hr"></div>
-                        <b>Operational implication</b><br/>
-                        Proof is a process system: documentation, repeatability, and controlled claims.
+      <!-- Claim Guardrails: Safe vs. Risk -->
+      <section id="claims" class="animate-step" style="animation-delay: 0.2s;">
+        <div class="grid lg:grid-cols-2 gap-8">
+            <div class="glass-card p-10 bg-emerald-950 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-10">
+                    <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3 class="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.3em] mb-4">Regulation 3/2022</h3>
+                <h2 class="serif text-4xl leading-tight mb-8">The Claim<br/>Guardrail</h2>
+                <p class="text-emerald-100/60 text-xs leading-relaxed mb-10 italic">
+                    "Q’WELL must navigate the thin line between 'Dermatological Excellence' and 'Illegal Medicinal Claims.' Defensive wording is the key to 2030 durability."
+                </p>
+                
+                <div class="space-y-4">
+                    <div class="p-4 bg-white/5 rounded-2xl border border-white/10">
+                        <h5 class="text-[10px] font-bold text-emerald-300 uppercase mb-2">The Rule</h5>
+                        <p class="text-[11px] leading-relaxed">Claims must be <strong>Objective, Clear, and Verifiable</strong>. Avoid "Curing," "Treating," or "Instant" results.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- TRANSPARENCY -->
-    <section id="sec7_view_transparency" class="sec7-view sec7-hidden">
-        <div class="sec7-grid">
-            <div class="sec7-card" style="grid-column: span 12;">
-                <h2>Transparency threshold</h2>
-                <div class="sec7-split">
-                    <div>
-                        <h3>Disclosure without overload</h3>
-                        <p class="sec7-mini">
-                            The goal is to publish enough proof to convert skepticism into calm.
-                            Use “short proof summaries” + “optional deep links” rather than long PDFs as the default view.
-                        </p>
-                        <div class="sec7-canvas-wrap">
-                            <canvas id="sec7_transparencyChart"></canvas>
+            <div class="glass-card p-10 overflow-hidden">
+                <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-widest mb-6">Interactive Claim Audit</h4>
+                <div class="space-y-4">
+                    <!-- Item 1 -->
+                    <div class="p-4 bg-red-50 rounded-2xl border border-red-100 group">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[10px] font-black text-red-600 uppercase">HIGH RISK (MEDICINAL)</span>
+                            <span class="text-[10px] font-bold text-gray-400">Avoid</span>
                         </div>
-                        <div style="display:flex; gap:10px; margin-top:10px">
-                            <button class="sec7-btn" onclick="sec7_openSources('trust')">Trust & consumer evaluation</button>
+                        <p class="text-xs font-bold text-red-950 italic">"Heals Eczema & Repairs Follicular Damage instantly."</p>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[10px] font-black text-emerald-600 uppercase">SAFE (DISCIPLINED)</span>
+                            <span class="text-[10px] font-bold text-gray-400">Q'WELL Standard</span>
+                        </div>
+                        <p class="text-xs font-bold text-emerald-950 italic">"Tested for Sensitive Skin suitability; maintains biological barrier balance."</p>
+                    </div>
+                     <!-- Item 3 -->
+                     <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[10px] font-black text-emerald-600 uppercase">PREMIUM ANCHOR</span>
+                            <span class="text-[10px] font-bold text-gray-400">Q'WELL Standard</span>
+                        </div>
+                        <p class="text-xs font-bold text-emerald-950 italic">"HRIPT Verified: Non-Irritant formulation under extreme conditions."</p>
+                    </div>
+                </div>
+                <div class="mt-8 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                    <p class="text-[10px] text-gray-500 font-medium">Compliance logic: We sell <strong>Stability and Maintenance</strong>, not medical cures.</p>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- HRIPT Advantage -->
+      <section id="hript" class="animate-step" style="animation-delay: 0.3s;">
+        <div class="glass-card p-12 bg-white border-2 border-[#D4AF37] shadow-2xl relative">
+            <div class="absolute -top-4 left-10 bg-[#D4AF37] text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">The Gold Signal</div>
+            
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2">
+                    <h2 class="serif text-4xl text-emerald-950 mb-6">HRIPT vs.<br/>Basic Patch Testing</h2>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        Most local incumbents (Rp 120k–180k) use "Single Patch Testing" for basic safety. Q’WELL’s <strong>Human Repeat Insult Patch Test (HRIPT)</strong> is a multi-week clinical stress test, identifying potential sensitizers that mass-market tests miss.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl">
+                            <div class="w-2 h-2 bg-emerald-950 rounded-full"></div>
+                            <p class="text-xs font-bold text-emerald-950 uppercase tracking-tight">Verified in International Labs (USA/KR/EU)</p>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl">
+                            <div class="w-2 h-2 bg-emerald-950 rounded-full"></div>
+                            <p class="text-xs font-bold text-emerald-950 uppercase tracking-tight">Validated on 50+ Multi-Ethnic Subjects</p>
                         </div>
                     </div>
-                    <div class="sec7-note">
-                        <b>Recommended “calm transparency” package</b><br/>
-                        <ul style="margin:8px 0 0 18px">
-                            <li>Named lab (already: Yes)</li>
-                            <li>Test summary per SKU (1 page)</li>
-                            <li>HRIPT explained in plain language (1 page)</li>
-                            <li>Halal status & timeline (clear)</li>
-                            <li>BPOM NA + QR verification (easy)</li>
-                        </ul>
+                </div>
+                <div class="md:w-1/2 bg-gray-50 rounded-[2.5rem] p-10 border border-gray-100">
+                    <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-6">Price-to-Proof Correlation</h4>
+                    <div class="relative h-48 w-full border-l border-b border-gray-200 mt-4 flex items-end">
+                        <div class="w-1/3 bg-gray-200 h-[30%] mx-2 rounded-t-lg relative group">
+                            <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[9px] font-bold text-gray-400 whitespace-nowrap">Basic Patch</span>
+                        </div>
+                        <div class="w-1/3 bg-emerald-900/40 h-[55%] mx-2 rounded-t-lg relative group">
+                             <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[9px] font-bold text-gray-400 whitespace-nowrap">Derm Test</span>
+                        </div>
+                        <div class="w-1/3 bg-[#0D2B2A] h-[90%] mx-2 rounded-t-lg relative">
+                            <div class="absolute inset-0 bg-white/10 animate-pulse"></div>
+                            <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-[10px] font-black text-[#D4AF37] whitespace-nowrap uppercase">Q'WELL HRIPT</span>
+                        </div>
                     </div>
+                    <p class="text-[10px] text-center mt-8 font-bold text-emerald-900">Premium pricing is not for the 'brand'; it's for the 'verification depth'.</p>
                 </div>
             </div>
         </div>
-    </section>
+      </section>
 
-    <!-- SOURCES -->
-    <section id="sec7_view_sources" class="sec7-view sec7-hidden">
-        <div class="sec7-grid">
-            <div class="sec7-card" style="grid-column: span 12;">
-                <h2>Sources used in this dashboard</h2>
-                <div class="sec7-table-wrap">
-                    <table class="sec7-table">
-                        <thead>
-                            <tr>
-                                <th class="sec7-sticky-col">Category</th>
-                                <th>Links</th>
-                            </tr>
-                        </thead>
-                        <tbody id="sec7_sourceTableRows"></tbody>
-                    </table>
-                </div>
-            </div>
+      <!-- Regulatory Roadmap Table -->
+      <section id="regulatory" class="animate-step" style="animation-delay: 0.4s;">
+        <div class="glass-card p-12 overflow-x-auto">
+            <h2 class="serif text-3xl text-emerald-950 mb-10">Mandatory Regulatory Roadmap</h2>
+            <table class="w-full text-left border-collapse min-w-[700px]">
+                <thead>
+                    <tr class="text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+                        <th class="pb-6 px-4">Requirement</th>
+                        <th class="pb-6 px-4">BPOM Code</th>
+                        <th class="pb-6 px-4">Implementation Reality</th>
+                        <th class="pb-6 px-4">Q'WELL Stance</th>
+                    </tr>
+                </thead>
+                <tbody class="text-xs">
+                    <tr class="border-b border-gray-50">
+                        <td class="py-6 px-4 font-bold">NIE Registration</td>
+                        <td class="py-6 px-4 text-gray-500">Notifkos System</td>
+                        <td class="py-6 px-4 text-gray-500">Compulsory for Market Entry</td>
+                        <td class="py-6 px-4 font-black text-emerald-900">NON-NEGOTIABLE</td>
+                    </tr>
+                    <tr class="border-b border-gray-50">
+                        <td class="py-6 px-4 font-bold">2D Barcoding</td>
+                        <td class="py-6 px-4 text-gray-500">Reg 18/2024</td>
+                        <td class="py-6 px-4 text-gray-500">Track & Trace Compliance</td>
+                        <td class="py-6 px-4 font-black text-emerald-900">MANDATORY BY NOV 2025</td>
+                    </tr>
+                    <tr class="border-b border-gray-50">
+                        <td class="py-6 px-4 font-bold">Halal Certification</td>
+                        <td class="py-6 px-4 text-gray-500">BPJPH Mandate</td>
+                        <td class="py-6 px-4 text-gray-500">Religious & Purity Verification</td>
+                        <td class="py-6 px-4 font-black text-emerald-900">STRATEGIC PREREQUISITE (2026)</td>
+                    </tr>
+                    <tr class="border-b border-gray-50">
+                        <td class="py-6 px-4 font-bold">Safety Assessment Dossier</td>
+                        <td class="py-6 px-4 text-gray-500">CPKB Standard</td>
+                        <td class="py-6 px-4 text-gray-500">Internal proof of non-maleficence</td>
+                        <td class="py-6 px-4 font-black text-emerald-900">HIGH-VERACITY (HRIPT LINKED)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </section>
+      </section>
 
-</div>
-</div>
-
-<!-- Modal (Scoped) -->
-<div id="sec7_backdrop" class="sec7-backdrop">
-    <div class="sec7-modal">
-        <div class="sec7-modal-header">
-            <h4 style="margin:0; font-size:16px; font-weight:700;">Sources</h4>
-            <button class="sec7-btn" onclick="sec7_closeModal()">Close</button>
+      <!-- Reference Sources -->
+      <footer id="sources" class="pt-10 border-t border-gray-200">
+        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Section 7 Validation Hierarchy</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[11px] font-semibold text-gray-500">
+          <div class="hover:text-emerald-700 transition-colors">01. BPOM Regulation No. 3/2022 (Claims)</div>
+          <div class="hover:text-emerald-700 transition-colors">02. BPOM Regulation No. 18/2024 (Labeling)</div>
+          <div class="hover:text-emerald-700 transition-colors">03. Indonesia Halal Law No. 33/2014</div>
+          <div class="hover:text-emerald-700 transition-colors">04. International Lab HRIPT Protocol (Standard)</div>
+          <div class="hover:text-emerald-700 transition-colors">05. Euromonitor ID: Trust-Based Beauty Trends</div>
+          <div class="hover:text-emerald-700 transition-colors">06. Shopee ID: Verification Scrutiny Audit</div>
+          <div class="hover:text-emerald-700 transition-colors">07. BPOM Contaminant Regulation 16/2024</div>
+          <div class="hover:text-emerald-700 transition-colors">08. J. of Cosmetic Science (Patch Test Comparison)</div>
         </div>
-        <div class="sec7-modal-content" id="sec7_modal_body"></div>
-    </div>
-</div>
+        <div class="mt-12 flex justify-between items-center text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+          <p>© 2026 Q'WELL STRATEGIC INTELLIGENCE UNIT</p>
+          <p>CONFIDENTIAL • PROOF ARCHITECTURE</p>
+        </div>
+      </footer>
+    </main>
+  </div>
 
-<script>
-(function(){
-    // --- DATA ---
-    const S7_SOURCES = {
-        core: [
-            {label:"BPOM Regulation No. 3/2022 (PDF)", url:"https://standar-otskk.pom.go.id/storage/uploads/9fafd640-6c8b-4853-ae1f-9a2f9255db46/PerBPOM-No.-3-tahun-2022.pdf"},
-            {label:"CIRS: Reg 18/2024 enforcement", url:"https://www.cirs-group.com/en/cosmetics/indonesia-new-requirements-on-cosmetic-labeling-promotion-and-advertising-now-in-effect-full-enforcement-begins-november-2025"},
-            {label:"ARMA Law: BPOM Reg 18/2024", url:"https://www.arma-law.com/news-event/newsflash/new-requirements-for-cosmetic-labeling-promotion-and-advertising-bpom-18-2024"}
-        ],
-        reg: [
-            {label:"CIRS: Reg 18/2024 Labeling", url:"#"},
-            {label:"ARMA Law Overview", url:"#"}
-        ],
-        claims: [
-            {label:"BPOM Claims Reg 3/2022", url:"#"},
-            {label:"Prolegal: Ketentuan Klaim Kosmetik", url:"#"}
-        ],
-        testing: [
-            {label:"ALS Global: HRIPT Study", url:"#"},
-            {label:"CPTC Labs: HRIPT Panels", url:"#"},
-            {label:"Skinproof Claim Support", url:"#"}
-        ],
-        trust: [
-            {label:"Populix: Indonesia Trust", url:"#"}
-        ]
-    };
-
-    const S7_SIGNALS = [
-        {signal:"HRIPT per SKU", proves:"Sensitization screening", disclosure:"Named panel size + summary", failure:"“Dermatologically tested” w/o details", explain:"Different risk control."},
-        {signal:"Named laboratory", proves:"Accountability", disclosure:"Lab name + country", failure:"No lab mentioned", explain:"If nobody is named, nobody is accountable."},
-        {signal:"BPOM NA + QR", proves:"Legal verification", disclosure:"NA Code + QR", failure:"NA missing", explain:"Baseline legality."},
-        {signal:"Certifications", proves:"Audit-backed claims", disclosure:"Body name + license", failure:"Logo usage without registry", explain:"Traceable certification."},
-        {signal:"Test summary", proves:"Transparency", disclosure:"1-page summary", failure:"PDF overload", explain:"Clarity beats volume."}
-    ];
-
-    const S7_STACK = [
-        {title:"Layer 1 — Regulatory Foundation", role:"Legality + disclosure", how:"BPOM NA, INCI correctness, Reg 18/2024."},
-        {title:"Layer 2 — Advanced Safety", role:"Non-maleficence", how:"HRIPT per SKU; sensitive-skin panel."},
-        {title:"Layer 3 — Certification & Traceability", role:"Audit-backed", how:"Halal, Vegan, with named bodies."},
-        {title:"Layer 4 — Transparency", role:"Skepticism conversion", how:"Short summaries, named labs, plain decoding."},
-        {title:"Layer 5 — Authority", role:"Credibility", how:"Education, not medical claims."}
-    ];
-
-    // --- UI LOGIC ---
-    window.sec7_switchView = function(viewId) {
-        document.querySelectorAll('.sec7-tab').forEach(t => {
-            t.classList.toggle('active', t.getAttribute('data-view') === viewId);
-        });
-        document.querySelectorAll('.sec7-view').forEach(v => {
-            v.classList.toggle('sec7-hidden', v.id !== `sec7_view_${viewId}`);
-        });
-        
-        // Close mobile nav if open
-        const navWrap = document.getElementById('sec7_nav_wrap');
-        if(navWrap.classList.contains('open')) navWrap.classList.remove('open');
-    };
-
-    document.querySelectorAll('.sec7-tab').forEach(t => {
-        t.addEventListener('click', () => sec7_switchView(t.getAttribute('data-view')));
+  <script>
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 100,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
 
-    // Mobile Burger
-    const burger = document.getElementById('sec7_burger');
-    const closeNav = document.getElementById('sec7_close_nav');
-    const navWrap = document.getElementById('sec7_nav_wrap');
-    
-    burger?.addEventListener('click', () => navWrap.classList.add('open'));
-    closeNav?.addEventListener('click', () => navWrap.classList.remove('open'));
+    // Sidebar active state logic
+    const navSections = ['summary', 'ladder', 'regulatory', 'claims', 'hript'];
+    window.addEventListener('scroll', () => {
+      let activeSection = '';
+      navSections.forEach(sectionId => {
+        const sec = document.getElementById(sectionId);
+        if (sec && window.pageYOffset >= sec.offsetTop - 150) {
+          activeSection = sectionId;
+        }
+      });
 
-    // Modal
-    window.sec7_openSources = function(key) {
-        const list = S7_SOURCES[key] || [];
-        const body = document.getElementById('sec7_modal_body');
-        body.innerHTML = list.length 
-            ? `<ul>${list.map(s => `<li><a href="${s.url}" target="_blank">${s.label}</a></li>`).join('')}</ul>`
-            : '<p class="sec7-mini">No sources.</p>';
-        document.getElementById('sec7_backdrop').classList.add('open');
-    };
-
-    window.sec7_closeModal = function() {
-        document.getElementById('sec7_backdrop').classList.remove('open');
-    };
-
-    // --- RENDER TABLES ---
-    document.getElementById('sec7_signalRows').innerHTML = S7_SIGNALS.map(r => `
-        <tr>
-            <td class="sec7-sticky-col"><b>${r.signal}</b></td>
-            <td>${r.proves}</td>
-            <td>${r.disclosure}</td>
-            <td>${r.failure}</td>
-            <td>${r.explain}</td>
-        </tr>
-    `).join('');
-
-    document.getElementById('sec7_stackCards').innerHTML = S7_STACK.map(s => `
-        <div class="sec7-card" style="box-shadow:none; border-style:dashed; margin-bottom:12px;">
-            <h3>${s.title}</h3>
-            <div class="sec7-mini"><b>Role:</b> ${s.role}</div>
-            <div class="sec7-mini" style="margin-top:4px;"><b>How:</b> ${s.how}</div>
-        </div>
-    `).join('');
-    
-    const srcTable = document.getElementById('sec7_sourceTableRows');
-    for (const [k, list] of Object.entries(S7_SOURCES)) {
-        srcTable.insertAdjacentHTML('beforeend', `
-            <tr>
-                <td class="sec7-sticky-col" style="text-transform:uppercase; font-weight:700;">${k}</td>
-                <td><ul>${list.map(i=>`<li><a href="${i.url}" target="_blank">${i.label}</a></li>`).join('')}</ul></td>
-            </tr>
-        `);
-    }
-
-    // --- CHARTS ---
-    function initCharts() {
-        if(typeof Chart === 'undefined') return;
-        
-        Chart.defaults.font.family = "ui-sans-serif, system-ui, sans-serif";
-        Chart.defaults.color = "#1f2a2b";
-
-        const ctxCal = document.getElementById('sec7_calibrationChart');
-        if(ctxCal) new Chart(ctxCal, {
-            type: 'bar',
-            data: {
-                labels: ['Mass','Upper-Mass','Premium'],
-                datasets: [
-                    {label:'Surface Claims', data:[78,58,22], backgroundColor:'#FFCC97', borderRadius:6},
-                    {label:'Semi-Specific', data:[18,28,48], backgroundColor:'#CAF1EB', borderRadius:6},
-                    {label:'Structural Proof', data:[4,14,30], backgroundColor:'#65BDAD', borderRadius:6}
-                ]
-            },
-            options: { responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true, stacked:true}, x:{stacked:true}} }
-        });
-
-        const ctxPyr = document.getElementById('sec7_pyramidChart');
-        if(ctxPyr) new Chart(ctxPyr, {
-            type: 'bar',
-            data: {
-                labels: ['Legal','Safety','Clinical'],
-                datasets: [{label:'Complexity', data:[2, 4.2, 4.8], backgroundColor:['#CAF1EB','#FFCC97','#65BDAD'], borderRadius:8}]
-            },
-            options: { responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true, max:5}} }
-        });
-
-        const ctxTrans = document.getElementById('sec7_transparencyChart');
-        if(ctxTrans) new Chart(ctxTrans, {
-            type: 'line',
-            data: {
-                labels: ['Generic','Named Lab','Full Summary'],
-                datasets: [{label:'Trust Index', data:[1.2, 3.5, 4.8], borderColor:'#65BDAD', backgroundColor:'rgba(101,189,173,0.1)', fill:true, tension:0.3}]
-            },
-            options: { responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true, max:5}} }
-        });
-    }
-
-    // Load Charts
-    if(document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCharts);
-    } else {
-        initCharts();
-    }
-})();
-</script>
+      document.querySelectorAll('aside a').forEach(a => {
+        a.classList.remove('sidebar-active');
+        a.classList.add('text-gray-600');
+        if (a.getAttribute('href') === `#${activeSection}`) {
+          a.classList.add('sidebar-active');
+          a.classList.remove('text-gray-600');
+        }
+      });
+    });
+  </script>
+</body>

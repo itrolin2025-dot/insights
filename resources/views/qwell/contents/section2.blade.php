@@ -1,585 +1,330 @@
-<style>
-    /* Scoped Variables needed for Section 2 */
-    .section-2-wrapper {
-        --primary: #65BDAD;
-        --secondary: #FFCC97;
-        --accent: #CAF1EB;
-        --bg-light: #FFEBDA;
-        --text-dark: #2D3436;
-        --white: #FFFFFF;
-        --soft-shadow: 0 4px 20px rgba(0,0,0,0.05);
 
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg-light);
-        color: var(--text-dark);
-        line-height: 1.6;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        position: relative;
+  <style>
+    :root {
+      --primary: #0D2B2A;       /* Deep Forest */
+      --secondary: #164E4D;     /* Dark Teal */
+      --accent: #D4AF37;        /* Gold/Bronze hint */
+      --paper: #F8F9FA;         /* Gallery Grey */
+      --ink: #111827;           /* Deep Grey */
+      --muted: #6B7280;         /* Slate */
+      --radius: 1.25rem;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
     }
 
-    @media (min-width: 1025px) {
-        .section-2-wrapper {
-            flex-direction: row;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background-color: var(--paper);
+      scroll-behavior: smooth;
     }
 
-    /* Sidebar Navigation (Scoped) */
-    .section-2-sidebar {
-        width: 100%;
-        background: var(--white);
-        padding: 2rem;
-        border-bottom: 1px solid var(--accent);
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        position: relative;
-        z-index: 40; /* Lower than header (z-50) */
-        transition: transform 0.27s cubic-bezier(.21,.6,.34,1), opacity 0.27s;
+    .serif { font-family: 'Playfair Display', serif; }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
 
-    @media (max-width: 1024px) {
-        .section-2-sidebar {
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 86vw;
-            max-width: 320px;
-            min-width: 220px;
-            box-shadow: 0 8px 32px rgba(0,0,0,.11), 0 1.5px 6px rgba(0,0,0,.04);
-            transform: translateX(-105%);
-            opacity: 0;
-            pointer-events: none;
-            border-bottom: none;
-        }
-        .section-2-sidebar.mobile-open {
-            transform: translateX(0);
-            opacity: 1;
-            pointer-events: all;
-        }
+    .sidebar-active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(13, 43, 42, 0.2);
     }
 
-    @media (min-width: 1025px) {
-        .section-2-sidebar {
-            width: 280px;
-            height: auto;
-            min-height: calc(100vh - 70px);
-            position: sticky;
-            top: 70px; /* Aligned below sticky header */
-            border-right: 1px solid var(--accent);
-            border-bottom: none;
-            flex-shrink: 0;
-            transform: none !important;
-            opacity: 1 !important;
-            pointer-events: all !important;
-            overflow: visible;
-            box-sizing: border-box;
-        }
+    .bg-grid {
+      background-size: 40px 40px;
+      background-image: radial-gradient(circle, #00000008 1px, transparent 1px);
     }
 
-    .section-2-sidebar h1 { font-size: 1.2rem; color: var(--primary); margin-bottom: 1rem; }
-    .section-2-sidebar nav { display: flex; flex-direction: column; gap: 0.5rem; }
-    .section-2-sidebar nav a { 
-        text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.9rem;
-        padding: 0.8rem; border-radius: 8px; transition: 0.3s;
+    .stat-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .section-2-sidebar nav a:hover { background: var(--accent); color: var(--primary); }
-    .section-2-sidebar nav a.active { background: var(--accent); color: var(--primary); font-weight: bold; }
-
-    /* Overlay for mobile sidebar */
-    .section-2-sidebar-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        z-index: 70;
-        background: rgba(0,0,0,0.18);
-        cursor: pointer;
-        transition: opacity 0.19s;
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--secondary);
     }
 
-    /* Burger button style */
-    .section-2-burger-btn {
-        display: none;
-        align-items: center;
-        justify-content: center;
-        width: 42px;
-        height: 42px;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        border: 1px solid #ececec;
-        cursor: pointer;
-        padding: 0;
-        margin-left: 10px;
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+    .animate-in { animation: fadeIn 0.6s ease-out forwards; }
 
-    @media (max-width: 1024px) {
-        .section-2-burger-btn {
-            display: flex;
-        }
-    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
 
-    .section-2-burger-lines {
-        display: inline-block;
-        width: 22px;
-        height: 16px;
-        position: relative;
-    }
-    .section-2-burger-lines span {
-        display: block;
-        height: 3px;
-        background: var(--primary);
-        border-radius: 2px;
-        position: absolute;
-        left: 0;
-        right: 0;
-        transition: .22s cubic-bezier(.21,.6,.34,1);
-    }
-    .section-2-burger-lines span:nth-child(1) { top: 0; }
-    .section-2-burger-lines span:nth-child(2) { top: 6.5px; }
-    .section-2-burger-lines span:nth-child(3) { top: 13px; }
-    .section-2-burger-btn.open .section-2-burger-lines span:nth-child(1) { transform: rotate(45deg) translateY(6.2px); }
-    .section-2-burger-btn.open .section-2-burger-lines span:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
-    .section-2-burger-btn.open .section-2-burger-lines span:nth-child(3) { transform: rotate(-45deg) translateY(-6.2px); }
+    .chart-bar { transition: width 1s ease-in-out; }
+  </style>  
+<body class="bg-grid">
 
-    /* Main Content (Scoped) */
-    .section-2-main {
-        flex: 1;
-        padding: 1.5rem;
-        width: 100%;
-        max-width: 100%;
-    }
-
-    @media (min-width: 768px) {
-        .section-2-main {
-            padding: 2.5rem;
-        }
-    }
-
-    .section-2-main .header { margin-bottom: 3rem; }
-    .section-2-main .header .title-area { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .section-2-main .header h2 { font-size: 2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem; }
-    @media (min-width: 768px) {
-        .section-2-main .header h2 { font-size: 2.5rem; }
-    }
-    .section-2-main .header p { color: #636e72; font-size: 1.1rem; }
-
-    /* Controls Area */
-    .section-2-main .controls { 
-        background: var(--white); padding: 1rem 1.5rem; border-radius: 12px; 
-        margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;
-        box-shadow: var(--soft-shadow);
-        flex-wrap: wrap; gap: 1rem;
-    }
-    .section-2-main .filter-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .section-2-main .filter-btn { 
-        padding: 0.5rem 1rem; border: none; border-radius: 20px; font-size: 0.8rem; cursor: pointer;
-        background: var(--accent); color: var(--primary); transition: 0.3s; font-weight: 600;
-    }
-    .section-2-main .filter-btn.active { background: var(--primary); color: var(--white); }
-
-    .section-2-main .source-toggle { font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
-
-    /* Grid Layout */
-    .section-2-main .dashboard-grid { 
-        display: grid; 
-        grid-template-columns: 1fr; 
-        gap: 1.5rem;
-        justify-items: center; /* Center cards on mobile if they don't fill width */
-    }
-    
-    @media (min-width: 1025px) {
-        .section-2-main .dashboard-grid { 
-            grid-template-columns: repeat(2, 1fr);
-            justify-items: stretch;
-        }
-    }
-
-    .section-2-main .card { 
-        background: var(--white); border-radius: 16px; padding: 1.5rem; 
-        box-shadow: var(--soft-shadow); transition: transform 0.2s;
-        border: 1px solid transparent;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        max-width: 500px; /* Limit width on mobile for better centering */
-        margin: 0 auto;
-    }
-
-    @media (min-width: 1025px) {
-        .section-2-main .card {
-            max-width: none;
-            margin: 0;
-        }
-    }
-
-    .section-2-main .card:hover { transform: translateY(-3px); border-color: var(--secondary); }
-    .section-2-main .card.full-width { grid-column: span 1; max-width: 100%; }
-    
-    @media (min-width: 1025px) {
-        .section-2-main .card.full-width { grid-column: span 2; }
-    }
-
-    .section-2-main .card h3 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
-    .section-2-main .insight-text { font-size: 0.95rem; color: #4b4b4b; margin-bottom: 1rem; }
-    .section-2-main .highlight { font-weight: 700; color: var(--primary); }
-
-    /* Accordion Style (Local to Section 2) */
-    .section-2-main .accordion { margin-top: auto; border-top: 1px solid #f1f1f1; }
-    .section-2-main .accordion-item { padding: 0.75rem 0; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #7f8c8d; }
-    .section-2-main .accordion-content { display: none; padding-bottom: 1rem; color: #4b4b4b; font-weight: 400; }
-    .section-2-main .accordion-content ul { padding-left: 1.2rem; }
-    .section-2-main .accordion-content li { margin-bottom: 0.4rem; }
-
-    /* Tooltips */
-    .section-2-main .tooltip { position: relative; border-bottom: 1px dotted var(--primary); cursor: help; }
-    .section-2-main .tooltip:hover::after {
-        content: attr(data-tip); position: absolute; bottom: 120%; left: 0; background: #333;
-        color: #fff; padding: 8px; border-radius: 4px; width: 200px; font-size: 0.75rem; z-index: 10;
-    }
-
-    /* Charts Wrapper */
-    .section-2-main .chart-container { height: 250px; position: relative; margin: 1rem 0; width: 100%; }
-
-    /* Citation Style */
-    .section-2-main .citation { display: none; font-size: 0.7rem; color: var(--primary); font-style: italic; margin-top: 5px; }
-</style>
-
-<div class="section-2-wrapper">
-    <div class="section-2-sidebar-overlay" id="section2SidebarOverlay"></div>
-    
-    <!-- hide : Navbar -->
-    <!-- <aside class="section-2-sidebar" id="section2Sidebar">
-        <h1>Q'WELL Research</h1>
-        <nav id="section2NavLinks">
-            <a href="#prevalence" class="active">1. Prevalence Overview</a>
-            <a href="#causes">2. Structural Causes</a>
-            <a href="#barrier">3. Barrier & Risk</a>
-            <a href="#behavior">4. Consumer Behavior</a>
-            <a href="#summary">5. Executive Summary</a>
-        </nav>
-    </aside> -->
-
-    <div class="section-2-main">
-        <!-- hide : Tittle burger dan sub title -->
-        <!-- <div class="header">
-            <button class="section-2-burger-btn" id="section2BurgerBtn" aria-label="Toggle Navigation" style="margin-bottom: 15px; margin-left: 0;">
-                <span class="section-2-burger-lines">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </button>
-            <div class="title-area">
-                <h2>Dermatological Crisis Dashboard</h2>
-            </div>
-            <p>Analyzing the Structural Determinants of Sensitivity in Indonesia</p>
-        </div> -->
-
-        <div class="controls">
-            <div class="filter-btns">
-                <button class="filter-btn active" onclick="section2FilterInsight('all', this)">All Insights</button>
-                <button class="filter-btn" onclick="section2FilterInsight('env', this)">Environmental</button>
-                <button class="filter-btn" onclick="section2FilterInsight('life', this)">Lifestyle</button>
-                <button class="filter-btn" onclick="section2FilterInsight('form', this)">Formulation</button>
-            </div>
-            <!-- <div class="source-toggle" onclick="section2ToggleSources()">
-                <input type="checkbox" id="section2SrcSwitch"> <span>Show Sources</span>
-            </div> -->
-            <small>
-                <button 
-                    class="linkbtn" 
-                    id="section2SrcSwitch" 
-                    onclick="section2ToggleSources()" 
-                    data-toggle="sec4_srcUsage"
-                    style="background-color:#caf1eb; color:#000000; border-radius:18px; padding:5px 18px; border:none;"
-                >
-                    Show sources
-                </button>
-            </small>
+  <!-- Navigation Rail -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
+    <div class="max-w-screen-2xl mx-auto w-full flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-10 bg-emerald-950 rounded-xl flex items-center justify-center text-white font-bold text-xl">Q</div>
+        <div class="hidden sm:block">
+          <p class="text-xs font-bold uppercase tracking-widest text-emerald-900">Q'WELL Research Intelligence</p>
+          <p class="text-[10px] text-gray-500 uppercase tracking-tight font-medium">Doc Ref: SECTION-02-STRUCT-2030</p>
         </div>
-
-        <div class="dashboard-grid">
-            <!-- Section 1: Prevalence -->
-            <div class="card" id="prevalence" data-cat="all">
-                <h3>Prevalence Trajectory</h3>
-                <p class="insight-text">Population-level sensitivity is shifting from <span class="highlight">acute irritation to chronic reactivity</span>.</p>
-                <div class="chart-container">
-                    <canvas id="prevalenceChart"></canvas>
-                </div>
-                <div class="accordion">
-                    <div class="accordion-item" onclick="section2ToggleAcc(this)">View Clinical Breakdown ▼</div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li><span class="highlight">88%</span> of male students report recurring dandruff/scalp itch.</li>
-                            <li>Dermatitis prevalence at <span class="highlight">6.8%</span>, with 90% linked to contact irritants.</li>
-                            <li><span class="highlight">87.5%</span> of urban youth suffer from treatment-induced barrier sensitivity.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="citation">Sources: BPS Health Survey, Dermatology Journals ID</div>
-            </div>
-
-            <!-- Section 2: Structural Causes -->
-            <div class="card" id="causes" data-cat="env life form">
-                <h3>Structural Root Causes</h3>
-                <p class="insight-text">Drivers of sensitivity are baked into the urban environment and commercial cycles.</p>
-                <div class="chart-container">
-                    <canvas id="causesChart"></canvas>
-                </div>
-                <div class="accordion">
-                    <div class="accordion-item" onclick="section2ToggleAcc(this)">Key Environmental Factors ▼</div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li><strong>Pollution:</strong> $PM_{2.5}$ triggers oxidative stress and barrier micro-inflammation.</li>
-                            <li><strong>Water Toxicity:</strong> Hard water and high mineral content strip natural lipids.</li>
-                            <li><strong>Formulation:</strong> <span class="highlight">54.9%</span> of products cause sensitivity through active overuse.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="citation">Sources: Ministry of Environment ID, Industry Market Research</div>
-            </div>
-
-            <!-- Section 3: Barrier Damage Loop -->
-            <div class="card" id="barrier" data-cat="env form">
-                <h3>The Barrier Degradation Loop</h3>
-                <p class="insight-text">High <span class="tooltip" data-tip="Transepidermal Water Loss: the amount of water lost across the stratum corneum through evaporation.">TEWL</span> values indicate permanent barrier breach.</p>
-                <div class="chart-container">
-                    <svg viewBox="0 0 400 200" style="width:100%; height:100%;">
-                        <circle cx="200" cy="100" r="70" fill="none" stroke="#CAF1EB" stroke-width="2" stroke-dasharray="5,5" />
-                        <g transform="translate(200,30)">
-                            <rect x="-60" y="-15" width="120" height="30" rx="15" fill="#65BDAD" />
-                            <text y="5" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">External Stressors</text>
-                        </g>
-                        <g transform="translate(320,100)">
-                            <rect x="-50" y="-15" width="100" height="30" rx="15" fill="#FFCC97" />
-                            <text y="5" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Barrier Failure</text>
-                        </g>
-                        <g transform="translate(200,170)">
-                            <rect x="-60" y="-15" width="120" height="30" rx="15" fill="#65BDAD" />
-                            <text y="5" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Inflammation Flare</text>
-                        </g>
-                        <g transform="translate(80,100)">
-                            <rect x="-50" y="-15" width="100" height="30" rx="15" fill="#FFCC97" />
-                            <text y="5" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">TEWL Elevation</text>
-                        </g>
-                    </svg>
-                </div>
-                <div class="insight-text">
-                    TEWL for sensitive skin: <span class="highlight">18.07 $g/m^2/h$</span> vs <span class="highlight">5.61 $g/m^2/h$</span> in healthy skin. This 3x increase creates a "leaky" interface.
-                </div>
-                <div class="citation">Sources: Clinical Barrier Studies ID</div>
-            </div>
-
-            <!-- Section 4: Cocok-Cocokan -->
-            <div class="card" id="behavior" data-cat="life form">
-                <h3>“Cocok-Cocokan” Behavior Funnel</h3>
-                <p class="insight-text">Misinformation drives a high-cost, high-wastage cycle of brand switching.</p>
-                <div class="chart-container">
-                    <canvas id="behaviorChart"></canvas>
-                </div>
-                <div class="accordion">
-                    <div class="accordion-item" onclick="section2ToggleAcc(this)">Behavior Drivers ▼</div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li><strong>Claim Fatigue:</strong> Viral transparency tests show massive gaps in actual active levels.</li>
-                            <li><strong>Financial Impact:</strong> Indonesians spend significant income on failed "trial" products.</li>
-                            <li><strong>Social Pressure:</strong> gen-Z purchases are 50%+ driven by TikTok/IG hype cycles.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="citation">Sources: Consumer Signal Aggregation, E-commerce Sentiment Data</div>
-            </div>
-
-            <!-- Section 5: Summary -->
-            <div class="card full-width" id="summary" style="background-color: var(--accent); border: 2px solid var(--primary);">
-                <h3>Systemic Problem Definition</h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start;">
-                    <div style="flex: 1; min-width: 250px;">
-                        <p style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">Skin sensitivity in Indonesia is a structural health reality, not a trend.</p>
-                        <ul class="insight-text" style="list-style: none; padding-left: 0;">
-                            <li style="margin-bottom: 0.5rem;">🚨 <strong>Environment:</strong> extreme UV and air particulates.</li>
-                            <li style="margin-bottom: 0.5rem;">🚨 <strong>Barrier:</strong> Permanent degradation loop.</li>
-                            <li style="margin-bottom: 0.5rem;">🚨 <strong>Culture:</strong> "Cocok-cocokan" cycle fatigue.</li>
-                        </ul>
-                    </div>
-                    <div style="flex: 1; min-width: 250px; padding: 1.5rem; background: var(--white); border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-                        <p class="insight-text"><strong>Conclusion:</strong> Consumers are trapped in a loop of stressors and ineffective products. Q'WELL targets the structural barrier deficiency first.</p>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex gap-1 text-[11px] font-bold uppercase tracking-wider text-gray-400">
+          <span class="px-2 py-1 bg-gray-100 rounded">Analysis: Structural</span>
+          <span class="px-2 py-1 bg-gray-100 rounded">Market: Indonesia</span>
         </div>
+        <button onclick="window.print()" class="px-4 py-2 bg-emerald-950 text-white text-xs font-bold rounded-full hover:bg-emerald-900 transition-all shadow-lg shadow-emerald-900/20">
+          DOWNLOAD DATASET
+        </button>
+      </div>
     </div>
-</div>
+  </nav>
 
-<script>
-    (function() { // Wrap in IIFE
-        // 1. Sidebar Toggle Implementation
-        const burgerBtn = document.getElementById('section2BurgerBtn');
-        const sidebar = document.getElementById('section2Sidebar');
-        const overlay = document.getElementById('section2SidebarOverlay');
-        const navLinks = document.querySelectorAll('#section2NavLinks a');
+  <div class="max-w-screen-2xl mx-auto pt-24 pb-20 px-6 flex flex-col lg:flex-row gap-10">
+    
+    <!-- Sidebar -->
+    <aside class="w-full lg:w-72 flex-shrink-0">
+      <div class="sticky top-24 space-y-6">
+        <div>
+          <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Navigation</h3>
+          <ul class="space-y-1">
+            <li><a href="#epidemiology" class="flex items-center gap-3 px-4 py-3 rounded-2xl sidebar-active text-sm font-semibold transition-all"><span>01.</span> Bio-Landscape</a></li>
+            <li><a href="#toxicity" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>02.</span> Urban Toxicity</a></li>
+            <li><a href="#internal" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>03.</span> The Active Burn</a></li>
+            <li><a href="#markers" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>04.</span> Physiological Markers</a></li>
+            <li><a href="#behavior" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-all"><span>05.</span> Cocok-Cocokan Loop</a></li>
+          </ul>
+        </div>
 
-        function toggleSidebar() {
-            const isOpen = sidebar.classList.toggle('mobile-open');
-            burgerBtn.classList.toggle('open');
-            overlay.style.display = isOpen ? 'block' : 'none';
-            if (isOpen) {
-                setTimeout(() => overlay.style.opacity = "1", 10);
-                document.body.style.overflow = 'hidden';
-            } else {
-                overlay.style.opacity = "0";
-                setTimeout(() => overlay.style.display = "none", 170);
-                document.body.style.overflow = '';
-            }
-        }
+        <div class="p-6 bg-red-50 rounded-3xl border border-red-100">
+          <p class="text-xs font-bold text-red-900 uppercase tracking-widest mb-2">Problem Density</p>
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+            <span class="text-[10px] font-bold text-red-700">HIGH HOSTILITY</span>
+          </div>
+          <p class="text-[11px] text-red-800 leading-relaxed font-medium">The Indonesian environment acts as a constant catalyst for barrier degradation. This is a structural, not elective, market driver.</p>
+        </div>
+      </div>
+    </aside>
 
-        if (burgerBtn) burgerBtn.addEventListener('click', toggleSidebar);
-        if (overlay) overlay.addEventListener('click', toggleSidebar);
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                if (window.innerWidth <= 1024) toggleSidebar();
-                
-                const targetId = link.getAttribute('href').substring(1);
-                const target = document.getElementById(targetId);
-                if (target) {
-                    e.preventDefault();
-                    const y = target.getBoundingClientRect().top + window.pageYOffset - 100;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
-                }
-            });
-        });
-
-        // 2. Active State on Scroll (ScrollSpy)
-        window.addEventListener('scroll', () => {
-            let current = "";
-            const sections = document.querySelectorAll('.section-2-wrapper .card');
-            sections.forEach(sec => {
-                if (window.scrollY >= (sec.offsetTop - 150)) {
-                    current = sec.getAttribute('id');
-                }
-            });
-            navLinks.forEach(link => {
-                link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
-            });
-        }, { passive: true });
-
-        // 3. Charts
-        const initCharts = () => {
-            if (typeof Chart === 'undefined') return;
+    <!-- Content -->
+    <main class="flex-grow space-y-12">
+      
+      <!-- Hero -->
+      <section id="epidemiology" class="animate-in">
+        <div class="relative p-1 bg-emerald-950 rounded-[2.5rem] overflow-hidden shadow-2xl">
+          <div class="bg-white rounded-[2.4rem] p-10 sm:p-14 relative overflow-hidden">
+            <span class="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-900 text-[10px] font-bold rounded-full uppercase tracking-widest mb-6">Phase 02: Structural Reality</span>
+            <h1 class="serif text-4xl sm:text-6xl text-emerald-950 leading-tight mb-8">Skin & Scalp<br/><span class="italic">The Hostility Reality</span></h1>
             
-            Chart.defaults.font.family = "'Inter', sans-serif";
+            <div class="max-w-2xl">
+              <p class="text-lg text-gray-600 leading-relaxed mb-10 font-medium">
+                Dermatological health in Indonesia is defined by a systemic breakdown in barrier integrity. Chronic sensitivity is no longer a niche complaint; it is a clinical population-level crisis.
+              </p>
+              
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                <div class="stat-card p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                  <p class="text-2xl font-black text-emerald-900">90%</p>
+                  <p class="text-[10px] text-gray-500 uppercase font-bold tracking-tight">Contact Dermatitis Rate</p>
+                </div>
+                <div class="stat-card p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                  <p class="text-2xl font-black text-emerald-900">80%+</p>
+                  <p class="text-[10px] text-gray-500 uppercase font-bold tracking-tight">Avg. Daily Humidity</p>
+                </div>
+                <div class="stat-card p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                  <p class="text-2xl font-black text-emerald-900">11+</p>
+                  <p class="text-[10px] text-gray-500 uppercase font-bold tracking-tight">Extreme UV Index</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            const ctx1 = document.getElementById('prevalenceChart');
-            if (ctx1) {
-                new Chart(ctx1, {
-                    type: 'line',
-                    data: {
-                        labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
-                        datasets: [{
-                            label: 'Sensitivity Index',
-                            data: [2.8, 3.2, 3.5, 4.1, 4.5, 4.8],
-                            borderColor: '#65BDAD',
-                            backgroundColor: 'rgba(101, 189, 173, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { y: { min: 1, max: 5 } }
-                    }
-                });
-            }
+      <!-- Toxicity Matrix -->
+      <section id="toxicity" class="animate-in" style="animation-delay: 0.1s;">
+        <div class="glass-card p-10">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+            <div>
+              <h2 class="serif text-3xl text-emerald-950 mb-2">The Urban Toxicity Matrix</h2>
+              <p class="text-sm text-gray-500">Environmental factors driving transepidermal water loss (TEWL).</p>
+            </div>
+            <div class="px-4 py-2 bg-emerald-900 text-white text-[10px] font-bold rounded-full uppercase tracking-widest">
+              Jakarta Audit 2024
+            </div>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-8">
+            <!-- Pollution -->
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M2 12a10 10 0 1120 0 10 10 0 01-20 0z"></path></svg>
+                </div>
+                <h4 class="font-bold text-gray-900">Particulate Matter</h4>
+              </div>
+              <p class="text-xs text-gray-500 leading-relaxed">PM2.5 peaks at <span class="font-bold text-gray-900">164μg/m³</span>. These particles penetrate the lipid barrier, inducing oxidative stress and chronic follicular inflammation.</p>
+              <div class="bg-gray-100 h-1.5 w-full rounded-full overflow-hidden">
+                <div class="bg-red-500 h-full w-[85%]"></div>
+              </div>
+              <p class="text-[10px] font-bold text-red-600 uppercase tracking-widest text-right">Danger: High</p>
+            </div>
+            
+            <!-- Humidity/Temp -->
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"></path></svg>
+                </div>
+                <h4 class="font-bold text-gray-900">Thermal Stress</h4>
+              </div>
+              <p class="text-xs text-gray-500 leading-relaxed">High humidity + heat creates a semi-occlusive state that disrupts the acid mantle, leading to <span class="font-bold text-gray-900">"Malassezia Overgrowth"</span> on the scalp.</p>
+              <div class="bg-gray-100 h-1.5 w-full rounded-full overflow-hidden">
+                <div class="bg-emerald-600 h-full w-[92%]"></div>
+              </div>
+              <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest text-right">Structural Level: Constant</p>
+            </div>
 
-            const ctx2 = document.getElementById('causesChart');
-            if (ctx2) {
-                new Chart(ctx2, {
-                    type: 'radar',
-                    data: {
-                        labels: ['Pollution', 'UV Exposure', 'Water Quality', 'Lifestyle', 'Harshness'],
-                        datasets: [{
-                            label: 'Level',
-                            data: [4.8, 4.2, 4.5, 3.8, 4.0],
-                            backgroundColor: 'rgba(255, 204, 151, 0.4)',
-                            borderColor: '#FFCC97',
-                            pointBackgroundColor: '#65BDAD'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: { r: { min: 0, max: 5, ticks: { display: false } } }
-                    }
-                });
-            }
+            <!-- UV -->
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 12h2M4.22 19.78l1.42-1.42M17.66 6.34l1.42-1.42"></path></svg>
+                </div>
+                <h4 class="font-bold text-gray-900">Solar Toxicity</h4>
+              </div>
+              <p class="text-xs text-gray-500 leading-relaxed">Extreme UV Index levels directly degrade structural proteins (collagen/keratin), accelerating barrier fragility and increasing trans-dermal sensitivity.</p>
+              <div class="bg-gray-100 h-1.5 w-full rounded-full overflow-hidden">
+                <div class="bg-amber-500 h-full w-[78%]"></div>
+              </div>
+              <p class="text-[10px] font-bold text-amber-600 uppercase tracking-widest text-right">Impact: Severe</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            const ctx4 = document.getElementById('behaviorChart');
-            if (ctx4) {
-                new Chart(ctx4, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Discovery', 'Purchase', 'Irritation', 'Abandon', 'Cycle'],
-                        datasets: [{
-                            data: [95, 82, 68, 74, 88],
-                            backgroundColor: ['#CAF1EB', '#FFCC97', '#65BDAD', '#FFCC97', '#CAF1EB'],
-                            borderRadius: 6
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        indexAxis: 'y',
-                        plugins: { legend: { display: false } }
-                    }
-                });
-            }
-        };
+      <!-- The Active Burn -->
+      <section id="internal" class="animate-in" style="animation-delay: 0.2s;">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-emerald-950 rounded-[2.5rem] p-10 sm:p-14 text-white">
+            <h3 class="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.3em] mb-4">Internal Catalyst</h3>
+            <h2 class="serif text-4xl leading-tight mb-8">The "Active Burn"<br/>Phenomenon</h2>
+            <p class="text-emerald-100/70 text-sm leading-relaxed mb-10">
+              The overuse of high-concentration chemical actives (Retinoids, AHAs/BHAs) in a tropical, high-UV climate has induced a state of <span class="text-emerald-400 font-bold">Structural Barrier Fatigue</span>.
+            </p>
+            <ul class="space-y-4 text-xs font-semibold">
+              <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div> Lipid depletion via aggressive surfactants.</li>
+              <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div> Chronic micro-inflammation from pH imbalance.</li>
+              <li class="flex items-center gap-3"><div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div> Weakened defenses against urban pollutants.</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-[2.5rem] p-10 sm:p-14 border border-gray-100 shadow-xl">
+            <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Physiological Baseline</h4>
+            <div class="space-y-10">
+              <div class="relative pl-6 border-l-2 border-emerald-900">
+                <p class="text-2xl font-black text-emerald-950 mb-1">Elevated TEWL</p>
+                <p class="text-xs text-gray-500">Transepidermal Water Loss is significantly higher in Indonesian urbanites, leading to "Internal Dehydration" regardless of topical oiliness.</p>
+              </div>
+              <div class="relative pl-6 border-l-2 border-emerald-900">
+                <p class="text-2xl font-black text-emerald-950 mb-1">Follicular Stress</p>
+                <p class="text-xs text-gray-500">Scalp sensitivity is rising due to the "Build-up Loop" (Sebum + PM2.5 + Aggressive Shampooing).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initCharts);
-        } else {
-            initCharts();
+      <!-- Behavioral Loop -->
+      <section id="behavior" class="animate-in" style="animation-delay: 0.3s;">
+        <div class="glass-card p-12 text-center">
+          <span class="inline-block px-4 py-1.5 bg-gray-100 text-gray-900 text-[10px] font-bold rounded-full uppercase tracking-widest mb-6">Market Behavior Psychology</span>
+          <h2 class="serif text-4xl text-emerald-950 mb-6">The "Cocok-Cocokan" Loop</h2>
+          <p class="max-w-2xl mx-auto text-gray-500 text-sm leading-relaxed mb-12 italic">
+            "Because the barrier is compromised, products that worked yesterday fail today. This drives a traumatized trial-and-error cycle where switching brands is a survival mechanism, not a luxury choice."
+          </p>
+          
+          <div class="grid md:grid-cols-4 gap-6">
+            <div class="p-6 bg-gray-50 rounded-3xl">
+              <p class="text-xs font-bold text-emerald-900 mb-2 uppercase tracking-tighter">01. Irritation Trigger</p>
+              <p class="text-[10px] text-gray-500 font-medium">Pollution or Active-overload compromises the barrier.</p>
+            </div>
+            <div class="p-6 bg-gray-50 rounded-3xl">
+              <p class="text-xs font-bold text-emerald-900 mb-2 uppercase tracking-tighter">02. "Kapok" (Fear)</p>
+              <p class="text-[10px] text-gray-500 font-medium">Consumer experiences redness or itching; immediately abandons product.</p>
+            </div>
+            <div class="p-6 bg-gray-50 rounded-3xl">
+              <p class="text-xs font-bold text-emerald-900 mb-2 uppercase tracking-tighter">03. Defensive Switch</p>
+              <p class="text-[10px] text-gray-500 font-medium">Seeks "Natural" or "Gentle" claims as a defensive sanctuary.</p>
+            </div>
+            <div class="p-6 bg-gray-50 rounded-3xl">
+              <p class="text-xs font-bold text-emerald-900 mb-2 uppercase tracking-tighter">04. Claim Failure</p>
+              <p class="text-[10px] text-gray-500 font-medium">Low-quality "Natural" products fail to protect; cycle restarts.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sources -->
+      <footer id="sources" class="pt-10 border-t border-gray-200">
+        <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Section 2 References & Validation</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[11px] font-semibold text-gray-500">
+          <div class="hover:text-emerald-700 transition-colors">01. IQAir Jakarta Air Quality Audit 2024</div>
+          <div class="hover:text-emerald-700 transition-colors">02. PERDOSKI Clinical Statistics (Dermatitis)</div>
+          <div class="hover:text-emerald-700 transition-colors">03. Journal of Cosmetic Dermatology (Tropical TEWL)</div>
+          <div class="hover:text-emerald-700 transition-colors">04. BMKG UV Index Longitudinal Study</div>
+          <div class="hover:text-emerald-700 transition-colors">05. Euromonitor ID Skin Sensitivity Trends</div>
+          <div class="hover:text-emerald-700 transition-colors">06. Indonesian Journal of Health Science (Scalp Audit)</div>
+          <div class="hover:text-emerald-700 transition-colors">07. Lancet Planetary Health (Urban Stressors)</div>
+          <div class="hover:text-emerald-700 transition-colors">08. Market Audit: Active-overload behavior</div>
+        </div>
+        <div class="mt-12 flex justify-between items-center text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+          <p>© 2026 Q'WELL STRATEGIC INTELLIGENCE UNIT</p>
+          <p>CONFIDENTIAL • STRUCTURAL AUDIT</p>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) {
+          window.scrollTo({
+            top: target.offsetTop - 100,
+            behavior: 'smooth'
+          });
         }
-    })();
+      });
+    });
 
-    // Global toggle functions with prefix for Section 2
-    function section2ToggleAcc(el) {
-        const content = el.nextElementSibling;
-        const isOpen = content.style.display === "block";
-        content.style.display = isOpen ? "none" : "block";
-        el.innerText = isOpen ? el.innerText.replace('▲', '▼') : el.innerText.replace('▼', '▲');
-    }
+    // Sidebar observer
+    const sections = ['epidemiology', 'toxicity', 'internal', 'behavior'];
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = document.getElementById(section).offsetTop;
+        if (pageYOffset >= sectionTop - 150) {
+          current = section;
+        }
+      });
 
-    function section2ToggleSources() {
-        const citations = document.querySelectorAll('.section-2-wrapper .citation');
-        const btn = document.getElementById('section2SrcSwitch');
-        const isNowVisible = !btn.classList.contains('src-visible');
-        btn.classList.toggle('src-visible', isNowVisible);
-        citations.forEach(c => c.style.display = isNowVisible ? 'block' : 'none');
-        btn.textContent = isNowVisible ? 'Hide sources' : 'Show sources';
-    }
-
-    function section2FilterInsight(cat, btn) {
-        const wrapper = btn.closest('.section-2-main');
-        const cards = wrapper.querySelectorAll('.card');
-        const buttons = wrapper.querySelectorAll('.filter-btn');
-        
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        cards.forEach(card => {
-            if (cat === 'all' || card.id === 'summary') {
-                card.style.display = "flex";
-            } else {
-                const categories = card.getAttribute('data-cat');
-                card.style.display = (categories && categories.includes(cat)) ? "flex" : "none";
-            }
-        });
-    }
-</script>
+      document.querySelectorAll('aside a').forEach(a => {
+        a.classList.remove('sidebar-active');
+        a.classList.add('text-gray-600');
+        if (a.getAttribute('href') === `#${current}`) {
+          a.classList.add('sidebar-active');
+          a.classList.remove('text-gray-600');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
