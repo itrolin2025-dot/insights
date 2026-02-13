@@ -27,6 +27,14 @@
       box-shadow: var(--shadow);
     }
 
+    .glass-card-emerald {
+      background: #0D2B2A;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
     .sidebar-active {
       background: var(--primary);
       color: white;
@@ -285,7 +293,7 @@
 
       <!-- 05. 2030 Stress Test -->
       <section id="stress" class="animate-reveal" style="animation-delay: 0.4s;">
-        <div class="glass-card p-12 bg-emerald-950 text-white relative overflow-hidden">
+        <div class="glass-card-emerald p-12 bg-emerald-950 text-white relative overflow-hidden">
             <div class="absolute inset-0 opacity-5 pointer-events-none">
                 <svg width="100%" height="100%"><pattern id="grid-stress" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5"/></pattern><rect width="100%" height="100%" fill="url(#grid-stress)" /></svg>
             </div>

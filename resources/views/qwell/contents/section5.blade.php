@@ -29,6 +29,15 @@
       transition: all 0.3s ease;
     }
 
+    .glass-card-emerald {
+      background: #0D2B2A;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
     .sidebar-active {
       background: var(--primary);
       color: white;
@@ -256,30 +265,30 @@
       </section>
 
       <!-- Channel Strategy -->
-      <section id="channels" class="animate-main" style="animation-delay: 0.3s;">
+      <section id="channels" class="animate-main #0D2B2A" style="animation-delay: 0.3s; ">
         <div class="flex flex-col md:flex-row gap-8">
-          <div class="md:w-1/2 glass-card p-10 bg-[#0D2B2A] text-white">
+          <div class="md:w-1/2 glass-card-emerald p-10 bg-[#0D2B2A] text-white">
             <h3 class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-6">Primary Conversion: Digital High-Trust</h3>
             <div class="space-y-8">
               <div class="flex gap-6 items-start">
                 <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-[#D4AF37] font-bold">1</div>
                 <div>
-                  <h4 class="font-bold mb-1 text-emerald-500">Shopee / Tokopedia Mall</h4>
-                  <p class="text-xs text-emerald-800 leading-relaxed">Official "Mall" status is non-negotiable for authenticity signaling. Primary channel for high-worth repeat buyers.</p>
+                  <h4 class="font-bold mb-1">Shopee / Tokopedia Mall</h4>
+                  <p class="text-xs text-emerald-100/60 leading-relaxed">Official "Mall" status is non-negotiable for authenticity signaling. Primary channel for high-worth repeat buyers.</p>
                 </div>
               </div>
               <div class="flex gap-6 items-start">
                 <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-[#D4AF37] font-bold">2</div>
                 <div>
-                  <h4 class="font-bold mb-1 text-emerald-500">TikTok Shop (Edu-Tok)</h4>
-                  <p class="text-xs  text-emerald-800 leading-relaxed">The venue for "Investigative Transparency." Leveraging de-influencers to show lab reports live on stream.</p>
+                  <h4 class="font-bold mb-1">TikTok Shop (Edu-Tok)</h4>
+                  <p class="text-xs text-emerald-100/60 leading-relaxed">The venue for "Investigative Transparency." Leveraging de-influencers to show lab reports live on stream.</p>
                 </div>
               </div>
               <div class="flex gap-6 items-start">
                 <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-[#D4AF37] font-bold">3</div>
                 <div>
-                  <h4 class="font-bold mb-1" text-emerald-500>D2C Trust-Hub</h4>
-                  <p class="text-xs  text-emerald-800 leading-relaxed">A dedicated portal where consumers enter batch codes to see the Certificate of Analysis (COA).</p>
+                  <h4 class="font-bold mb-1">D2C Trust-Hub</h4>
+                  <p class="text-xs text-emerald-100/60 leading-relaxed">A dedicated portal where consumers enter batch codes to see the Certificate of Analysis (COA).</p>
                 </div>
               </div>
             </div>

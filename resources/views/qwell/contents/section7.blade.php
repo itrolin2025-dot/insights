@@ -361,7 +361,7 @@
       </section>
 
       <!-- Footer Refs -->
-      <footer id="sources" class="pt-10 border-t border-gray-200">
+      <!-- <footer id="sources" class="pt-10 border-t border-gray-200">
         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Section 7 Hierarchy of Evidence</h3>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[11px] font-semibold text-gray-500">
           <div class="hover:text-emerald-700 transition-colors">01. BPOM Regulation No. 18/2024</div>
@@ -376,7 +376,7 @@
               <span>VER V3.0 (AUTHENTICITY UPDATE)</span>
           </div>
         </div>
-      </footer>
+      </footer> -->
     </main>
   </div>
 

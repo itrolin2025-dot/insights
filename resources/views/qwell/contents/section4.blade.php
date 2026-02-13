@@ -29,6 +29,15 @@
       transition: all 0.3s ease;
     }
 
+    .glass-card-emerald-4{ 
+      background: #0D2B2A;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
     .sidebar-active {
       background: var(--primary);
       color: white;
@@ -302,7 +311,7 @@
 
       <!-- 05. Verification Funnel -->
       <section id="funnel" class="animate-up" style="animation-delay: 0.4s;">
-        <div class="glass-card-4 p-12 bg-emerald-950 text-white overflow-hidden relative">
+        <div class="glass-card-emerald-4 p-12  text-white overflow-hidden relative">
             <div class="absolute inset-0 opacity-5 pointer-events-none">
                 <svg width="100%" height="100%"><pattern id="grid-funnel" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5"/></pattern><rect width="100%" height="100%" fill="url(#grid-funnel)" /></svg>
             </div>
