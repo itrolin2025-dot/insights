@@ -316,7 +316,7 @@
         <div class="relative p-1 bg-[#D4AF37] rounded-[3.5rem] overflow-hidden shadow-2xl">
             <div class="bg-white rounded-[3.4rem] p-10 sm:p-20 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-2 h-full bg-[#0D2B2A]"></div>
-                <h2 class="serif text-5xl text-emerald-950 mb-10 italic">Penutup & <span class="not-italic text-[#D4AF37]">Roadmap</span></h2>
+                <h2 class="serif text-5xl text-emerald-950 mb-10 italic">Conclusion</h2>
                 
                 <div class="grid lg:grid-cols-2 gap-16">
                     <div class="space-y-10">
