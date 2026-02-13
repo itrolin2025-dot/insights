@@ -70,7 +70,7 @@
 <div id="section6-root" class="bg-grid w-full relative">
 
   <!-- Section Header / Nav -->
-  <!-- <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6 w-full">
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6 w-full">
     <div class="w-full flex justify-between items-center">
       <div class="flex items-center gap-4">
         <div class="w-10 h-10 bg-[#0D2B2A] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">Q</div>
@@ -86,7 +86,7 @@
         </button>
       </div>
     </div>
-  </nav> -->
+  </nav>
 
   <div class="w-full flex flex-col lg:flex-row gap-12 pt-10 pb-32">
     
@@ -338,20 +338,20 @@
       <section id="playbook" class="animate-up" style="animation-delay: 0.4s;">
         <div class="glass-card p-12 text-center bg-[#0D2B2A] text-white">
             <span class="inline-block px-4 py-1.5 bg-white/5 text-emerald-300 text-[10px] font-bold rounded-full uppercase tracking-widest mb-6 border border-white/10">Strategic Playbook 2026</span>
-            <h2 class="serif text-4xl mb-12 italic text-emerald-500">How Q'WELL Wins Against Incumbents</h2>
+            <h2 class="serif text-4xl mb-12 italic">How Q'WELL Wins Against Incumbents</h2>
             
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 text-left">
                     <h5 class="text-[10px] font-black text-[#D4AF37] uppercase mb-4 tracking-widest">Reframing Value</h5>
-                    <p class="text-xs  text-emerald-800 leading-relaxed italic">"Don't sell a body wash; sell <strong>Biological Security</strong>. Frame lower-priced competitors as 'Unverified Biological Risks'."</p>
+                    <p class="text-xs text-emerald-100/60 leading-relaxed italic">"Don't sell a body wash; sell <strong>Biological Security</strong>. Frame lower-priced competitors as 'Unverified Biological Risks'."</p>
                 </div>
                 <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 text-left">
                     <h5 class="text-[10px] font-black text-[#D4AF37] uppercase mb-4 tracking-widest">Structural Trust</h5>
-                    <p class="text-xs  text-emerald-800 leading-relaxed italic">"Deploy the <strong>HRIPT Signal</strong> in all upper-funnel communication to instantly separate from generic 'Clean' noise."</p>
+                    <p class="text-xs text-emerald-100/60 leading-relaxed italic">"Deploy the <strong>HRIPT Signal</strong> in all upper-funnel communication to instantly separate from generic 'Clean' noise."</p>
                 </div>
                 <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 text-left">
                     <h5 class="text-[10px] font-black text-[#D4AF37] uppercase mb-4 tracking-widest">Transparency as PR</h5>
-                    <p class="text-xs text-emerald-800 leading-relaxed italic">"Preempt investigative de-influencers by publishing <strong>Laboratory COAs</strong> before they are requested."</p>
+                    <p class="text-xs text-emerald-100/60 leading-relaxed italic">"Preempt investigative de-influencers by publishing <strong>Laboratory COAs</strong> before they are requested."</p>
                 </div>
             </div>
         </div>

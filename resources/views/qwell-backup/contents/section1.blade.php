@@ -83,7 +83,7 @@
     </div>
   </nav> -->
 
-  <div class="w-full flex flex-col lg:flex-row gap-8 lg:gap-10 pt-8 pb-16 px-6">
+  <div class="w-full flex flex-col lg:flex-row gap-8 lg:gap-10 pt-8 pb-16">
     
     <!-- Sidebar -->
     <aside class="w-full lg:w-72 flex-shrink-0">

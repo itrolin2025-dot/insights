@@ -64,7 +64,7 @@
 <body class="bg-grid">
 
   <!-- Navigation Rail -->
-  <!-- <div class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
     <div class="max-w-screen-2xl mx-auto w-full flex justify-between items-center">
       <div class="flex items-center gap-4">
         <div class="w-10 h-10 bg-emerald-950 rounded-xl flex items-center justify-center text-white font-bold text-xl">Q</div>
@@ -83,9 +83,9 @@
         </button>
       </div>
     </div>
-  </div> -->
+  </nav>
 
-  <div class="max-w-screen-2xl mx-auto pt-10 pb-20 px-6 flex flex-col lg:flex-row gap-10">
+  <div class="max-w-screen-2xl mx-auto pt-24 pb-20 px-6 flex flex-col lg:flex-row gap-10">
     
     <!-- Sidebar -->
     <aside class="w-full lg:w-72 flex-shrink-0">

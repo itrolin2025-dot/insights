@@ -70,7 +70,7 @@
 <body class="bg-grid">
 
   <!-- Navigation -->
-  <!-- <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
     <div class="max-w-screen-2xl mx-auto w-full flex justify-between items-center">
       <div class="flex items-center gap-4">
         <div class="w-10 h-10 bg-[#0D2B2A] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-900/20">Q</div>
@@ -86,9 +86,9 @@
         </button>
       </div>
     </div>
-  </nav> -->
+  </nav>
 
-  <div class="max-w-screen-2xl mx-auto pt-10 pb-20 px-6 flex flex-col lg:flex-row gap-12">
+  <div class="max-w-screen-2xl mx-auto pt-24 pb-20 px-6 flex flex-col lg:flex-row gap-12">
     
     <!-- Sidebar -->
     <aside class="w-full lg:w-72 flex-shrink-0">

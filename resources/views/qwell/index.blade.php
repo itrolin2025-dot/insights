@@ -1,322 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q'WELL Strategic Research Brief | Insights</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Q'WELL | Master Strategic Intelligence Dossier</title>
+    <!-- <title>Q'WELL Strategic Research Brief | Insights</title> -->
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
     <link rel="icon" href="{{ asset('images/logo/qwell-logo.png') }}" type="image/png">
-    
-    <!-- custom style -->
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- custom js -->
-    <script src="{{ asset('js/custom.js') }}" defer></script>
-    
-    <style>
-        /* Blur overlay for popup */
-        #qwell-blur-bg {
-            position: fixed;
-            z-index: 998;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            backdrop-filter: blur(8px);
-            background: rgba(241,245,249,0.45); /* slight light overlay for usability */
-            opacity: 1;
-            transition: backdrop-filter 0.5s cubic-bezier(.4,0,.2,1), opacity 0.5s cubic-bezier(.4,0,.2,1); /* smooth transition */
-        }
-        #qwell-blur-bg.smooth-unblur {
-            backdrop-filter: blur(0px);
-            opacity: 0;
-        }
-        #qwell-blur-bg.hidden {
-            display: none !important;
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
-        #qwell-password-popup {
-            z-index: 999;
-        }
+  <style>
+    :root {
+      --primary: #0D2B2A;       /* Deep Forest */
+      --secondary: #164E4D;     /* Dark Teal */
+      --accent: #D4AF37;        /* Gold/Bronze */
+      --paper: #F8F9FA;         /* Gallery Grey */
+      --ink: #111827;           /* Deep Grey */
+      --radius: 1.5rem;
+      --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    }
 
-        #qwell-success-message {
-            display: none;
-        }
-        #qwell-success-message.active {
-            display: flex;
-            animation: fadeSuccess 0.6s;
-        }
-        @keyframes fadeSuccess {
-            from { opacity: 0; transform: translateY(10px);}
-            to { opacity: 1; transform: none;}
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background-color: var(--paper);
+      scroll-behavior: smooth;
+    }
 
-        body.password-locked main,
-        body.password-locked .antialiased > *:not(#qwell-blur-bg):not(#qwell-password-popup){
-            pointer-events: none;
-            user-select: none;
-        }
-        /* Hide popup by default, show blur immediately */
-        #qwell-blur-bg {
-            visibility: visible;
-            opacity: 1;
-            transition: backdrop-filter 0.5s cubic-bezier(.4,0,.2,1), opacity 0.5s cubic-bezier(.4,0,.2,1);
-        }
-        #qwell-password-popup {
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.45s cubic-bezier(.4,0,.2,1), visibility 0s linear 0.45s;
-        }
-        #qwell-blur-bg.qwell-show, #qwell-password-popup.qwell-show {
-            visibility: visible;
-            opacity: 1;
-            transition: opacity 0.45s cubic-bezier(.4,0,.2,1), visibility 0s;
-        }
+    .serif { font-family: 'Playfair Display', serif; }
 
+    .bg-grid {
+      background-size: 60px 60px;
+      background-image: radial-gradient(circle, #0000000a 1px, transparent 1px);
+    }
 
-        /* Back to Top Floating Button */
-        #qwell-back-to-top {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            z-index: 950;
-            display: none;
-            background: #F59E0B;
-            color: #fff;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            box-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.25s cubic-bezier(.4,0,.2,1), visibility 0.2s;
-            cursor: pointer;
-        }
-        #qwell-back-to-top.show {
-            display: flex;
-            opacity: 1;
-        }
-        #qwell-back-to-top:active {
-            background: #fbbf24;
-        }
-        @media (max-width: 600px) {
-            #qwell-back-to-top {
-                bottom: 18px;
-                right: 18px;
-                width: 46px;
-                height: 46px;
-            }
-        }
-        #qwell-back-to-top svg {
-            display: block;
-        }
-    </style>
+    /* Accordion Custom Styles */
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+    }
+    .accordion-item.active .accordion-content {
+      max-height: 5000px; /* High enough to fit content */
+      transition: max-height 1s ease-in-out;
+    }
+    .accordion-item.active .accordion-icon {
+      transform: rotate(180deg);
+      background-color: var(--accent);
+      color: white;
+    }
 
-    <!-- 
-        Palette Used: "Electric Blue & Clinical White" from "Colour Combinations" (vibrant/professional adaptation).
-        Colors: #0B6E99 (Deep Blue), #06B6D4 (Cyan), #F59E0B (Gold).
-        NO SVG used. NO Mermaid JS used.
-    -->
-    <!--
-        Narrative Plan:
-        1. Intro: The Strategic Mandate.
-        2. Environment: Urban impact on skin (The "Why").
-        3. Regulation: The breakdown of trust (The "Gap").
-        4. Psychology: Skintimidation (The "Tension").
-        5. Solution: Clinical Halal (The "Bridge").
-        6. Market: Premium Local vs Global (The "Battleground").
-        7. Conclusion: The Core Question.
-    -->
+    /* Progress bar */
+    #progress-container {
+      height: 4px;
+      background: rgba(13, 43, 42, 0.1);
+    }
+    #progress-bar {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.2s;
+    }
+
+    /* Chart Simulation */
+    .bar-grow { transition: width 1s ease-in-out; }
+
+    /* Footer Shadow */
+    .footer-shadow {
+        box-shadow: 0 -20px 50px rgba(0,0,0,0.05);
+    }
+
+    @media print {
+      .no-print { display: none; }
+      .accordion-content { max-height: none !important; }
+    }
+  </style>
 </head>
-<body class="antialiased">
-    <!-- 
-    <div id="qwell-blur-bg"></div>
+<body class="bg-grid">
 
-    <div id="qwell-password-popup" class="fixed inset-0 flex items-center justify-center z-[999]">
-        <div class="bg-white rounded-2xl shadow-xl px-7 py-8 max-w-md w-full border border-blue-100 flex flex-col items-center animate-fadeIn">
-            <img src="{{ asset('images/logo/app-logo.png') }}" class="w-16 h-16 mb-2 object-contain" style="aspect-ratio:1/1;display:block;" alt="Logo">
-            <h2 class="text-2xl font-bold text-[#0B6E99] mb-1">Masukkan Password</h2>
-            <p class="text-gray-600 mb-5 text-center text-base font-normal">Halaman ini dilindungi.<br>Silakan masukkan password untuk melanjutkan.</p>
-            <form id="qwell-password-form" autocomplete="off" class="w-full flex flex-col items-center gap-3">
-                <input type="password" id="qwell-password-input" class="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#06B6D4] focus:outline-none transition" placeholder="Password..." required autocomplete="current-password">
-                <span id="qwell-password-error" class="text-sm text-red-500 mt-1 mb-2 w-full hidden">Password salah. Coba lagi.</span>
-                <button type="submit" class="mt-1 w-full bg-[#0B6E99] text-white font-bold py-2 rounded-lg hover:bg-[#06B6D4] transition">Masuk</button>
-            </form>
+  <!-- Floating Navigation -->
+  <!-- <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/5">
+    <div class="max-w-screen-2xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-10 bg-[#0D2B2A] rounded-xl flex items-center justify-center text-white font-bold text-xl">Q</div>
+        <div>
+          <p class="text-[10px] font-black uppercase tracking-widest text-[#0D2B2A]">Master Strategic Dossier</p>
+          <p class="text-[9px] text-gray-400 uppercase tracking-tighter">Indonesia Market Entry 2026-2030</p>
         </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="hidden md:inline-block text-[10px] font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 uppercase tracking-widest">Confidence Level: 94%</span>
+        <button onclick="window.print()" class="no-print px-4 py-2 bg-[#0D2B2A] text-white text-[11px] font-bold rounded-full hover:bg-emerald-900 transition-all shadow-lg shadow-emerald-900/20">
+          GENERATE FULL PDF
+        </button>
+      </div>
     </div>
-    -->
+    <div id="progress-container"><div id="progress-bar"></div></div>
+  </nav> -->
+  @include('qwell.components.header')
 
-    <!-- Back to Top Floating Button -->
-    <button id="qwell-back-to-top" aria-label="Kembali ke Atas" title="Back to Top">
-        <!-- Up Arrow SVG -->
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <circle cx="14" cy="14" r="13.5" fill="none"/>
-            <path d="M14 20V10M14 10L9 15M14 10l5 5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </button>
+  <main class="max-w-7xl mx-auto pt-10 pb-20 px-2">
+    
+    <!-- SECTION 0: GATEWAY -->
+    <header id="section-0" class="mb-24 animate-in">
+        <div class="relative p-1 bg-[#0D2B2A] rounded-[3.5rem] overflow-hidden shadow-2xl">
+            <div class="bg-white rounded-[3.4rem] p-10 sm:p-20 relative overflow-hidden">
+              <span class="inline-block px-4 py-1.5 bg-emerald-50 text-[#0D2B2A] text-[10px] font-bold rounded-full uppercase tracking-widest mb-8 border border-emerald-100">Research Gateway</span>
+              <h1 class="serif text-5xl sm:text-7xl text-emerald-950 leading-tight mb-8 italic">The Strategic Intelligence <span class="not-italic text-[#D4AF37]">Framework</span></h1>
+              
+              <div class="grid lg:grid-cols-2 gap-12">
+                  <div class="space-y-6">
+                      <h3 class="text-xs font-black text-emerald-900 uppercase tracking-widest border-b pb-2">Overview</h3>
+                      <p class="text-gray-500 text-sm leading-relaxed">
+                          This dossier is a decision-grade system engineered to remove assumption bias from Q’WELL’s market entry. It anchors the brand in <strong>biological reality</strong> and <strong>structural proof</strong> rather than aspirational hype.
+                      </p>
+                  </div>
+                  <div class="space-y-6">
+                      <h3 class="text-xs font-black text-emerald-900 uppercase tracking-widest border-b pb-2">Methodology</h3>
+                      <p class="text-[11px] text-gray-500 font-medium leading-relaxed italic">
+                        "Inverse Validation: Analyzing environmental toxicity (Problem) and cultural trauma (Psychology) to build a brand that acts as Biological Insurance."
+                      </p>
+                      <div class="flex gap-2">
+                          <span class="px-3 py-1 bg-gray-100 rounded-full text-[9px] font-bold uppercase">Secondary Data Only</span>
+                          <span class="px-3 py-1 bg-gray-100 rounded-full text-[9px] font-bold uppercase">2030 Conservative Outlook</span>
+                      </div>
+                  </div>
+              </div>
 
-    <!-- Sukses Message popup -->
-    <!-- <div id="qwell-success-message" class="fixed inset-0 flex items-center justify-center z-[999] bg-transparent pointer-events-none">
-        <div class="bg-white/95 rounded-xl border border-blue-100 shadow-lg px-8 py-6 flex flex-col items-center pointer-events-auto transition">
-            <svg class="mb-2" width="40" height="40" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="12" fill="#06B6D4"/>
-                <path d="M7 13l3 3 7-7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="text-lg font-semibold text-[#0B6E99] mb-2">Berhasil!</div>
-            <div class="text-gray-600 text-base text-center">Password benar. Selamat datang di halaman Q'WELL.</div>
-        </div>
-    </div> -->
-
-    <!--
-    <script>
-        // Langsung tampilkan blur saat HTML selesai parse (tanpa menunggu loading)
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.classList.add('password-locked');
-            document.getElementById('qwell-blur-bg').classList.add('qwell-show');
-
-            // Popup password akan muncul sedikit terlambat biar transisinya smooth
-            setTimeout(function() {
-                document.getElementById('qwell-password-popup').classList.add('qwell-show');
-
-                // Fokus ke input password begitu popup muncul
-                setTimeout(function(){
-                    var passInput = document.getElementById('qwell-password-input');
-                    if(passInput) passInput.focus();
-                }, 50);
-            }, 400);
-
-            var blurBg = document.getElementById('qwell-blur-bg');
-            var popup = document.getElementById('qwell-password-popup');
-            var form = document.getElementById('qwell-password-form');
-            var passInput = document.getElementById('qwell-password-input');
-            var errorText = document.getElementById('qwell-password-error');
-            // var successMsg = document.getElementById('qwell-success-message');
-
-            form.addEventListener('submit', function(e){
-                e.preventDefault();
-                // Password check logic: password is "nuisel"
-                if(passInput.value.trim() === 'nuisel'){
-                    // Sembunyikan popup segera
-                    popup.classList.remove('qwell-show');
-                    // successMsg.classList.add('active');
-                    // Animate blur to clear smoothly
-                    blurBg.classList.add('smooth-unblur');
-                    blurBg.classList.remove('qwell-show');
-                    // Remove password-locked agar bisa diinteraksi setelah blur hilang
-                    setTimeout(function() {
-                        blurBg.classList.add('hidden'); // pastikan hidden
-                        blurBg.classList.remove('smooth-unblur');
-                        document.body.classList.remove('password-locked');
-                        // Hide sukses message smoothly after delay
-                        setTimeout(function(){
-                            // successMsg.classList.remove('active');
-                        }, 1400); // show success for 1.4s (adjust as needed)
-                    }, 700); // Wait for the blur transition to complete (must match CSS transition duration)
-                } else {
-                    errorText.classList.remove('hidden');
-                    passInput.classList.add('border-red-500', 'ring', 'ring-red-300');
-                    passInput.focus();
-                }
-            });
-
-            passInput.addEventListener('input', function() {
-                this.classList.remove('border-red-500','ring','ring-red-300');
-                errorText.classList.add('hidden');
-            });
-
-            // --- BACK TO TOP BUTTON LOGIC ---
-            var backToTopBtn = document.getElementById('qwell-back-to-top');
-            var prevShow = false;
-            function handleBackToTop() {
-                // Show only after user scrolls down at least 80px
-                if(window.scrollY > 0) {
-                    if (!prevShow) {
-                        backToTopBtn.classList.add('show');
-                        prevShow = true;
-                    }
-                } else {
-                    if (prevShow) {
-                        backToTopBtn.classList.remove('show');
-                        prevShow = false;
-                    }
-                }
-            }
-            window.addEventListener('scroll', handleBackToTop);
-            // optional: on page load
-            handleBackToTop();
-            // smooth scrolling when button clicked
-            backToTopBtn.addEventListener('click', function(){
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-    </script>
-    -->
-
-    <!-- Header -->
-    @include('qwell.components.header')
-    @include('qwell.components.welcome')
-
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-5">
-        
-        @php
-            $sections = [
-                1 => 'Strategic Question & Positioning Uncertainty',
-                2 => 'Indonesia’s Skin & Scalp Structural Reality',
-                3 => 'Consumer Risk Psychology & Decision Fatigue',
-                4 => 'Ideal Customer Profile (ICP) & Jobs-To-Be-Done',
-                5 => 'Market Validation & Conservative 2030 Outlook',
-                6 => 'Competitive Structure & Claim Inflation Dynamics',
-                7 => 'Proof Architecture & Regulatory Infrastructure',
-                8 => 'Final Positioning Territory & Strategic Durability',
-            ];
-        @endphp
-
-        @foreach ($sections as $i => $title)
-            @if ($i > 0)
-                <div class="flex w-full">
-                    <button id="qwell-fullsize-{{ $i }}"
-                        class="flex items-stretch p-0 font-semibold text-base sm:text-lg bg-white border border-gray-300 rounded-lg
-                            shadow hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 w-full justify-between 
-                            min-h-[60px] sm:min-h-[86px] overflow-hidden"
-                        aria-expanded="false"
-                        aria-controls="qwell-fullsize-content"
-                        style="cursor: pointer;">
-                        <!-- Full-height, full-width image at the left -->
-                        <div class="flex-shrink-0 w-20 h-full sm:w-36">
-                            <img src="{{ asset('images/accordion-logo/section-' . $i . '.jpeg') }}"
-                                 alt="Q'WELL Logo"
-                                 class="w-full h-full object-cover block"
-                            />
-                        </div>
-                        <!-- Text and right-side content -->
-                        <div class="flex items-center flex-1 min-h-[60px] sm:min-h-[86px] px-3 sm:px-6 gap-2 sm:gap-3 text-left">
-                            <span class="text-sm sm:text-base text-left font-bold min-w-[2ch] sm:min-w-[2ch]">{{ $i }}.</span>
-                            <span class="text-sm sm:text-base text-left break-words whitespace-normal">{{ $title }}</span>
-                            <span class="flex-1"></span>
-                            <span class="flex justify-end">
-                                <svg id="qwell-chevron-icon-{{ $i == 0 ? '' : $i }}" class="transform transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" style="">
-                                    <path d="M7 10l5 5 5-5" stroke="#0B6E99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                        </div>
-                    </button>
-                </div>
-            @endif
-
-            <div class="section-{{ $i }}-content">
-                @include('qwell.contents.section'.$i)
+              <!-- Disclaimer Card -->
+              <div class="mt-12 p-8 bg-red-50 rounded-[2rem] border border-red-100 flex items-start gap-6">
+                  <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center shrink-0 text-red-600 font-black">!</div>
+                  <div>
+                      <h4 class="text-xs font-black text-red-900 uppercase mb-2">Legal Disclaimer</h4>
+                      <p class="text-[11px] text-red-800/70 leading-relaxed">
+                          Internal strategic asset only. Does not constitute medical advice. Forecasts assume stable regulatory environments and adherence to BPOM 18/2024 standards.
+                      </p>
+                  </div>
+              </div>
             </div>
-        @endforeach
+        </div>
+    </header>
 
-    </main>
+    <!-- RESEARCH ACCORDION (1-8) -->
+    <div class="space-y-6">
 
+        <!-- SECTION 1: Governance -->
+
+        <!-- SECTION 2: Structural Problem -->
+        <div class="accordion-item glass-card overflow-hidden">
+            <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
+                <div class="flex items-center gap-6">
+                    <span class="text-3xl serif italic text-[#D4AF37]">01</span>
+                    <h2 class="serif text-2xl text-emerald-950">Strategic Governance & The Core Question</h2>
+                </div>
+                <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="accordion-content">
+                @include('qwell.contents.section1')
+            </div>
+        </div>
+
+        <!-- SECTION 2: Structural Problem -->
+        <div class="accordion-item glass-card overflow-hidden">
+            <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
+                <div class="flex items-center gap-6">
+                    <span class="text-3xl serif italic text-[#D4AF37]">02</span>
+                    <h2 class="serif text-2xl text-emerald-950">Environmental Hostility Matrix</h2>
+                </div>
+                <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="accordion-content">
+                @include('qwell.contents.section2')
+            </div>
+        </div>
+
+        <!-- SECTION 3: Psychology -->
+        <div class="accordion-item glass-card overflow-hidden">
+            <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
+                <div class="flex items-center gap-6">
+                    <span class="text-3xl serif italic text-[#D4AF37]">03</span>
+                    <h2 class="serif text-2xl text-emerald-950">Psychology & The Veracity Crisis</h2>
+                </div>
+                <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="accordion-content">
+                @include('qwell.contents.section3')
+            </div>
+        </div>
+
+        <!-- SECTION 4: ICP & JTBD -->
+        <div class="accordion-item glass-card overflow-hidden">
+            <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
+                <div class="flex items-center gap-6">
+                    <span class="text-3xl serif italic text-[#D4AF37]">04</span>
+                    <h2 class="serif text-2xl text-emerald-950">ICP & The Hierarchy of Defensive Needs</h2>
+                </div>
+                <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="accordion-content">
+                @include('qwell.contents.section4')
+            </div>
+        </div>
+
+        <!-- SECTION 5: Market Validation -->
+        <div class="accordion-item glass-card overflow-hidden">
+            <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
+                <div class="flex items-center gap-6">
+                    <span class="text-3xl serif italic text-[#D4AF37]">05</span>
+                    <h2 class="serif text-2xl text-emerald-950">Market Validation & 2030 Resilience</h2>
+                </div>
+                <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="accordion-content">
+                @include('qwell.contents.section5')
+            </div>
+        </div>
+
+        <!-- SECTION 6: Competitive Map -->
+        <div class="accordion-item glass-card overflow-hidden">
+            <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
+                <div class="flex items-center gap-6">
+                    <span class="text-3xl serif italic text-[#D4AF37]">06</span>
+                    <h2 class="serif text-2xl text-emerald-950">Competitive Battleground</h2>
+                </div>
+                <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="accordion-content">
+                @include('qwell.contents.section6')
+            </div>
+        </div>
+
+        <!-- SECTION 7: Trust Architecture -->
+        <div class="accordion-item glass-card overflow-hidden">
+            <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
+                <div class="flex items-center gap-6">
+                    <span class="text-3xl serif italic text-[#D4AF37]">07</span>
+                    <h2 class="serif text-2xl text-emerald-950">Proof Infrastructure & Guardrails</h2>
+                </div>
+                <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="accordion-content">
+                @include('qwell.contents.section7')
+            </div>
+        </div>
+
+        <!-- SECTION 8: Final Lock -->
+        <div class="accordion-item glass-card overflow-hidden">
+            <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
+                <div class="flex items-center gap-6">
+                    <span class="text-3xl serif italic text-[#D4AF37]">08</span>
+                    <h2 class="serif text-2xl text-emerald-950 font-black">Final Strategic Lock & Synthesis</h2>
+                </div>
+                <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="accordion-content">
+                @include('qwell.contents.section8')
+            </div>
+        </div>
+
+    </div>
+  </main>
+
+  <!-- WORLD-CLASS FOOTER -->
+  <footer class="mt-20 bg-[#0D2B2A] text-white pt-24 pb-12 relative overflow-hidden footer-shadow">
+      <!-- Decorative Overlay -->
+      <div class="absolute inset-0 opacity-5 pointer-events-none">
+          <svg width="100%" height="100%"><pattern id="grid-footer" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="white" stroke-width="0.5"/></pattern><rect width="100%" height="100%" fill="url(#grid-footer)" /></svg>
+      </div>
+
+      <div class="max-w-screen-2xl mx-auto px-6 relative z-10">
+          <div class="grid lg:grid-cols-12 gap-16 mb-20">
+              <!-- Institutional Identity -->
+              <div class="lg:col-span-5 space-y-8">
+                  <div class="flex items-center gap-4">
+                      <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-white font-bold text-3xl border border-white/10">Q</div>
+                      <div>
+                          <h2 class="serif text-2xl italic tracking-wide">Q'WELL</h2>
+                          <p class="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4AF37]">Strategic Intelligence Unit</p>
+                      </div>
+                  </div>
+                  <p class="text-emerald-100/60 text-sm leading-relaxed max-w-sm">
+                      Protecting brand equity through 2030 via clinical verification, regulatory compliance, and biological security logic. Engineered for the Indonesian Urban Ecosystem.
+                  </p>
+              </div>
+
+              <!-- Quick Links (Internal Use) -->
+              <div class="lg:col-span-3">
+                  <h4 class="text-[10px] font-black text-[#D4AF37] uppercase tracking-[0.3em] mb-8">Strategic Documents</h4>
+                  <ul class="space-y-4 text-xs font-bold text-emerald-100/50">
+                      <li><a href="#section-0" class="hover:text-white transition-colors">Project Methodology</a></li>
+                      <li><a href="#" class="hover:text-white transition-colors">Raw Data Annex (Confidential)</a></li>
+                      <li><a href="#" class="hover:text-white transition-colors">2030 Risk Assessment</a></li>
+                      <li><a href="#" class="hover:text-white transition-colors">Regulatory Compliance Registry</a></li>
+                  </ul>
+              </div>
+
+              <!-- Contact/Auth -->
+              <div class="lg:col-span-4 bg-white/5 p-8 rounded-[2.5rem] border border-white/10">
+                  <h4 class="text-[10px] font-black text-emerald-300 uppercase tracking-widest mb-6 italic">Internal Authorization</h4>
+                  <div class="space-y-6">
+                      <div class="flex items-center gap-4">
+                          <div class="w-10 h-10 rounded-full bg-emerald-900 border border-white/20 flex items-center justify-center">
+                              <svg width="18" height="18" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M12 11v5m0 0h-1m1 0h1m-1-10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                          </div>
+                          <div>
+                              <p class="text-[9px] font-black text-gray-400 uppercase">Dossier Access Status</p>
+                              <p class="text-xs font-bold text-emerald-100 uppercase">Board Level Authorized</p>
+                          </div>
+                      </div>
+                      <p class="text-[10px] text-emerald-200/40 leading-relaxed italic">
+                          "This document remains the property of the Strategic Intelligence Unit. Unauthorized reproduction is prohibited by the 2026 Brand Governance Agreement."
+                      </p>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Bottom Bar -->
+          <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+              <div class="flex gap-8 text-[10px] font-black uppercase tracking-widest text-emerald-100/30">
+                  <span>Privacy Policy</span>
+                  <span>Confidentiality Agreement</span>
+                  <span>Data Integrity Protocol</span>
+              </div>
+              <p class="text-[10px] font-black text-[#D4AF37] uppercase tracking-[0.2em]">
+                  © 2026 Q'WELL • Decision-Grade Research
+              </p>
+          </div>
+      </div>
+  </footer>
+
+  <script>
+    // Accordion Logic
+    document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const item = trigger.parentElement;
+            const isOpen = item.classList.contains('active');
+            
+            // Close all items
+            document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+            
+            // Toggle clicked item
+            if (!isOpen) {
+                item.classList.add('active');
+            }
+        });
+    });
+
+    // Progress Bar Logic
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progress-bar").style.width = scrolled + "%";
+    });
+
+    // Open first accordion by default
+    document.querySelector('.accordion-item').classList.add('active');
+  </script>
 </body>
 </html>

@@ -74,7 +74,7 @@
 <body class="bg-grid">
 
   <!-- Navigation -->
-  <!-- <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 h-16 flex items-center px-6">
     <div class="max-w-screen-2xl mx-auto w-full flex justify-between items-center">
       <div class="flex items-center gap-4">
         <div class="w-10 h-10 bg-[#0D2B2A] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">Q</div>
@@ -90,9 +90,9 @@
         </button>
       </div>
     </div>
-  </nav> -->
+  </nav>
 
-  <div class="max-w-screen-2xl mx-auto pt-10 pb-20 px-6 flex flex-col lg:flex-row gap-12">
+  <div class="max-w-screen-2xl mx-auto pt-24 pb-20 px-6 flex flex-col lg:flex-row gap-12">
     
     <!-- Sidebar Navigation -->
     <aside class="w-full lg:w-72 flex-shrink-0">
@@ -234,15 +234,15 @@
                     <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                 </div>
                 <h3 class="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.3em] mb-4">Regulation 3/2022</h3>
-                <h2 class="serif text-4xl leading-tight mb-8 text-emerald-500">The Claim<br/>Guardrail</h2>
-                <p class="text-emerald-800 text-xs leading-relaxed mb-10 italic">
+                <h2 class="serif text-4xl leading-tight mb-8">The Claim<br/>Guardrail</h2>
+                <p class="text-emerald-100/60 text-xs leading-relaxed mb-10 italic">
                     "Q’WELL must navigate the thin line between 'Dermatological Excellence' and 'Illegal Medicinal Claims.' Defensive wording is the key to 2030 durability."
                 </p>
                 
                 <div class="space-y-4">
                     <div class="p-4 bg-white/5 rounded-2xl border border-white/10">
                         <h5 class="text-[10px] font-bold text-emerald-300 uppercase mb-2">The Rule</h5>
-                        <p class="text-[11px] text-emerald-800 leading-relaxed">Claims must be <strong>Objective, Clear, and Verifiable</strong>. Avoid "Curing," "Treating," or "Instant" results.</p>
+                        <p class="text-[11px] leading-relaxed">Claims must be <strong>Objective, Clear, and Verifiable</strong>. Avoid "Curing," "Treating," or "Instant" results.</p>
                     </div>
                 </div>
             </div>
