@@ -103,6 +103,11 @@
       z-index: 100;
     }
 
+    /* Gold Glow */
+    .gold-glow { box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
+    .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 30px 50px -10px rgba(0,0,0,0.15); }
+
     @media print {
       .no-print { display: none; }
       .accordion-content { max-height: none !important; display: block !important; opacity: 1 !important; }
