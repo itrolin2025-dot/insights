@@ -342,7 +342,7 @@
       </section>
 
       <!-- Reference Deck -->
-      <footer id="sources" class="pt-10 border-t border-gray-200">
+      <!-- <footer id="sources" class="pt-10 border-t border-gray-200">
         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Validation Hierarchy & Sources</h3>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[11px] font-semibold text-gray-500">
           <div class="hover:text-emerald-700 transition-colors">01. Euromonitor: Premium Personal Care ID</div>
@@ -358,7 +358,7 @@
           <p>© 2026 Q'WELL STRATEGIC INTELLIGENCE UNIT</p>
           <p>CONFIDENTIAL • MARKET VALIDATION</p>
         </div>
-      </footer>
+      </footer> -->
     </main>
   </div>
 
@@ -387,10 +387,10 @@
     });
 
     // Active Sidebar logic
-    const navSections = ['macro', 'premium', 'price-bench', 'channels', 'outlook'];
+    const navSections5 = ['macro', 'premium', 'price-bench', 'channels', 'outlook'];
     window.addEventListener('scroll', () => {
       let activeSection = '';
-      navSections.forEach(sectionId => {
+      navSections5.forEach(sectionId => {
         const sec = document.getElementById(sectionId);
         if (sec && window.pageYOffset >= sec.offsetTop - 150) {
           activeSection = sectionId;

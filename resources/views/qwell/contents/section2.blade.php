@@ -270,7 +270,7 @@
       </section>
 
       <!-- Sources -->
-      <footer id="sources" class="pt-10 border-t border-gray-200">
+      <!-- <footer id="sources" class="pt-10 border-t border-gray-200">
         <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Section 2 References & Validation</h3>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[11px] font-semibold text-gray-500">
           <div class="hover:text-emerald-700 transition-colors">01. IQAir Jakarta Air Quality Audit 2024</div>
@@ -286,7 +286,7 @@
           <p>© 2026 Q'WELL STRATEGIC INTELLIGENCE UNIT</p>
           <p>CONFIDENTIAL • STRUCTURAL AUDIT</p>
         </div>
-      </footer>
+      </footer> -->
     </main>
   </div>
 
@@ -306,10 +306,10 @@
     });
 
     // Sidebar observer
-    const sections = ['epidemiology', 'toxicity', 'internal', 'behavior'];
+    const sections2 = ['epidemiology', 'toxicity', 'internal', 'behavior'];
     window.addEventListener('scroll', () => {
       let current = '';
-      sections.forEach(section => {
+      sections2.forEach(section => {
         const sectionTop = document.getElementById(section).offsetTop;
         if (pageYOffset >= sectionTop - 150) {
           current = section;

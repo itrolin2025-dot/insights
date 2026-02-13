@@ -339,10 +339,10 @@
     });
 
     // Sidebar active state logic
-    const navSections = ['locked', 'doctrine', 'pricing', 'rtb', 'stress'];
+    const navSections8 = ['locked', 'doctrine', 'pricing', 'rtb', 'stress'];
     window.addEventListener('scroll', () => {
       let activeSection = '';
-      navSections.forEach(sectionId => {
+      navSections8.forEach(sectionId => {
         const sec = document.getElementById(sectionId);
         if (sec && window.pageYOffset >= sec.offsetTop - 150) {
           activeSection = sectionId;

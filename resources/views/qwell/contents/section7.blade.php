@@ -393,10 +393,10 @@
     });
 
     // Sidebar active state logic
-    const navSections = ['hero', 'ladder', 'scan-to-trust', 'intensity', 'regulatory'];
+    const navSections7 = ['hero', 'ladder', 'scan-to-trust', 'intensity', 'regulatory'];
     window.addEventListener('scroll', () => {
       let activeSection = '';
-      navSections.forEach(sectionId => {
+      navSections7.forEach(sectionId => {
         const sec = document.getElementById(sectionId);
         if (sec && window.pageYOffset >= sec.offsetTop - 150) {
           activeSection = sectionId;

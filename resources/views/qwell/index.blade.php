@@ -432,24 +432,7 @@
                   <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
               </button>
           </div>
-          <div class="flex-grow overflow-y-auto p-10">
-              <div class="grid md:grid-cols-2 gap-10">
-                  <div class="space-y-6">
-                      <h4 class="text-[10px] font-black text-[#D4AF37] uppercase border-b pb-2">Regulatory & Urban Stress (S1-S2)</h4>
-                      <ul class="text-[11px] space-y-4">
-                          <li class="flex flex-col"><span class="font-bold text-emerald-950">BPOM Regulation No. 18/2024</span><span class="text-gray-400">Labeling & Traceability Mandate</span></li>
-                          <li class="flex flex-col"><span class="font-bold text-emerald-950">IQAir Jakarta Longitudinal Audit 2024</span><span class="text-gray-400">Urban Pollution Penetration Data</span></li>
-                      </ul>
-                  </div>
-                  <div class="space-y-6">
-                      <h4 class="text-[10px] font-black text-[#D4AF37] uppercase border-b pb-2">Economic & Market (S5-S6)</h4>
-                      <ul class="text-[11px] space-y-4">
-                          <li class="flex flex-col"><span class="font-bold text-emerald-950">Euromonitor ID Premium Beauty 2028</span><span class="text-gray-400">Pricing Benchmarking Analysis</span></li>
-                          <li class="flex flex-col"><span class="font-bold text-emerald-950">Ken Research: Hair Care ID 2030</span><span class="text-gray-400">Sector Resiliency Forecasts</span></li>
-                      </ul>
-                  </div>
-              </div>
-          </div>
+          @include('qwell.components.footer.source')
       </div>
   </div>
 

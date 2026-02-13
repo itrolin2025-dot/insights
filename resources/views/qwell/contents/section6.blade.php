@@ -320,7 +320,7 @@
       </section>
 
       <!-- Reference Sources -->
-      <footer id="sources" class="pt-10 border-t border-gray-200">
+      <!-- <footer id="sources" class="pt-10 border-t border-gray-200">
         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
           <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Section 6 Sources & Benchmarks</h3>
           <div class="flex gap-4 text-[10px] font-bold text-gray-400">
@@ -333,7 +333,7 @@
           <div class="hover:text-emerald-700 transition-colors">03. Indonesia Counterfeit Market Impact Report</div>
           <div class="hover:text-emerald-700 transition-colors">04. Mintel: Verification-as-a-Service Trends</div>
         </div>
-      </footer>
+      </footer> -->
     </main>
   </div>
 
@@ -350,10 +350,10 @@
     });
 
     // Sidebar active state logic
-    const navSections = ['universe', 'verification', 'price-trust', 'whitespace', 'playbook'];
+    const navSections6 = ['universe', 'verification', 'price-trust', 'whitespace', 'playbook'];
     window.addEventListener('scroll', () => {
       let activeSection = '';
-      navSections.forEach(sectionId => {
+      navSections6.forEach(sectionId => {
         const sec = document.getElementById(sectionId);
         if (sec && window.pageYOffset >= sec.offsetTop - 150) {
           activeSection = sectionId;

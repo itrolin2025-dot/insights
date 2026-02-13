@@ -346,7 +346,7 @@
       </section>
 
       <!-- Footer Refs -->
-      <footer class="pt-10 border-t border-gray-200">
+      <!-- <footer class="pt-10 border-t border-gray-200">
         <div class="flex justify-between items-center text-[10px] text-gray-400 font-bold uppercase tracking-widest">
           <p>© 2026 Q'WELL STRATEGIC INTELLIGENCE UNIT</p>
           <div class="flex gap-6">
@@ -354,7 +354,7 @@
               <span>ICP V3.1 (AUTHENTICITY UPDATE)</span>
           </div>
         </div>
-      </footer>
+      </footer> -->
     </main>
   </div>
 
@@ -387,10 +387,10 @@
     });
 
     // Sidebar active state logic
-    const navSections = ['jtbd', 'authenticity', 'personas', 'wtp-section', 'funnel'];
+    const navSections4 = ['jtbd', 'authenticity', 'personas', 'wtp-section', 'funnel'];
     window.addEventListener('scroll', () => {
       let activeSection = '';
-      navSections.forEach(sectionId => {
+      navSections4.forEach(sectionId => {
         const sec = document.getElementById(sectionId);
         if (sec && window.pageYOffset >= sec.offsetTop - 150) {
           activeSection = sectionId;
