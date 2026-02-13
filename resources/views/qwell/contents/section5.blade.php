@@ -302,7 +302,11 @@
               
               <!-- Data Points -->
               <div class="absolute top-[20%] right-[30%] group">
-                <div class="w-10 h-10 bg-[#0D2B2A] rounded-full border-4 border-[#D4AF37] flex items-center justify-center text-white font-black text-xs shadow-lg">Q</div>
+                <div class="w-10 h-10 bg-[#0D2B2A] rounded-full border-4 border-[#D4AF37] flex items-center justify-center text-white font-black text-xs shadow-lg">
+                  <img src="{{ asset('images/logo/qwell-logo.png') }}" alt="Q'WELL"
+                    class="w-8 h-8 object-contain"
+                    style="aspect-ratio:1/1; display:block;"/>
+                </div>
                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[9px] px-2 py-1 rounded hidden group-hover:block whitespace-nowrap uppercase">Q'WELL: High Trust + Targeted Access</div>
               </div>
               

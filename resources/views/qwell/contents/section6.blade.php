@@ -225,7 +225,11 @@
                     
                     <!-- Q'WELL -->
                     <div class="absolute top-[20%] right-[15%] group">
-                        <div class="w-20 h-20 bg-[#D4AF37] rounded-full border-4 border-[#0D2B2A] flex items-center justify-center font-black text-[#0D2B2A] shadow-2xl animate-pulse">Q</div>
+                        <div class="w-20 h-20 bg-[#D4AF37] rounded-full border-4 border-[#0D2B2A] flex items-center justify-center font-black text-[#0D2B2A] shadow-2xl animate-pulse">
+                        <img src="{{ asset('images/logo/qwell-logo.png') }}" alt="Q'WELL"
+                            class="w-20 h-20 object-contain"
+                            style="aspect-ratio:1/1; display:block;"/>
+                        </div>
                         <p class="text-[9px] font-black uppercase text-center mt-2">Biological Security</p>
                     </div>
 

@@ -152,7 +152,11 @@
 
                     <!-- Q'WELL Node -->
                     <div class="absolute bottom-[15%] right-[10%] group cursor-pointer">
-                        <div class="w-24 h-24 bg-[#0D2B2A] rounded-full border-8 border-[#D4AF37] flex items-center justify-center text-white font-black text-3xl gold-pulse">Q</div>
+                        <div class="w-24 h-24 bg-[#0D2B2A] rounded-full border-8 border-[#D4AF37] flex items-center justify-center text-white font-black text-3xl gold-pulse">
+                        <img src="{{ asset('images/logo/qwell-logo.png') }}" alt="Q'WELL"
+                          class="w-24 h-24 object-contain"
+                          style="aspect-ratio:1/1; display:block;"/>
+                        </div>
                         <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-[#0D2B2A] text-[#D4AF37] px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shadow-xl">
                             THE GOLD ZONE
                         </div>
@@ -322,7 +326,11 @@
       <!-- Strategic Conclusion -->
       <footer id="final-summary" class="pt-20 border-t border-gray-200">
         <div class="text-center">
-            <div class="w-20 h-20 bg-[#0D2B2A] rounded-2xl mx-auto flex items-center justify-center text-white font-bold text-3xl mb-10 shadow-2xl">Q</div>
+            <div class="w-20 h-20 bg-[#0D2B2A] rounded-2xl mx-auto flex items-center justify-center text-white font-bold text-3xl mb-10 shadow-2xl">
+              <img src="{{ asset('images/logo/qwell-logo.png') }}" alt="Q'WELL"
+                    class="w-20 h-20 object-contain"
+                    style="aspect-ratio:1/1; display:block;"/>
+            </div>
             <h2 class="serif text-5xl sm:text-7xl text-emerald-950 mb-10 italic">Strategic Conclusion</h2>
             <p class="max-w-4xl mx-auto text-xl text-gray-500 leading-relaxed font-medium mb-20">
                 "Q’WELL does not compete in the aesthetic 'glow' space. It occupies the <strong>Biological Security Premium Tier</strong>—A structurally verified, dermatology-aligned, calm stability system for the urban Indonesian consumer seeking predictability over experimentation."
