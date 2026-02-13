@@ -445,8 +445,8 @@
                   </div>
 
                   <!-- CLAIM LIBRARY BUTTON -->
-                  <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow">
-                  <!-- <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow" onclick="openModal('claim-modal')"> -->
+                  <!-- <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow"> -->
+                  <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow" onclick="openModal('claim-modal')">
                       <div class="absolute -top-3 -right-3 bg-white w-12 h-12 rounded-full flex items-center justify-center text-[#0D2B2A] font-bold shadow-lg transform group-hover:scale-110 transition-transform">
                           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                       </div>
