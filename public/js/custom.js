@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Helper for hide/show
     function hideSection(selector) {
         document.querySelectorAll(selector).forEach(function (el) {
+            // Ensure overflow is hidden before collapsing
+            el.style.overflow = 'hidden';
+
+            // Force reflow to ensure the browser registers the overflow change before animating
+            void el.offsetWidth;
+
             el.style.transition = 'max-height 0.4s ease-in, opacity 0.3s ease-in';
             el.style.maxHeight = '0';
             el.style.opacity = '0';
@@ -33,9 +39,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 400);
         });
     }
+
     function showSection(selector) {
         document.querySelectorAll(selector).forEach(function (el) {
             el.style.display = 'block';
+            el.style.overflow = 'hidden'; // Essential for animation
             el.style.maxHeight = '0';
             el.style.opacity = '0';
 
@@ -47,10 +55,11 @@ document.addEventListener('DOMContentLoaded', function () {
             el.style.maxHeight = targetHeight;
             el.style.opacity = '1';
 
-            // After transition, allow height to be auto for responsiveness
+            // After transition, remove constraints
             setTimeout(() => {
                 if (el.style.opacity === '1') {
                     el.style.maxHeight = 'none';
+                    el.style.overflow = 'visible'; // Allow sticky elements and shadows to work
                 }
             }, 600);
         });

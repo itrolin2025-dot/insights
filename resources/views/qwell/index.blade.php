@@ -86,10 +86,13 @@
 <body class="bg-grid">
 
   <!-- Floating Navigation -->
-  <!-- <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/5">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/5">
     <div class="max-w-screen-2xl mx-auto px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-4">
-        <div class="w-10 h-10 bg-[#0D2B2A] rounded-xl flex items-center justify-center text-white font-bold text-xl">Q</div>
+        <img src="{{ asset('images/logo/qwell-text-logo.png') }}" alt="Q'WELL Logo Left"
+                    class="w-8 h-8 object-contain"
+                    style="aspect-ratio:1/1; display:block;"
+            />
         <div>
           <p class="text-[10px] font-black uppercase tracking-widest text-[#0D2B2A]">Master Strategic Dossier</p>
           <p class="text-[9px] text-gray-400 uppercase tracking-tighter">Indonesia Market Entry 2026-2030</p>
@@ -97,16 +100,30 @@
       </div>
       <div class="flex items-center gap-4">
         <span class="hidden md:inline-block text-[10px] font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 uppercase tracking-widest">Confidence Level: 94%</span>
-        <button onclick="window.print()" class="no-print px-4 py-2 bg-[#0D2B2A] text-white text-[11px] font-bold rounded-full hover:bg-emerald-900 transition-all shadow-lg shadow-emerald-900/20">
+        <!-- <button onclick="window.print()" class="no-print px-4 py-2 bg-[#0D2B2A] text-white text-[11px] font-bold rounded-full hover:bg-emerald-900 transition-all shadow-lg shadow-emerald-900/20">
           GENERATE FULL PDF
-        </button>
+        </button> -->
       </div>
     </div>
+    <header style="background-color: #f0f757;" class="shadow-md top-0 z-80">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-3 flex items-center justify-center text-center h-6 md:h-10 transition-all duration-200">
+            <span class="block text-base sm:text-xl px-2 font-extrabold tracking-tight text-[#0B6E99] text-center w-full">
+                <span class="font-semibold text-gray-700">
+                    Prepared exclusively for Q’WELL
+                </span>
+            </span>
+        </div>
+    </header>
     <div id="progress-container"><div id="progress-bar"></div></div>
-  </nav> -->
-  @include('qwell.components.header')
+  </nav>
 
-  <main class="max-w-7xl mx-auto pt-10 pb-20 px-2">
+  <div class="md:hidden fixed bottom-3 left-0 w-full flex justify-center z-50 pointer-events-none">
+    <div class="bg-white/95 border border-gray-200 shadow-lg rounded-lg px-4 py-2 text-xs font-semibold text-gray-500 pointer-events-auto">
+        Access protected &middot; Not for distribution
+    </div>
+</div>
+
+  <main class="max-w-7xl mx-auto pt-32 pb-20 px-2">
     
     <!-- SECTION 0: GATEWAY -->
     <header id="section-0" class="mb-24 animate-in">
@@ -152,8 +169,6 @@
     <div class="space-y-6">
 
         <!-- SECTION 1: Governance -->
-
-        <!-- SECTION 2: Structural Problem -->
         <div class="accordion-item glass-card overflow-hidden">
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
