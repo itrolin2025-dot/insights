@@ -324,7 +324,7 @@
       </section>
 
       <!-- Strategic Conclusion -->
-      <footer id="final-summary" class="pt-20 border-t border-gray-200">
+      <!-- <footer id="final-summary" class="pt-20 border-t border-gray-200">
         <div class="text-center">
             <div class="w-20 h-20 bg-[#0D2B2A] rounded-2xl mx-auto flex items-center justify-center text-white font-bold text-3xl mb-10 shadow-2xl">
               <img src="{{ asset('images/logo/qwell-logo.png') }}" alt="Q'WELL"
@@ -338,7 +338,7 @@
             <div class="h-px w-48 bg-[#D4AF37] mx-auto mb-10"></div>
             <p class="text-[11px] font-black uppercase tracking-[0.4em] text-[#0D2B2A] opacity-40">Dossier Locked • Q1 2026</p>
         </div>
-      </footer>
+      </footer> -->
     </main>
   </div>
 

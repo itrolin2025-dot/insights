@@ -330,10 +330,34 @@
     <section id="penutup" class="mt-20 animate-in">
         <div class="relative p-1 bg-[#D4AF37] rounded-[3.5rem] overflow-hidden shadow-2xl">
             <div class="bg-white rounded-[3.4rem] p-10 sm:p-20 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-[#0D2B2A]"></div>
-                <h2 class="serif text-5xl text-emerald-950 mb-10 italic">Conclusion</h2>
+            <div class="absolute top-0 left-0 w-2 h-full bg-[#0D2B2A]"></div>
                 
-                <div class="grid lg:grid-cols-2 gap-16">
+                <h2 class="serif text-3xl md:text-5xl text-emerald-950 mb-10 ml-6 md:ml-20 italic flex items-center gap-3 md:gap-4">
+        
+                    <div class="w-12 h-12 ml-5 md:w-20 md:h-20 bg-[#0D2B2A] rounded-2xl flex items-center justify-center">
+                        <img 
+                            src="{{ asset('images/logo/qwell-logo.png') }}" 
+                            alt="Q'WELL"
+                            class="w-full h-full object-contain"
+                        />
+                    </div>
+
+                    <span>Conclusion</span>
+                </h2>
+
+                
+                <p class="max-w-4xl mx-auto text-xl text-gray-500 leading-relaxed font-medium mb-20">
+                    "Q’WELL does not compete in the aesthetic 'glow' space. It occupies the <strong>Biological Security Premium Tier</strong>—A structurally verified, dermatology-aligned, calm stability system for the urban Indonesian consumer seeking predictability over experimentation."
+                </p>
+                
+                
+                <div class="p-4 bg-emerald-950 rounded-2xl text-center shadow-xl w-80 mx-auto">
+                    <span class="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4AF37]">
+                        STRATEGY APPROVED
+                    </span>
+                </div>
+
+                <!-- <div class="grid lg:grid-cols-2 gap-16">
                     <div class="space-y-10">
                         <div>
                             <h4 class="text-xs font-black text-[#0D2B2A] uppercase tracking-widest mb-6 border-b pb-2">Execution Pulse (Next 90 Days)</h4>
@@ -362,7 +386,7 @@
                             <span class="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4AF37]">STRATEGY APPROVED</span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
