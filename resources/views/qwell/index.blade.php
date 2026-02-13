@@ -89,6 +89,20 @@
         box-shadow: 0 -20px 50px rgba(0,0,0,0.05);
     }
 
+    .hello-bar {
+      background: var(--primary);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      text-align: center;
+      padding: 8px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
     @media print {
       .no-print { display: none; }
       .accordion-content { max-height: none !important; display: block !important; opacity: 1 !important; }
@@ -99,6 +113,7 @@
 
   <!-- Floating Navigation -->
   <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/5">
+    <div class="hello-bar no-print">Prepared Exclusively for Q'WELL</div>
     <div class="max-w-screen-2xl mx-auto px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-4">
         <img src="{{ asset('images/logo/qwell-text-logo.png') }}" alt="Q'WELL Logo Left"
@@ -118,7 +133,7 @@
         />
       </div>
     </div>
-    <header style="background-color: #f0f757;" class="shadow-md top-0 z-80">
+    <!-- <header style="background-color: #f0f757;" class="shadow-md top-0 z-80">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-3 flex items-center justify-center text-center h-6 md:h-10 transition-all duration-200">
             <span class="block text-base sm:text-xl px-2 font-extrabold tracking-tight text-[#0B6E99] text-center w-full">
                 <span class="font-semibold text-gray-700">
@@ -126,7 +141,7 @@
                 </span>
             </span>
         </div>
-    </header>
+    </header> -->
     <div id="progress-container"><div id="progress-bar"></div></div>
   </nav>
 
