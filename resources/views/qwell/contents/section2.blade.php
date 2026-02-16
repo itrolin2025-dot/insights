@@ -88,7 +88,7 @@
   <div class="max-w-screen-2xl mx-auto pt-10 pb-20 px-6 flex flex-col lg:flex-row gap-10">
     
     <!-- Sidebar -->
-    <aside class="hidden lg:block w-72 flex-shrink-0">
+    <aside class="w-72 flex-shrink-0 hidden lg:block">
       <div class="sticky top-24 space-y-6">
         <div>
           <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Navigation</h3>
@@ -111,6 +111,18 @@
         </div>
       </div>
     </aside>
+
+    <!-- System Status for mobile -->
+    <div class="block lg:hidden px-2 mb-6">
+      <div class="p-6 bg-red-50 rounded-3xl border border-red-100">
+        <p class="text-xs font-bold text-red-900 uppercase tracking-widest mb-2">Problem Density</p>
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+            <span class="text-[10px] font-bold text-red-700">HIGH HOSTILITY</span>
+          </div>
+          <p class="text-[11px] text-red-800 leading-relaxed font-medium">The Indonesian environment acts as a constant catalyst for barrier degradation. This is a structural, not elective, market driver.</p>
+        </div>
+    </div>
 
     <!-- Content -->
     <main class="flex-grow space-y-12">

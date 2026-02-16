@@ -97,7 +97,7 @@
   <div class="max-w-screen-2xl mx-auto pt-10 pb-20 px-6 flex flex-col lg:flex-row gap-12">
     
     <!-- Navigation Sidebar -->
-    <aside class="hidden lg:block w-72 flex-shrink-0">
+    <aside class="w-72 flex-shrink-0 hidden lg:block">
       <div class="sticky top-24 space-y-6">
         <div>
           <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Market Navigation</h3>
@@ -116,6 +116,14 @@
         </div>
       </div>
     </aside>
+
+    <!-- System Status for mobile -->
+    <div class="block lg:hidden px-2 mb-6">
+      <div class="p-6 bg-[#0D2B2A] rounded-3xl text-white">
+        <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-3">Economic Guardrail</p>
+        <p class="text-[11px] leading-relaxed opacity-80">Q'WELL is positioned for <strong>Resiliency</strong>. In a tightening economy, consumers trade down on volume but trade <em>up</em> on <strong>Reliability</strong> to avoid costly clinical errors.</p>
+      </div>
+    </div>
 
     <!-- Main Dashboard -->
     <main class="flex-grow space-y-16">

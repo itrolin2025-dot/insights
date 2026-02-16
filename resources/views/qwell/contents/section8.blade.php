@@ -98,7 +98,7 @@
   <div class="max-w-screen-2xl mx-auto pt-10 pb-20 px-6 flex flex-col lg:flex-row gap-12">
     
     <!-- Sidebar -->
-    <aside class="hidden lg:block w-72 flex-shrink-0">
+    <aside class="w-72 flex-shrink-0 hidden lg:block">
       <div class="sticky top-24 space-y-6">
         <div>
           <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Final Roadmap</h3>
@@ -118,6 +118,14 @@
         </div>
       </div>
     </aside>
+
+    <!-- System Status for mobile -->
+    <div class="block lg:hidden px-2 mb-6">
+      <div class="p-6 bg-[#0D2B2A] rounded-[2rem] text-white">
+        <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-3 italic">Positioning Essence</p>
+        <p class="text-[11px] leading-relaxed italic opacity-90">"Q'WELL occupies the intersection of Clinical Depth and Biological Security. We sell the absence of regret."</p>
+      </div>
+    </div>
 
     <!-- Main Content -->
     <main class="flex-grow space-y-20">

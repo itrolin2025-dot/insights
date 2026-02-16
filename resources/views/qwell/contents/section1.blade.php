@@ -86,7 +86,7 @@
   <div class="w-full flex flex-col lg:flex-row gap-8 lg:gap-10 pt-8 pb-16 px-6">
     
     <!-- Sidebar -->
-    <aside class="hidden lg:block w-72 flex-shrink-0">
+    <aside class="w-72 flex-shrink-0 hidden lg:block">
       <div class="sticky top-24 space-y-6">
         <div>
           <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Navigation Guide</h3>
@@ -99,6 +99,7 @@
           </ul>
         </div>
 
+        <!-- System Status for desktop (in aside) -->
         <div class="p-6 bg-emerald-50 rounded-3xl border border-emerald-100">
           <p class="text-xs font-bold text-emerald-900 uppercase tracking-widest mb-2">System Status</p>
           <div class="flex items-center gap-2 mb-4">
@@ -109,6 +110,18 @@
         </div>
       </div>
     </aside>
+
+    <!-- System Status for mobile -->
+    <div class="block lg:hidden px-2 mb-6">
+      <div class="p-6 bg-emerald-50 rounded-3xl border border-emerald-100">
+        <p class="text-xs font-bold text-emerald-900 uppercase tracking-widest mb-2">System Status</p>
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+          <span class="text-[10px] font-bold text-emerald-700">GOVERNANCE ACTIVE</span>
+        </div>
+        <p class="text-[11px] text-emerald-800 leading-relaxed font-medium">This module removes assumption bias, protecting the 2030 premium price ceiling against "Claim Inflation."</p>
+      </div>
+    </div>
 
     <!-- Content -->
     <main class="flex-grow min-w-0 space-y-12">

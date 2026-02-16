@@ -98,7 +98,7 @@
   <div class="max-w-screen-2xl mx-auto pt-10 pb-20 px-6 flex flex-col lg:flex-row gap-12">
     
     <!-- Sidebar -->
-    <aside class="hidden lg:block w-72 flex-shrink-0">
+    <aside class="w-72 flex-shrink-0 hidden lg:block">
       <div class="sticky top-24 space-y-6">
         <div>
           <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Proof Hierarchy</h3>
@@ -117,6 +117,14 @@
         </div>
       </div>
     </aside>
+
+    <!-- System Status for mobile -->
+    <div class="block lg:hidden px-2 mb-6">
+      <div class="p-6 bg-[#0D2B2A] rounded-[2rem] text-white">
+        <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-2 italic">SIU Mandate</p>
+        <p class="text-[11px] text-emerald-100 leading-relaxed font-medium">In a market of overclaims, <strong>structural truth</strong> is the only sustainable premium differentiator. <strong>SQR</strong> is our defensive shield.</p>
+      </div>
+    </div>
 
     <!-- Main Content -->
     <main class="flex-grow space-y-16">

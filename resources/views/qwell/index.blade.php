@@ -112,9 +112,60 @@
       .no-print { display: none; }
       .accordion-content { max-height: none !important; display: block !important; opacity: 1 !important; }
     }
+
+    /* Password Protection Blur */
+    #main-wrapper {
+      transition: filter 0.5s ease;
+    }
+    body.locked #main-wrapper {
+      filter: blur(25px);
+      pointer-events: none;
+      user-select: none;
+    }
+    
+    #password-modal {
+      display: none;
+      background: rgba(13, 43, 42, 0.8);
+      backdrop-filter: blur(10px);
+    }
+    #password-modal.active {
+      display: flex;
+    }
   </style>
 </head>
 <body class="bg-grid">
+<!-- <body class="bg-grid locked"> -->
+
+  <!-- PASSWORD PROTECTION MODAL (ENABLE) -->
+  <!-- <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 active"> -->
+  <!-- PASSWORD PROTECTION MODAL (DISABLED) -->
+  <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 hidden">
+      <div class="bg-white w-full max-w-md rounded-[3rem] shadow-2xl p-10 sm:p-12 text-center border border-emerald-900/10">
+          <div class="w-20 h-20 bg-emerald-950 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl">
+              <img src="{{ asset('images/logo/qwell-logo.png') }}" alt="Q'WELL" class="w-12 h-12 object-contain" />
+          </div>
+          
+          <h2 class="serif text-3xl text-emerald-950 mb-2">Secure Access</h2>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">Strategic Intelligence Dossier</p>
+          
+          <div class="space-y-4">
+              <input type="password" id="access-password" 
+                  class="w-full px-6 py-4 rounded-2xl border-2 border-gray-100 focus:border-emerald-950 focus:outline-none text-center font-bold tracking-[0.5em] transition-all"
+                  placeholder="••••••••" />
+              
+              <button onclick="checkPassword()" 
+                  class="w-full py-4 bg-emerald-950 text-white rounded-2xl font-black uppercase tracking-[0.2em] hover:bg-emerald-900 transition-all shadow-lg shadow-emerald-950/20">
+                  VERIFY IDENTITY
+              </button>
+              
+              <p id="password-error" class="text-red-600 text-[10px] font-black uppercase tracking-widest opacity-0 transition-opacity">Access Denied: Invalid Credentials</p>
+          </div>
+          
+          <p class="mt-8 text-[9px] text-gray-400 font-bold uppercase tracking-tighter">Authenticated access only. Activity is monitored.</p>
+      </div>
+  </div>
+
+  <div id="main-wrapper">
 
   <!-- Floating Navigation -->
   <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/5">
@@ -161,42 +212,184 @@
     <!-- SECTION 0: GATEWAY -->
     <header id="section-0" class="mb-24 animate-in">
         <div class="relative p-1 bg-[#0D2B2A] rounded-[3.5rem] overflow-hidden shadow-2xl">
+            
             <div class="bg-white rounded-[3.4rem] p-10 sm:p-20 relative overflow-hidden">
-              <span class="inline-block px-4 py-1.5 bg-emerald-50 text-[#0D2B2A] text-[10px] font-bold rounded-full uppercase tracking-widest mb-8 border border-emerald-100">Research Gateway</span>
-              <h1 class="serif text-5xl sm:text-7xl text-emerald-950 leading-tight mb-8 italic">The Strategic Intelligence <span class="not-italic text-[#D4AF37]">Framework</span></h1>
-              
-              <div class="grid lg:grid-cols-2 gap-12">
-                  <div class="space-y-6">
-                      <h3 class="text-xs font-black text-emerald-900 uppercase tracking-widest border-b pb-2">Overview</h3>
-                      <p class="text-gray-500 text-sm leading-relaxed">
-                          This dossier is a decision-grade system engineered to remove assumption bias from Q’WELL’s market entry. It anchors the brand in <strong>biological reality</strong> and <strong>structural proof</strong> rather than aspirational hype.
-                      </p>
-                  </div>
-                  <div class="space-y-6">
-                      <h3 class="text-xs font-black text-emerald-900 uppercase tracking-widest border-b pb-2">Methodology</h3>
-                      <p class="text-[11px] text-gray-500 font-medium leading-relaxed italic">
-                        "Inverse Validation: Analyzing environmental toxicity (Problem) and cultural trauma (Psychology) to build a brand that acts as Biological Insurance."
-                      </p>
-                      <div class="flex gap-2">
-                          <span class="px-3 py-1 bg-gray-100 rounded-full text-[9px] font-bold uppercase">Secondary Data Only</span>
-                          <span class="px-3 py-1 bg-gray-100 rounded-full text-[9px] font-bold uppercase">2030 Conservative Outlook</span>
-                      </div>
-                  </div>
-              </div>
+                <!-- Intelligence Protocol CARD, RESPONSIVE POSITION -->
+                <div 
+                  class="
+                    w-full sm:w-auto
+                    static sm:absolute 
+                    top-10 right-10 
+                    flex flex-col items-center sm:items-end 
+                    mb-6 sm:mb-0
+                    z-10
+                  "
+                  style="margin-bottom:1.5rem;"
+                >
+                    <div class="p-4 bg-[#0D2B2A] rounded-2xl text-white relative overflow-hidden min-w-[210px] max-w-xs shadow mx-auto sm:mx-0">
+                        <div class="absolute -bottom-4 -right-4 opacity-10">
+                            <svg width="70" height="70" viewBox="0 0 100 100" fill="white"><path d="M50 0L61 39L100 50L61 61L50 100L39 61L0 50L39 39L50 0Z"/></svg>
+                        </div>
+                        <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-2 italic">Objective</p>
+                        <p class="text-[11px] leading-relaxed opacity-90">"This system removes assumption bias to protect the 2030 premium price ceiling against market skepticism."</p>
+                    </div>
+                </div>
 
-              <!-- Disclaimer Card -->
-              <div class="mt-12 p-8 bg-red-50 rounded-[2rem] border border-red-100 flex items-start gap-6">
-                  <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center shrink-0 text-red-600 font-black">!</div>
-                  <div>
-                      <h4 class="text-xs font-black text-red-900 uppercase mb-2">Legal Disclaimer</h4>
-                      <p class="text-[11px] text-red-800/70 leading-relaxed">
-                          Internal strategic asset only. Does not constitute medical advice. Forecasts assume stable regulatory environments and adherence to BPOM 18/2024 standards.
-                      </p>
-                  </div>
-              </div>
+                <!-- <span class="inline-block px-4 py-1.5 bg-emerald-50 text-[#0D2B2A] text-[10px] font-bold rounded-full uppercase tracking-widest mb-8 border border-emerald-100">Research Gateway</span> -->
+                <div class="max-w-4xl">
+                    <h1 class="serif text-5xl sm:text-7xl text-emerald-950 leading-tight mb-10 italic">Decision-Grade <br><span class="not-italic text-[#D4AF37]">Intelligence</span></h1>
+                    <p class="text-xl text-gray-500 leading-relaxed font-medium mb-12">
+                        This dossier evaluates the structural viability of Q’WELL’s premium system in Indonesia. It removes assumption bias by formalizing a <strong>Biological Security</strong> doctrine—treating the target price (Rp 400k–800k) as a <strong>Reliability Insurance</strong> investment rather than a vanity markup.
+                    </p>
+                    
+                    <div class="grid md:grid-cols-3 gap-8 border-t border-gray-100 pt-10">
+                        <div class="space-y-2">
+                            <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Primary Scope</h4>
+                            <p class="text-xs font-bold text-gray-600">ID Tier 1 Urban Markets</p>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Strategy Mode</h4>
+                            <p class="text-xs font-bold text-gray-600">Defensive Security</p>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Key Lever</h4>
+                            <p class="text-xs font-bold text-gray-600">Scan-to-Trust (SQR)</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
+
+    <!-- Methodology -->
+    <section id="methodology" class="animate-reveal" style="animation-delay: 0.1s;">
+        <div class="glass-card p-12 sm:p-16">
+            <div class="flex flex-col md:flex-row gap-16">
+                <div class="md:w-1/3">
+                    <h2 class="serif text-4xl text-emerald-950 mb-6 italic">Protocol & <span class="not-italic text-[#D4AF37]">Verification</span></h2>
+                    <p class="text-sm text-gray-500 leading-relaxed font-medium mb-8">
+                        "The methodology follows an 'Inverse Validation' logic—proving why premium pricing is the only rational choice for sensitive consumers in a hostile environment."
+                    </p>
+                    <div class="p-6 bg-[#0D2B2A] rounded-[2rem] text-white">
+                        <p class="text-[10px] font-bold text-emerald-300 uppercase mb-3">Verification Pillar</p>
+                        <p class="text-[11px] text-emerald-100/70 leading-relaxed font-medium">Exclusively utilizing high-veracity secondary data including BPOM 18/2024 mandates, Mintel longitudinal audits, and international HRIPT standards.</p>
+                    </div>
+                </div>
+                <div class="md:w-2/3 space-y-6">
+                    <div class="method-card p-6 bg-gray-50 rounded-2xl">
+                        <h4 class="text-xs font-black text-emerald-900 uppercase mb-2 tracking-tight">01. Environmental Stress Mapping</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Auditing Indonesia's objective stressors (PM2.5 peaks of 164μg/m³, UV Index 11+) to define the structural problem Q'WELL must resolve.</p>
+                    </div>
+                    <div class="method-card p-6 bg-gray-50 rounded-2xl">
+                        <h4 class="text-xs font-black text-emerald-900 uppercase mb-2 tracking-tight">02. Psychographic Trauma Analysis</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Identifying the 'Kapok' effect and the 'Veracity Crisis' as the primary barriers to premium adoption in Indonesia.</p>
+                    </div>
+                    <div class="method-card p-6 bg-gray-50 rounded-2xl">
+                        <h4 class="text-xs font-black text-emerald-900 uppercase mb-2 tracking-tight">03. Scan-to-Trust (SQR) Infrastructure</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Establishing a unique unit-level verification layer to neutralize counterfeit risk and marketplace friction.</p>
+                    </div>
+                    <div class="method-card p-6 bg-gray-50 rounded-2xl">
+                        <h4 class="text-xs font-black text-emerald-900 uppercase mb-2 tracking-tight">04. Reliability Premium Logic</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Framing high pricing as 'Biological Debt' prevention, shifting the brand from elective luxury to mandatory stability.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Framework Decision Map -->
+    <section id="framework" class="animate-reveal py-12" style="animation-delay: 0.2s;">
+        <div class="glass-card p-12">
+            <h2 class="serif text-3xl text-emerald-950 mb-10 text-center">The 8-Section Decision Ecosystem</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Row 1 -->
+                <div class="framework-node p-6 bg-white border border-gray-100 rounded-2xl group">
+                    <span class="text-[10px] font-black text-gray-400 group-hover:text-[#D4AF37] uppercase">Section 01</span>
+                    <h5 class="text-xs font-black mt-2 text-emerald-950">Governance</h5>
+                    <p class="text-[10px] text-gray-400 mt-2">Strategic Brand Question</p>
+                </div>
+                <div class="framework-node p-6 bg-white border border-gray-100 rounded-2xl group">
+                    <span class="text-[10px] font-black text-gray-400 group-hover:text-[#D4AF37] uppercase">Section 02</span>
+                    <h5 class="text-xs font-black mt-2 text-emerald-950">Hostility Matrix</h5>
+                    <p class="text-[10px] text-gray-400 mt-2">Structural Reality Audit</p>
+                </div>
+                <div class="framework-node p-6 bg-white border border-gray-100 rounded-2xl group">
+                    <span class="text-[10px] font-black text-gray-400 group-hover:text-[#D4AF37] uppercase">Section 03</span>
+                    <h5 class="text-xs font-black mt-2 text-emerald-950">Veracity Crisis</h5>
+                    <p class="text-[10px] text-gray-400 mt-2">The "Kapok" Psychology</p>
+                </div>
+                <div class="framework-node p-6 bg-white border border-gray-100 rounded-2xl group">
+                    <span class="text-[10px] font-black text-gray-400 group-hover:text-[#D4AF37] uppercase">Section 04</span>
+                    <h5 class="text-xs font-black mt-2 text-emerald-950">ICP & SQR</h5>
+                    <p class="text-[10px] text-gray-400 mt-2">Scan-to-Trust Profiling</p>
+                </div>
+                <!-- Row 2 -->
+                <div class="framework-node p-6 bg-white border border-gray-100 rounded-2xl group">
+                    <span class="text-[10px] font-black text-gray-400 group-hover:text-[#D4AF37] uppercase">Section 05</span>
+                    <h5 class="text-xs font-black mt-2 text-emerald-950">Validation</h5>
+                    <p class="text-[10px] text-gray-400 mt-2">$5.5B Market Outlook</p>
+                </div>
+                <div class="framework-node p-6 bg-white border border-gray-100 rounded-2xl group">
+                    <span class="text-[10px] font-black text-gray-400 group-hover:text-[#D4AF37] uppercase">Section 06</span>
+                    <h5 class="text-xs font-black mt-2 text-emerald-950">Battle Map</h5>
+                    <p class="text-[10px] text-gray-400 mt-2">Verification Gap Moat</p>
+                </div>
+                <div class="framework-node p-6 bg-white border border-gray-100 rounded-2xl group">
+                    <span class="text-[10px] font-black text-gray-400 group-hover:text-[#D4AF37] uppercase">Section 07</span>
+                    <h5 class="text-xs font-black mt-2 text-emerald-950">Infrastructure</h5>
+                    <p class="text-[10px] text-gray-400 mt-2">Trust Ladder & Compliance</p>
+                </div>
+                <div class="framework-node p-6 bg-[#0D2B2A] border border-emerald-950 rounded-2xl shadow-xl">
+                    <span class="text-[10px] font-black text-emerald-400 uppercase">Section 08</span>
+                    <h5 class="text-xs font-black mt-2 text-white">Final Lock</h5>
+                    <p class="text-[10px] text-emerald-100/50 mt-2 italic">Strategy Approved</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+      <!-- Disclaimers -->
+    <section id="disclaimer" class="animate-reveal pb-12" style="animation-delay: 0.3s;">
+        <div class="bg-emerald-950 rounded-[3.5rem] p-12 sm:p-24 text-white relative overflow-hidden">
+            <div class="absolute inset-0 opacity-5 pointer-events-none">
+                <svg width="100%" height="100%"><pattern id="grid-disc" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5"/></pattern><rect width="100%" height="100%" fill="url(#grid-disc)" /></svg>
+            </div>
+            <div class="flex flex-col md:flex-row gap-20 items-center relative z-10">
+                <div class="md:w-1/2">
+                    <h3 class="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.3em] mb-6 italic">Governance Agreement</h3>
+                    <h2 class="serif text-5xl mb-8 leading-tight italic">Disclaimer & Usage Guardrails</h2>
+
+                    <!-- Disclaimer Card -->
+                    <div class="mt-12 p-8 pb-1 bg-red-50 rounded-[2rem] border border-red-100 flex items-start gap-6">
+                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center shrink-0 text-red-600 font-black">!</div>
+                        <div>
+                            <h4 class="text-xs font-black text-red-900 uppercase mb-2">Disclaimer</h4>
+                            <p class="text-sm text-emerald-800 leading-relaxed mb-8 italic">
+                                "This report is an internal strategic asset and does not constitute dermatological advice or financial guarantee."
+                            </p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="md:w-1/2 space-y-4">
+                    <div class="p-6 bg-white/5 rounded-3xl border border-white/10">
+                        <h5 class="text-[10px] font-bold text-[#D4AF37] uppercase mb-2">Confidentiality</h5>
+                        <p class="text-[11px] text-emerald-100/80">Proprietary and confidential. Intended for Q’WELL board and marketing execution teams only.</p>
+                    </div>
+                    <div class="p-6 bg-white/5 rounded-3xl border border-white/10">
+                        <h5 class="text-[10px] font-bold text-[#D4AF37] uppercase mb-2">Scope Limit</h5>
+                        <p class="text-[11px] text-emerald-100/80">Analysis based on point-in-time data (Q1 2026). Strategic durability forecasts are conservative projections.</p>
+                    </div>
+                    <div class="p-6 bg-white/5 rounded-3xl border border-white/10">
+                        <h5 class="text-[10px] font-bold text-[#D4AF37] uppercase mb-2">Decision Guardrail</h5>
+                        <p class="text-[11px] text-emerald-100/80">Positioning decisions must be cross-verified with manufacturing feasibility and final BPOM approvals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- RESEARCH ACCORDION (1-8) -->
     <div class="space-y-6">
@@ -445,8 +638,8 @@
                   </div>
 
                   <!-- CLAIM LIBRARY BUTTON -->
-                  <!-- <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow"> -->
-                  <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow" onclick="openModal('claim-modal')">
+                  <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow">
+                  <!-- <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow" onclick="openModal('claim-modal')"> -->
                       <div class="absolute -top-3 -right-3 bg-white w-12 h-12 rounded-full flex items-center justify-center text-[#0D2B2A] font-bold shadow-lg transform group-hover:scale-110 transition-transform">
                           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                       </div>
@@ -567,6 +760,47 @@
   </div>
 
   <script>
+    // ---------- PASSWORD PROTECTION ----------
+    function checkPassword() {
+        const input = document.getElementById('access-password');
+        const error = document.getElementById('password-error');
+        const modal = document.getElementById('password-modal');
+        const body = document.body;
+        
+        if (input.value === 'nuisel') {
+            modal.classList.remove('active');
+            body.classList.remove('locked');
+            // Store accessibility in session if needed, for simplicity we just hide it now
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        } else {
+            error.classList.remove('opacity-0');
+            input.value = '';
+            input.focus(); // Auto-focus on wrong password
+            input.classList.add('border-red-500');
+            setTimeout(() => {
+                input.classList.remove('border-red-500');
+            }, 500);
+        }
+    }
+
+    // Allow "Enter" key for password
+    document.getElementById('access-password')?.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            checkPassword();
+        }
+    });
+
+    // Auto-focus on Page Load
+    document.addEventListener('DOMContentLoaded', () => {
+        const passwordInput = document.getElementById('access-password');
+        if (passwordInput) {
+            setTimeout(() => {
+                passwordInput.focus();
+            }, 500); // Small delay to ensure modal is ready
+        }
+    });
 
     function openModal(id) {
         const modal = document.getElementById(id);
