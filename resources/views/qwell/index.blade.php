@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Q'WELL | Master Strategic Intelligence Dossier</title>
+  <title>Q’well | Brand Research & Strategic Insights</title>
   <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
   <link rel="icon" href="{{ asset('images/logo/qwell-logo.png') }}" type="image/png">
 
@@ -146,7 +146,7 @@
           </div>
           
           <h2 class="serif text-3xl text-emerald-950 mb-2">Secure Access</h2>
-          <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">Strategic Intelligence Dossier</p>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">STRATEGIC RESEARCH REPORT</p>
           
           <div class="space-y-4">
               <input type="password" id="access-password" 
@@ -177,8 +177,8 @@
                     style="aspect-ratio:1/1; display:block;"
             />
         <div>
-          <p class="text-[10px] font-black uppercase tracking-widest text-[#0D2B2A]">Master Strategic Dossier</p>
-          <p class="text-[9px] text-gray-400 uppercase tracking-tighter">Indonesia Market Entry 2026-2030</p>
+          <p class="text-[10px] font-black uppercase tracking-widest text-[#0D2B2A]">STRATEGIC RESEARCH REPORT</p>
+          <p class="text-[9px] text-gray-400 uppercase tracking-tighter">Indonesia Market Entry</p>
         </div>
       </div>
       <div class="flex items-center gap-6">
@@ -212,24 +212,16 @@
     <!-- SECTION 0: GATEWAY -->
     <header id="section-0" class="mb-24 animate-in">
         <div class="relative p-1 bg-[#0D2B2A] rounded-[3.5rem] overflow-hidden shadow-2xl">
-            
             <div class="bg-white rounded-[3.4rem] p-10 sm:p-20 relative overflow-hidden">
-                <!-- Flex row: Heading left, Card right -->
-                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between sm:gap-10 relative">
-                    
-                    <!-- Heading Column -->
-                    <div class="max-w-4xl flex-1">
-                        <h1 class="serif text-5xl sm:text-7xl text-emerald-950 leading-tight mb-10 italic">
-                            Research <br>
-                            <span class="not-italic text-[#D4AF37]">Overview</span>
-                        </h1>
-                    </div>
 
-                    <!-- Objective Card: Emerald, pojok kanan sejajar (right top for large screens) -->
+                <!-- Mobile: Objective Card center (atas), Desktop: kanan Heading -->
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between sm:gap-10 relative">
+
+                    <!-- Objective Card: mobile (top, center), desktop (right, end) -->
                     <div 
-                        class="mt-10 sm:mt-0 sm:ml-10 flex-shrink-0 flex flex-col items-end"
+                        class="order-1 sm:order-2 mt-0 sm:mt-0 sm:ml-10 flex-shrink-0 flex flex-col items-center sm:items-end w-full sm:w-auto"
                     >
-                        <div class="p-5 bg-emerald-900 rounded-2xl text-white relative overflow-hidden min-w-[220px] max-w-xs shadow-lg">
+                        <div class="p-5 bg-emerald-900 rounded-2xl text-white relative overflow-hidden min-w-[220px] max-w-xs shadow-lg mb-10 sm:mb-0">
                             <div class="absolute -bottom-4 -right-6 opacity-10">
                                 <svg width="70" height="70" viewBox="0 0 100 100" fill="white"><path d="M50 0L61 39L100 50L61 61L50 100L39 61L0 50L39 39L50 0Z"/></svg>
                             </div>
@@ -239,33 +231,40 @@
                             </p>
                         </div>
                     </div>
+
+                    <!-- Heading Column -->
+                    <div class="max-w-4xl flex-1 order-2 sm:order-1">
+                        <h1 class="serif text-5xl sm:text-7xl text-emerald-950 leading-tight mb-10 italic">
+                            Research <br>
+                            <span class="not-italic text-[#D4AF37]">Overview</span>
+                        </h1>
+                    </div>
                 </div>
                 
                 <!-- This Research Paragraph: Diletakkan di bawah Research Overview dan kartu Objective -->
                 <div class="mt-10">
-                    <p class="text-xl text-gray-500 leading-relaxed font-medium mb-12">
+                    <p class="text-xl text-gray-500 leading-relaxed font-medium mb-12 text-justify">
                         This research serves as a decision-grade positioning framework for <strong>Q’WELL’s</strong> entry into the Indonesian premium hair and body care market. It is designed to bridge the gap between internal trust assets and external market reality.
                     </p>
                     <div class="grid md:grid-cols-4 gap-8">
-                        <div class="space-y-2">
+                        <div class="space-y-2 text-justify">
                             <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Scope</h4>
                             <p class="text-xs font-bold text-gray-600">Indonesia (Tier 1, 2 and 3)</p>
                         </div>
-                        <div class="space-y-2">
+                        <div class="space-y-2 text-justify">
                             <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Timeline</h4>
                             <p class="text-xs font-bold text-gray-600">Conservative 2030 Outlook</p>
                         </div>
-                        <div class="space-y-2">
+                        <div class="space-y-2 text-justify">
                             <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Objective</h4>
                             <p class="text-xs font-bold text-gray-600">Remove Positioning Bias</p>
                         </div>
-                        <div class="space-y-2">
+                        <div class="space-y-2 text-justify">
                             <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Key Lever</h4>
                             <p class="text-xs font-bold text-gray-600">Scan-to-Trust</p>
                         </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </header>
@@ -349,10 +348,10 @@
                     <h5 class="text-xs font-black mt-2 text-emerald-950">Infrastructure</h5>
                     <p class="text-[10px] text-gray-400 mt-2">Trust Ladder & Compliance</p>
                 </div>
-                <div class="framework-node p-6 bg-[#0D2B2A] border border-emerald-950 rounded-2xl shadow-xl">
-                    <span class="text-[10px] font-black text-emerald-400 uppercase">Section 08</span>
-                    <h5 class="text-xs font-black mt-2 text-white">Final Lock</h5>
-                    <p class="text-[10px] text-emerald-100/50 mt-2 italic">Strategy Approved</p>
+                <div class="p-6 bg-white border border-emerald-900 rounded-2xl shadow-xl group">
+                    <span class="text-[10px] font-black text-emerald-950">SECTION 08</span>
+                    <h5 class="text-xs font-black mt-2 text-emerald-900">POSITIONING LOCK</h5>
+                    <p class="text-[10px] text-gray-400 mt-2">Strategy Approved</p>
                 </div>
             </div>
         </div>
