@@ -180,15 +180,15 @@
           <p class="text-[11px] font-black uppercase tracking-widest text-[#0D2B2A]"><span class="block sm:hidden">RESEARCH REPORT</span>
           <span class="hidden sm:block">STRATEGIC RESEARCH REPORT</span></p>
           <!-- <span class="hidden md:inline-block text-[8px] font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 uppercase tracking-widest">Confidence Level: 94%</span> -->
-          <p class="text-[10px] text-emerald-800 uppercase tracking-tighter">Confidence Level: 94%</p>
+          <p class="text-[10px] text-emerald-800 uppercase tracking-tighter font-black"><b>Confidence Level: 94%</b></p>
         </div>
       </div>
       <div class="flex items-center gap-3">
         <!-- <span class="hidden md:inline-block text-[10px] font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 uppercase tracking-widest">Confidence Level: 94%</span> -->
-        <a href="https://insights.rolin.co.id/qwell/pkj" target="_blank" class="px-5 py-2.5 bg-emerald-50 text-[#0D2B2A] border border-emerald-100 text-[11px] font-black rounded-full hover:bg-emerald-100 transition-all flex items-center gap-2 uppercase tracking-widest">
+        <a target="_blank" class="px-5 py-2.5 bg-emerald-50 text-[#0D2B2A] border border-emerald-100 text-[11px] font-black rounded-full hover:bg-emerald-100 transition-all flex items-center gap-2 uppercase tracking-widest">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5S19.832 5.477 21 6.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-            <span class="block sm:hidden">pkj</span>
-            <span class="hidden sm:block">Scientific PKJ</span>
+            <span class="block sm:hidden">PKJ</span>
+            <span class="hidden sm:block">PKJ</span>
         </a>
         <img src="{{ asset('images/logo/qwell-text-logo.png') }}" alt="Q'WELL Logo Right"
           class="w-8 h-8 object-contain"
@@ -560,7 +560,7 @@
 
                 
                 <p class="max-w-4xl mx-auto text-xl text-gray-500 leading-relaxed font-medium mb-20">
-                    "Q’WELL does not compete in the aesthetic 'glow' space. It occupies the <strong>Biological Security Premium Tier</strong>—A structurally verified, dermatology-aligned, calm stability system for the urban Indonesian consumer seeking predictability over experimentation."
+                    Q’well does not compete in the aesthetic “glow” space. It operates in the domain of <span class="font-bold text-emerald-700">Biological Security Brand</span>, positioned as a structurally verified, dermatology-aligned system designed for calm stability. It serves the urban Indonesian consumer who prioritizes predictability, safety, and long-term resilience over experimentation.
                 </p>
                 
                 
