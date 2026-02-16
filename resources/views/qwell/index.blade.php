@@ -315,7 +315,7 @@
     <!-- Framework Decision Map -->
     <section id="framework" class="animate-reveal py-12" style="animation-delay: 0.2s;">
         <div class="glass-card p-12">
-            <h2 class="serif text-3xl text-emerald-950 mb-10 text-center">The 8-Section Decision Ecosystem</h2>
+            <h2 class="serif text-3xl text-emerald-950 mb-10 text-center">The 8-Section Decision</h2>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Row 1 -->
@@ -414,7 +414,7 @@
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
                     <span class="text-3xl serif italic text-[#D4AF37]">01</span>
-                    <h2 class="serif text-2xl text-emerald-950">Strategic Governance & The Core Question</h2>
+                    <h2 class="serif text-2xl text-emerald-950">Governance</h2>
                 </div>
                 <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
@@ -430,7 +430,7 @@
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
                     <span class="text-3xl serif italic text-[#D4AF37]">02</span>
-                    <h2 class="serif text-2xl text-emerald-950">Environmental Hostility Matrix</h2>
+                    <h2 class="serif text-2xl text-emerald-950">Hostility Matrix</h2>
                 </div>
                 <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
@@ -446,7 +446,7 @@
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
                     <span class="text-3xl serif italic text-[#D4AF37]">03</span>
-                    <h2 class="serif text-2xl text-emerald-950">Psychology & The Veracity Crisis</h2>
+                    <h2 class="serif text-2xl text-emerald-950">Veracity Crisis</h2>
                 </div>
                 <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
@@ -462,7 +462,7 @@
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
                     <span class="text-3xl serif italic text-[#D4AF37]">04</span>
-                    <h2 class="serif text-2xl text-emerald-950">ICP & The Hierarchy of Defensive Needs</h2>
+                    <h2 class="serif text-2xl text-emerald-950">ICP & SQR</h2>
                 </div>
                 <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
@@ -478,7 +478,7 @@
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
                     <span class="text-3xl serif italic text-[#D4AF37]">05</span>
-                    <h2 class="serif text-2xl text-emerald-950">Market Validation & 2030 Resilience</h2>
+                    <h2 class="serif text-2xl text-emerald-950">Validation</h2>
                 </div>
                 <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
@@ -494,7 +494,7 @@
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
                     <span class="text-3xl serif italic text-[#D4AF37]">06</span>
-                    <h2 class="serif text-2xl text-emerald-950">Competitive Battleground</h2>
+                    <h2 class="serif text-2xl text-emerald-950">Battle Map</h2>
                 </div>
                 <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
@@ -510,7 +510,7 @@
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
                     <span class="text-3xl serif italic text-[#D4AF37]">07</span>
-                    <h2 class="serif text-2xl text-emerald-950">Proof Infrastructure & Guardrails</h2>
+                    <h2 class="serif text-2xl text-emerald-950">Infrastructure</h2>
                 </div>
                 <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
@@ -526,7 +526,7 @@
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
                     <span class="text-3xl serif italic text-[#D4AF37]">08</span>
-                    <h2 class="serif text-2xl text-emerald-950 font-black">Final Strategic Lock & Synthesis</h2>
+                    <h2 class="serif text-2xl text-emerald-950 font-black">Positioning Lock</h2>
                 </div>
                 <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
@@ -673,7 +673,7 @@
   </footer>
 
 <!-- BACK TO TOP -->
-    <button id="backToTop" onclick="scrollToTop()" class="fixed bottom-10 right-10 w-14 h-14 bg-[#D4AF37] text-[#0D2B2A] rounded-full shadow-2xl flex items-center justify-center no-print z-50 hover:bg-white transition-all" style="display: none;">
+    <button id="backToTop" onclick="scrollToTop()" class="fixed bottom-10 right-2.5 w-12 h-12 bg-[#D4AF37] text-[#0D2B2A] rounded-full shadow-2xl flex items-center justify-center no-print z-50 hover:bg-white transition-all" style="display: none;">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"></path></svg>
     </button>
     <script>
