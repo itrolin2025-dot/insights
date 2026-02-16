@@ -177,7 +177,8 @@
                     style="aspect-ratio:1/1; display:block;"
             />
         <div>
-          <p class="text-[11px] font-black uppercase tracking-widest text-[#0D2B2A]">STRATEGIC RESEARCH REPORT</p>
+          <p class="text-[11px] font-black uppercase tracking-widest text-[#0D2B2A]"><span class="block sm:hidden">RESEARCH REPORT</span>
+          <span class="hidden sm:block">STRATEGIC RESEARCH REPORT</span></p>
           <!-- <span class="hidden md:inline-block text-[8px] font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 uppercase tracking-widest">Confidence Level: 94%</span> -->
           <p class="text-[10px] text-emerald-800 uppercase tracking-tighter">Confidence Level: 94%</p>
         </div>
@@ -186,7 +187,8 @@
         <!-- <span class="hidden md:inline-block text-[10px] font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 uppercase tracking-widest">Confidence Level: 94%</span> -->
         <a href="https://insights.rolin.co.id/qwell/pkj" target="_blank" class="px-5 py-2.5 bg-emerald-50 text-[#0D2B2A] border border-emerald-100 text-[11px] font-black rounded-full hover:bg-emerald-100 transition-all flex items-center gap-2 uppercase tracking-widest">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5S19.832 5.477 21 6.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-            Scientific PKJ
+            <span class="block sm:hidden">pkj</span>
+            <span class="hidden sm:block">Scientific PKJ</span>
         </a>
         <img src="{{ asset('images/logo/qwell-text-logo.png') }}" alt="Q'WELL Logo Right"
           class="w-8 h-8 object-contain"
@@ -370,7 +372,7 @@
             </div>
             <div class="flex flex-col md:flex-row gap-20 items-center relative z-10">
                 <div class="md:w-1/2">
-                    <h3 class="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.3em] mb-6 italic">Governance Agreement</h3>
+                    <h3 class="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.3em] mb-6 italic">Governance</h3>
                     <h2 class="serif text-5xl mb-8 leading-tight italic">Disclaimer & Usage Guardrails</h2>
 
                     <!-- Disclaimer Card -->
@@ -614,17 +616,17 @@
               <!-- Identity -->
               <div class="lg:col-span-4 space-y-8">
                   <div class="flex items-center gap-5">
-                      <img src="{{ asset('images/logo/qwell-logo.png') }}" alt="Q'WELL Logo Right"
+                      <img src="{{ asset('images/logo/app-logo.png') }}" alt="Rolin Logo"
                         class="w-8 h-8 object-contain"
                         style="aspect-ratio:1/1; display:block;"
                         />
                       <div>
-                          <h2 class="serif text-3xl italic tracking-wide">Q'WELL</h2>
+                          <h2 class="text-3xl tracking-wide">ROLIN</h2>
                           <p class="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4AF37]">Strategic Intelligence Unit</p>
                       </div>
                   </div>
                   <p class="text-emerald-100/60 text-sm leading-relaxed max-w-sm">
-                      Dossier focused on 2030 commercial durability through structural verification. Engineered for the Indonesian Urban Ecosystem.
+                      Research focused on 2030 commercial durability through structural verification. Engineered for the Indonesian Urban Ecosystem.
                   </p>
               </div>
 
@@ -634,7 +636,7 @@
                   <ul class="space-y-4 text-xs font-bold text-emerald-100/50">
                       <li><a href="#section-0" class="hover:text-white transition-colors">Methodology</a></li>
                       <li><a href="#penutup" class="hover:text-white transition-colors">Final Conclusion</a></li>
-                      <li><a href="#" class="hover:text-white transition-colors">Risk Register</a></li>
+                      <li><a class="hover:text-white transition-colors">PKJ</a></li>
                   </ul>
               </div>
 
@@ -664,8 +666,8 @@
           </div>
 
           <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-              <p class="text-[10px] font-black text-emerald-100/20 uppercase tracking-widest">Privacy Protocol 2026 • SIU • CONFIDENTIAL</p>
-              <p class="text-[10px] font-black text-[#D4AF37] uppercase tracking-[0.2em]">© 2026 Q'WELL STRATEGY UNIT</p>
+              <p class="text-[10px] font-black text-emerald-100/20 uppercase tracking-widest">CONFIDENTIAL • NOT FOR DISTRIBUTION </p>
+              <p class="text-[10px] font-black text-[#D4AF37] uppercase tracking-[0.2em]">© 2026 PT ROLIN NUISEL NIAGA</p>
           </div>
       </div>
   </footer>
