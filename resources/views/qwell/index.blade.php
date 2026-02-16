@@ -214,49 +214,58 @@
         <div class="relative p-1 bg-[#0D2B2A] rounded-[3.5rem] overflow-hidden shadow-2xl">
             
             <div class="bg-white rounded-[3.4rem] p-10 sm:p-20 relative overflow-hidden">
-                <!-- Intelligence Protocol CARD, RESPONSIVE POSITION -->
-                <div 
-                  class="
-                    w-full sm:w-auto
-                    static sm:absolute 
-                    top-10 right-10 
-                    flex flex-col items-center sm:items-end 
-                    mb-6 sm:mb-0
-                    z-10
-                  "
-                  style="margin-bottom:1.5rem;"
-                >
-                    <div class="p-4 bg-[#0D2B2A] rounded-2xl text-white relative overflow-hidden min-w-[210px] max-w-xs shadow mx-auto sm:mx-0">
-                        <div class="absolute -bottom-4 -right-4 opacity-10">
-                            <svg width="70" height="70" viewBox="0 0 100 100" fill="white"><path d="M50 0L61 39L100 50L61 61L50 100L39 61L0 50L39 39L50 0Z"/></svg>
+                <!-- Flex row: Heading left, Card right -->
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between sm:gap-10 relative">
+                    
+                    <!-- Heading Column -->
+                    <div class="max-w-4xl flex-1">
+                        <h1 class="serif text-5xl sm:text-7xl text-emerald-950 leading-tight mb-10 italic">
+                            Research <br>
+                            <span class="not-italic text-[#D4AF37]">Overview</span>
+                        </h1>
+                    </div>
+
+                    <!-- Objective Card: Emerald, pojok kanan sejajar (right top for large screens) -->
+                    <div 
+                        class="mt-10 sm:mt-0 sm:ml-10 flex-shrink-0 flex flex-col items-end"
+                    >
+                        <div class="p-5 bg-emerald-900 rounded-2xl text-white relative overflow-hidden min-w-[220px] max-w-xs shadow-lg">
+                            <div class="absolute -bottom-4 -right-6 opacity-10">
+                                <svg width="70" height="70" viewBox="0 0 100 100" fill="white"><path d="M50 0L61 39L100 50L61 61L50 100L39 61L0 50L39 39L50 0Z"/></svg>
+                            </div>
+                            <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-2 italic">Objective</p>
+                            <p class="text-[11px] leading-relaxed opacity-90">
+                                "This system removes assumption bias to protect the 2030 premium price ceiling against market skepticism."
+                            </p>
                         </div>
-                        <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-2 italic">Objective</p>
-                        <p class="text-[11px] leading-relaxed opacity-90">"This system removes assumption bias to protect the 2030 premium price ceiling against market skepticism."</p>
                     </div>
                 </div>
-
-                <!-- <span class="inline-block px-4 py-1.5 bg-emerald-50 text-[#0D2B2A] text-[10px] font-bold rounded-full uppercase tracking-widest mb-8 border border-emerald-100">Research Gateway</span> -->
-                <div class="max-w-4xl">
-                    <h1 class="serif text-5xl sm:text-7xl text-emerald-950 leading-tight mb-10 italic">Decision-Grade <br><span class="not-italic text-[#D4AF37]">Intelligence</span></h1>
+                
+                <!-- This Research Paragraph: Diletakkan di bawah Research Overview dan kartu Objective -->
+                <div class="mt-10">
                     <p class="text-xl text-gray-500 leading-relaxed font-medium mb-12">
-                        This dossier evaluates the structural viability of Q’WELL’s premium system in Indonesia. It removes assumption bias by formalizing a <strong>Biological Security</strong> doctrine—treating the target price (Rp 400k–800k) as a <strong>Reliability Insurance</strong> investment rather than a vanity markup.
+                        This research serves as a decision-grade positioning framework for <strong>Q’WELL’s</strong> entry into the Indonesian premium hair and body care market. It is designed to bridge the gap between internal trust assets and external market reality.
                     </p>
-                    
-                    <div class="grid md:grid-cols-3 gap-8 border-t border-gray-100 pt-10">
+                    <div class="grid md:grid-cols-4 gap-8">
                         <div class="space-y-2">
-                            <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Primary Scope</h4>
-                            <p class="text-xs font-bold text-gray-600">ID Tier 1 Urban Markets</p>
+                            <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Scope</h4>
+                            <p class="text-xs font-bold text-gray-600">Indonesia (Tier 1, 2 and 3)</p>
                         </div>
                         <div class="space-y-2">
-                            <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Strategy Mode</h4>
-                            <p class="text-xs font-bold text-gray-600">Defensive Security</p>
+                            <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Timeline</h4>
+                            <p class="text-xs font-bold text-gray-600">Conservative 2030 Outlook</p>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Objective</h4>
+                            <p class="text-xs font-bold text-gray-600">Remove Positioning Bias</p>
                         </div>
                         <div class="space-y-2">
                             <h4 class="text-[10px] font-black text-emerald-900 uppercase tracking-[0.2em]">Key Lever</h4>
-                            <p class="text-xs font-bold text-gray-600">Scan-to-Trust (SQR)</p>
+                            <p class="text-xs font-bold text-gray-600">Scan-to-Trust</p>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </header>
