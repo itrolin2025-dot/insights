@@ -98,7 +98,7 @@
   <div class="max-w-screen-2xl mx-auto pt-10 pb-20 px-6 flex flex-col lg:flex-row gap-12">
     
     <!-- Sidebar -->
-    <aside class="w-full lg:w-72 flex-shrink-0">
+    <aside class="hidden lg:block w-72 flex-shrink-0">
       <div class="sticky top-24 space-y-6">
         <div>
           <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Proof Hierarchy</h3>

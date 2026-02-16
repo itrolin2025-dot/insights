@@ -86,7 +86,7 @@
   <div class="w-full flex flex-col lg:flex-row gap-8 lg:gap-10 pt-8 pb-16 px-6">
     
     <!-- Sidebar -->
-    <aside class="w-full lg:w-72 flex-shrink-0">
+    <aside class="hidden lg:block w-72 flex-shrink-0">
       <div class="sticky top-24 space-y-6">
         <div>
           <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Navigation Guide</h3>

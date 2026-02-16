@@ -83,7 +83,7 @@
   <div class="max-w-screen-2xl mx-auto pt-10 pb-20 px-6 flex flex-col lg:flex-row gap-12">
     
     <!-- Sidebar -->
-    <aside class="w-full lg:w-72 flex-shrink-0">
+    <aside class="hidden lg:block w-72 flex-shrink-0">
       <div class="sticky top-24 space-y-6">
         <div>
           <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 ml-2">Competitive Guide</h3>
@@ -307,7 +307,7 @@
             <div class="absolute bottom-0 right-0 p-12 opacity-5"><svg width="240" height="240" viewBox="0 0 24 24" fill="white"><path d="M4 4h4v4H4V4zm2 2v2h2V6H6zm8-2h4v4h-4V4zm2 2v2h2V6h-2zM4 14h4v4H4v-4zm2 2v2h2v-2H6zm10 0h2v2h-2v-2zm2-2h2v2h-2v-2zm0 4h2v2h-2v-2zM8 8V4h4v4H8zM4 8v4h4V8H4zm8 8v4h4v-4h-4zm-4-4h4v4H8v-4zm8-4h4v4h-4V8z"></path></svg></div>
             <div class="max-w-3xl relative z-10">
                 <h3 class="text-[10px] font-black text-emerald-300 uppercase tracking-[0.3em] mb-6">Offensive SQR Playbook</h3>
-                <h2 class="serif text-5xl mb-12">The "Scan-to-Trust" Implementation</h2>
+                <h2 class="serif text-4xl mb-12">The "Scan-to-Trust" Implementation</h2>
                 
                 <div class="grid sm:grid-cols-2 gap-12">
                     <div class="space-y-4">
