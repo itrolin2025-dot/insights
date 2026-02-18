@@ -236,7 +236,7 @@
                             </div>
                             <p class="text-[10px] font-bold text-emerald-300 uppercase tracking-widest mb-2 italic">Objective</p>
                             <p class="text-[11px] leading-relaxed opacity-90">
-                                "This system removes assumption bias to protect the 2030 premium price ceiling against market skepticism."
+                                "This research removes assumption bias to protect the 2030 premium price ceiling against market skepticism."
                             </p>
                         </div>
                     </div>
@@ -285,7 +285,7 @@
                 <div class="md:w-1/3">
                     <h2 class="serif text-4xl text-emerald-950 mb-6 italic">Protocol & <span class="not-italic text-[#D4AF37]">Verification</span></h2>
                     <p class="text-sm text-gray-500 leading-relaxed font-medium mb-8">
-                        "The methodology follows an 'Inverse Validation' logic—proving why premium pricing is the only rational choice for sensitive consumers in a hostile environment."
+                        "The methodology follows an 'Inverse Validation' logic, proving why premium pricing is the only rational choice for sensitive consumers in a hostile environment."
                     </p>
                     <div class="p-6 bg-[#0D2B2A] rounded-[2rem] text-white">
                         <p class="text-[10px] font-bold text-emerald-300 uppercase mb-3">Verification Pillar</p>
@@ -650,7 +650,7 @@
                           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                       </div>
                       <h4 class="text-[10px] font-black text-[#D4AF37] uppercase tracking-widest mb-3">Evidence Hub</h4>
-                      <p class="text-[11px] text-emerald-100 mb-6 font-bold">112 Verified Research Citations</p>
+                      <p class="text-[11px] text-emerald-100 mb-6 font-bold">100+ Verified Citations</p>
                       <span class="text-[10px] font-black bg-white/10 px-4 py-2 rounded-full uppercase tracking-widest group-hover:bg-[#D4AF37] group-hover:text-[#0D2B2A] transition-all">Show All Sources</span>
                   </div>
 

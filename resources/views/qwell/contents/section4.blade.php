@@ -207,8 +207,8 @@
         <div class="flex items-center justify-between mb-8">
             <h2 class="serif text-4xl text-emerald-950">Target Personas</h2>
             <div class="flex gap-2">
-                <button onclick="switchTab('primary')" id="btn-primary" class="px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all bg-[#0D2B2A] text-white shadow-lg">Primary</button>
-                <button onclick="switchTab('secondary')" id="btn-secondary" class="px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all bg-gray-100 text-gray-400 hover:bg-gray-200">Secondary</button>
+                <button onclick="switchTab('primary')" id="btn-primary" class="px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all bg-[#0D2B2A] text-white shadow-lg">Most Valuable</button>
+                <button onclick="switchTab('secondary')" id="btn-secondary" class="px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all bg-gray-100 text-gray-400 hover:bg-gray-200">Growth Engine</button>
             </div>
         </div>
 
@@ -222,12 +222,14 @@
                             <h3 class="serif text-4xl mb-2 italic">The Traumatized Pragmatist</h3>
                             <p class="text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-10">High-Worth Stability Seeker</p>
                             <div class="space-y-4 text-xs font-medium">
-                                <div class="flex justify-between border-b border-white/10 pb-2"><span>Age</span><span>28 — 42</span></div>
+                                <div class="flex justify-between border-b border-white/10 pb-2"><span>Age</span><span>28 - 42</span></div>
                                 <div class="flex justify-between border-b border-white/10 pb-2"><span>Income</span><span>Middle-Up / Upper</span></div>
                                 <div class="flex justify-between border-b border-white/10 pb-2"><span>Risk Trigger</span><span class="text-[#D4AF37]">Authenticity</span></div>
                             </div>
                         </div>
-                        <p class="text-[11px] text-emerald-100 leading-relaxed italic mt-12">"My skin cannot afford the debt of a fake product. If I can't scan it and verify it, I won't risk it on my body."</p>
+                        <p class="text-[11px] text-white-900 font-medium italic leading-relaxed">
+                            "I’ve spent too much on products that promised a glow but gave me a rash. I don’t want a miracle; I want a guarantee that I won’t wake up with a reaction tomorrow."
+                        </p>
                     </div>
                     <div class="md:col-span-3 p-12 bg-white space-y-10">
                         <div class="grid sm:grid-cols-2 gap-10">
@@ -240,6 +242,16 @@
                                 <p class="text-xs text-gray-500 leading-relaxed">Requires <strong>Predictable Outcome</strong>. They reject viral hype unless backed by SQR Serial + HRIPT Clinical data.</p>
                             </div>
                         </div>
+                        
+                        <div class="p-6 bg-red-50 rounded-3xl border border-red-100">
+                            <h4 class="text-[10px] font-black text-red-900 uppercase mb-2">Rejection Triggers</h4>
+                            <p class="text-[11px] font-bold text-red-800 uppercase tracking-tighter">
+                              • "Hype-only" marketing.<br>
+                              • Missing BPOM NIE codes.<br>
+                              • Unexplained "Natural" claims.
+                            </p>
+                        </div>
+
                         <div class="p-6 bg-emerald-50 rounded-3xl border border-emerald-100">
                             <h4 class="text-[10px] font-black text-emerald-900 uppercase mb-2">Proof Threshold</h4>
                             <p class="text-[11px] font-bold text-emerald-800 uppercase tracking-tighter">Requires BPOM NIE + Unit-Level SQR Verification to unlock Rp 400k+ transaction potential.</p>
@@ -258,12 +270,12 @@
                             <h3 class="serif text-4xl mb-2 italic">The Investigative Gen-Z</h3>
                             <p class="text-emerald-800 text-[10px] font-black uppercase tracking-widest mb-10">Science-First "Skintellectual"</p>
                             <div class="space-y-4 text-xs font-bold">
-                                <div class="flex justify-between border-b border-black/5 pb-2"><span>Age</span><span>18 — 26</span></div>
+                                <div class="flex justify-between border-b border-black/5 pb-2"><span>Age</span><span>18 - 26</span></div>
                                 <div class="flex justify-between border-b border-black/5 pb-2"><span>Status</span><span>Aspirant / Influencer</span></div>
                                 <div class="flex justify-between border-b border-black/5 pb-2"><span>Behavior</span><span>De-influencer Ally</span></div>
                             </div>
                         </div>
-                        <p class="text-[11px] text-emerald-900 leading-relaxed italic mt-12">"I don't trust the label. I trust the COA and the SQR code. Transparency is the only currency I value."</p>
+                        <p class="text-[11px] text-emerald-900 leading-relaxed italic mt-12">"I don't trust the label. So, I watch De-influencers. I trust the Certificates and the SQR code. If you can't prove your percentage, you're irrelevant to my routine."</p>
                     </div>
                     <div class="md:col-span-3 p-12 bg-white space-y-10">
                         <div class="grid sm:grid-cols-2 gap-10">
@@ -275,6 +287,15 @@
                                 <h4 class="text-[10px] font-black text-emerald-950 uppercase mb-4">Functional Demand</h4>
                                 <p class="text-xs text-gray-500 leading-relaxed">Requires <strong>Transparency Tools</strong>. They use SQR to access batch-specific pH levels and ingredient provenance.</p>
                             </div>
+                        </div>
+                        <div class="p-6 bg-emerald-50 rounded-3xl border border-emerald-100">
+                            <h4 class="text-[10px] font-black text-emerald-400 uppercase mb-2">Communication Mode</h4>
+                            <!-- <p class="text-[11px] font-bold text-gray-600 uppercase tracking-tighter">Acts as the "Truth-Validator" for the Primary ICP. If they can't verify it, they 'Kapok' the brand via social ripple.</p> -->
+                            <ul class="text-[10px] text-emerald-500 space-y-2">
+                                <li>• TikTok "Science-Tok" deep dives.</li>
+                                <li>• Batch-specific QR codes.</li>
+                                <li>• Ingredient pH & Lab Origin.</li>
+                            </ul>
                         </div>
                         <div class="p-6 bg-gray-50 rounded-3xl border border-gray-100">
                             <h4 class="text-[10px] font-black text-gray-400 uppercase mb-2">Social Power</h4>

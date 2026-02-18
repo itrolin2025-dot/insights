@@ -194,14 +194,14 @@
             <h3 class="text-[10px] font-bold text-emerald-300 uppercase tracking-[0.3em] mb-4">The Cognitive Threshold</h3>
             <h2 class="serif text-4xl leading-tight mb-8">Mapping the<br/>"Risk Barrier"</h2>
             <p class="text-emerald-100/70 text-base leading-relaxed mb-12 italic">
-              "In the Indonesian mind, the perceived probability of harm now outweighs the promised benefits of a product. This 'Risk Barrier' can only be lowered by structural verification (HRIPT/BPOM) — not by storytelling."
+              "In the Indonesian mind, the perceived probability of harm now outweighs the promised benefits of a product. This 'Risk Barrier' can only be lowered by structural verification (HRIPT/BPOM) not by storytelling."
             </p>
             
             <div class="grid md:grid-cols-2 gap-10">
               <div class="space-y-6">
                 <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-white/10 pb-2">The Biological Debt</h4>
                 <p class="text-sm text-emerald-100/80">
-                  Consumers view a bad reaction as "Biological Debt" — costing them weeks of skin recovery and expensive dermatologist visits. Q'WELL is "Debt Prevention."
+                  Consumers view a bad reaction as "Biological Debt", costing them weeks of skin recovery and expensive dermatologist visits. Q'WELL is "Debt Prevention."
                 </p>
               </div>
               <div class="space-y-6">

@@ -198,7 +198,7 @@
                 <div class="space-y-6">
                     <div class="pillar-card p-6 bg-white/50 rounded-2xl">
                         <h4 class="text-xs font-black text-emerald-900 uppercase mb-2">01. Predictable Reliability</h4>
-                        <p class="text-xs text-gray-500 italic">"The brand refuses to chase 'viral glow.' We ensure skin is exactly the same—healthy and stable—every morning."</p>
+                        <p class="text-xs text-gray-500 italic">"The brand refuses to chase 'viral glow.' We ensure skin is exactly the same, healthy and stable, every morning."</p>
                     </div>
                     <div class="pillar-card p-6 bg-white/50 rounded-2xl">
                         <h4 class="text-xs font-black text-emerald-900 uppercase mb-2">02. Structural Stability</h4>
@@ -267,7 +267,7 @@
                         "The cost of a bad skin reaction, dermatologist visits, and barrier recovery weeks is higher than a Q'WELL SKU. We sell the insurance against that debt."
                     </p>
                     <div class="mt-10 px-6 py-3 border border-[#D4AF37] rounded-full">
-                        <span class="text-[10px] font-black text-[#D4AF37] uppercase tracking-widest">Rp 400k — 800k Validated Tier</span>
+                        <span class="text-[10px] font-black text-[#D4AF37] tracking-widest">Rp 400k - 800k VALIDATED TIER</span>
                     </div>
                 </div>
             </div>
