@@ -133,13 +133,15 @@
     }
   </style>
 </head>
-<!-- <body class="bg-grid"> -->
-<body class="bg-grid locked">
+<!-- Password Off -->
+<body class="bg-grid">
+<!-- Password ON -->
+<!-- <body class="bg-grid locked"> -->
 
-  <!-- PASSWORD PROTECTION MODAL (ENABLE) -->
-  <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 active">
-  <!-- PASSWORD PROTECTION MODAL (DISABLED) -->
-  <!-- <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 hidden"> -->
+  <!-- PASSWORD ON -->
+  <!-- <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 active"> -->
+  <!-- PASSWORD OFF -->
+  <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 hidden">
       <div class="bg-white w-full max-w-md rounded-[3rem] shadow-2xl p-10 sm:p-12 text-center border border-emerald-900/10">
           <div class="w-20 h-20 bg-emerald-950 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl">
               <img src="{{ asset('images/logo/qwell-logo.png') }}" alt="Q'WELL" class="w-12 h-12 object-contain" />
