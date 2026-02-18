@@ -134,14 +134,14 @@
   </style>
 </head>
 <!-- Password Off -->
-<body class="bg-grid">
+<!-- <body class="bg-grid"> -->
 <!-- Password ON -->
-<!-- <body class="bg-grid locked"> -->
+<body class="bg-grid locked">
 
   <!-- PASSWORD ON -->
-  <!-- <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 active"> -->
+  <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 active">
   <!-- PASSWORD OFF -->
-  <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 hidden">
+  <!-- <div id="password-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-6 hidden"> -->
       <div class="bg-white w-full max-w-md rounded-[3rem] shadow-2xl p-10 sm:p-12 text-center border border-emerald-900/10">
           <div class="w-20 h-20 bg-emerald-950 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl">
               <img src="{{ asset('images/logo/qwell-logo.png') }}" alt="Q'WELL" class="w-12 h-12 object-contain" />
@@ -566,7 +566,7 @@
                 </p>
                 
                 
-                <div class="p-4 bg-emerald-950 rounded-2xl text-center shadow-xl w-80 mx-auto">
+                <div class="p-4 bg-emerald-950 rounded-2xl text-center shadow-xl mx-auto w-72 sm:w-80" style="max-width:90vw;">
                     <span class="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4AF37]">
                         STRATEGY APPROVED
                     </span>
@@ -643,7 +643,7 @@
               </div> -->
 
               <!-- INTERACTIVE CARDS (HUB) -->
-              <div class="lg:col-span-8 flex flex-row gap-6 no-print justify-between">
+              <div class="lg:col-span-8 flex flex-col lg:flex-row gap-6 no-print justify-between">
 
                   <!-- EVIDENCE HUB BUTTON -->
                   <div class="flex-1 flex flex-col bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center" onclick="openModal('source-modal')">
@@ -656,8 +656,8 @@
                   </div>
 
                   <!-- CLAIM LIBRARY BUTTON -->
-                  <div class="flex-1 flex flex-col bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center">
-                  <!-- <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow" onclick="openModal('claim-modal')"> -->
+                  <div class="flex-1 flex flex-col bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center mt-0 lg:mt-0">
+                      <!-- <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow" onclick="openModal('claim-modal')"> -->
                       <div class="absolute -top-3 -right-3 bg-white w-12 h-12 rounded-full flex items-center justify-center text-[#0D2B2A] font-bold shadow-lg transform group-hover:scale-110 transition-transform">
                           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                       </div>
@@ -667,7 +667,7 @@
                   </div>
 
                   <!-- Glossary BUTTON -->
-                  <div class="flex-1 flex flex-col bg-white/5 p-10 rounded-[3rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center text-center" onclick="openModal('glossary-modal')">
+                  <div class="flex-1 flex flex-col bg-white/5 p-10 rounded-[3rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center text-center mt-0 lg:mt-0">
                       <div class="absolute -top-3 -right-3 bg-[#D4AF37] w-12 h-12 rounded-full flex items-center justify-center text-[#0D2B2A] font-bold shadow-2xl transform group-hover:scale-110 transition-transform">
                           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5S19.832 5.477 21 6.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                       </div>
@@ -677,6 +677,17 @@
                       <span class="text-[10px] font-black bg-white/10 px-4 py-2 rounded-full uppercase tracking-widest group-hover:bg-[#D4AF37] group-hover:text-[#0D2B2A] transition-all">View Glossary</span>
                   </div>
               </div>
+              <style>
+              @media (max-width: 1023px) {
+                .lg\:col-span-8.flex {
+                  flex-direction: column !important;
+                }
+                .lg\:col-span-8.flex > div[class*="flex-1"] {
+                  width: 100%;
+                  min-width: 0;
+                }
+              }
+              </style>
           </div>
 
           <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
