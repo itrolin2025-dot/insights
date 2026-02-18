@@ -263,7 +263,7 @@
               <span class="inline-block px-4 py-1.5 bg-violet-100 text-violet-900 text-[10px] font-bold rounded-full uppercase tracking-widest mb-6">The New Gatekeepers</span>
               <h2 class="serif text-4xl text-emerald-950 mb-6">The Rise of Digital Arbiters</h2>
               <p class="text-gray-500 text-sm leading-relaxed mb-6">
-                A new class of "Science-First" influencers (e.g., <strong>Dokter Detektif</strong>) act as the judicial system for the beauty market. They independently test products and "de-influence" brands that fail lab verification.
+                A new class of "Science-First" influencers (e.g., <strong>Doktif, dr. Ika, dr. Zie, dr. Gio, etc.</strong>) act as the judicial system for the beauty market. They independently test products and "de-influence" brands that fail lab verification.
               </p>
               <div class="p-6 bg-gray-50 rounded-3xl border border-gray-100 italic text-[11px] text-gray-600">
                 "Brands that cannot produce batch-specific lab data are now treated as high-risk by the Investigative Gen Z consumer."

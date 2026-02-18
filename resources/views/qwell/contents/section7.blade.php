@@ -209,8 +209,8 @@
                         <h4 class="text-xs font-black text-[#0D2B2A] uppercase tracking-widest mb-2">Tier 4: Transparency Index (Expert Alignment)</h4>
                         <p class="text-sm text-gray-500 mb-4">Detailed technical proof for the Investigative Gen-Z "Skintellectual" segment.</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-gray-50 rounded-full text-[9px] font-bold text-gray-400 border border-gray-200 uppercase">Batch-Specific COA Access</span>
-                            <span class="px-3 py-1 bg-gray-50 rounded-full text-[9px] font-bold text-gray-400 border border-gray-200 uppercase">Independent Lab Portals</span>
+                            <span class="px-3 py-1 bg-gray-50 rounded-full text-[9px] font-bold text-gray-400 border border-gray-200 uppercase">CERTIFICATES ACCESS</span>
+                            <!-- <span class="px-3 py-1 bg-gray-50 rounded-full text-[9px] font-bold text-gray-400 border border-gray-200 uppercase">Independent Lab Portals</span> -->
                         </div>
                     </div>
                 </div>

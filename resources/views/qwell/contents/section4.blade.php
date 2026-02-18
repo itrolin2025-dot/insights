@@ -245,11 +245,16 @@
                         
                         <div class="p-6 bg-red-50 rounded-3xl border border-red-100">
                             <h4 class="text-[10px] font-black text-red-900 uppercase mb-2">Rejection Triggers</h4>
-                            <p class="text-[11px] font-bold text-red-800 uppercase tracking-tighter">
+                            <ul class="text-[10px] text-red-500 space-y-2">
+                                <li>• Hype-only" marketing.</li>
+                                <li>• Missing BPOM NIE codes.</li>
+                                <li>• Unexplained "Natural" claims.</li>
+                            </ul>
+                            <!-- <p class="text-[11px] font-bold text-red-800 uppercase tracking-tighter">
                               • "Hype-only" marketing.<br>
                               • Missing BPOM NIE codes.<br>
                               • Unexplained "Natural" claims.
-                            </p>
+                            </p> -->
                         </div>
 
                         <div class="p-6 bg-emerald-50 rounded-3xl border border-emerald-100">

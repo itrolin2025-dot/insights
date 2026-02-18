@@ -266,7 +266,7 @@
             <div class="p-8 border border-gray-100 rounded-[2rem] hover:shadow-lg transition-shadow bg-gray-50/50">
               <span class="text-xs font-bold text-emerald-600 mb-4 block">GATE E</span>
               <h4 class="font-bold text-emerald-950 mb-3 uppercase tracking-tight">Compliance Integrity</h4>
-              <p class="text-xs text-gray-500 leading-relaxed">Claims must adhere to BPOM Reg 18/2024 standards, avoiding "Medicinal" terminology while projecting authority.</p>
+              <p class="text-xs text-gray-500 leading-relaxed">Claims must adhere to BPOM standards, avoiding "Medicinal" terminology while projecting authority.</p>
             </div>
           </div>
         </div>

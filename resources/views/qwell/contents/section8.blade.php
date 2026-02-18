@@ -139,7 +139,7 @@
             <div class="max-w-4xl">
               <h1 class="serif text-5xl sm:text-7xl text-emerald-950 leading-tight mb-10">The Biological<br/><span class="italic text-[#D4AF37]">Security</span> Premium</h1>
               <p class="text-xl text-gray-500 leading-relaxed font-medium mb-16">
-                Q’WELL is not a "beauty" brand; it is a **Biological Security System**. We provide a structurally verified, dermatology-aligned sanctuary for high-worth urbanites who prioritize **Predictable Stability** over viral aesthetic experimentation.
+                Q’WELL is not a "beauty" brand; it is a <span class="font-bold text-emerald-700">Biological Security System</span>. We provide a structurally verified, dermatology-aligned sanctuary for high-worth urbanites who prioritize <span class="font-bold text-emerald-700">Predictable Stability</span> over viral aesthetic experimentation.
               </p>
             </div>
 

@@ -296,7 +296,7 @@
                 <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 text-[#D4AF37] font-bold">3</div>
                 <div>
                   <h4 class="font-bold mb-1">D2C Trust-Hub</h4>
-                  <p class="text-xs text-emerald-100/60 leading-relaxed">A dedicated portal where consumers enter batch codes to see the Certificate of Analysis (COA).</p>
+                  <p class="text-xs text-emerald-100/60 leading-relaxed">A dedicated portal where consumers enter batch codes to see the Authenticity Certificate.</p>
                 </div>
               </div>
             </div>

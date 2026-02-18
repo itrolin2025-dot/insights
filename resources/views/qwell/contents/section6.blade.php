@@ -324,7 +324,7 @@
                     </div>
                     <div class="space-y-4">
                         <h4 class="text-xs font-black text-[#D4AF37] uppercase tracking-widest border-b border-white/10 pb-2">Phase 2: Digital Handshake</h4>
-                        <p class="text-sm text-emerald-100/70 leading-relaxed italic">"Consumers scan to access batch-specific HRIPT data, pH levels, and bottling date. Verification becomes a moment of joy."</p>
+                        <p class="text-sm text-emerald-100/70 leading-relaxed italic">"Consumers scan to view an Authenticity Certificate for each SKU. Verification becomes a calm moment of reassurance, confirming the product is genuine, traceable, and exactly what it claims to be."</p>
                     </div>
                 </div>
             </div>

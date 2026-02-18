@@ -349,7 +349,7 @@
                 </div>
                 <div class="framework-node p-6 bg-white border border-gray-100 rounded-2xl group">
                     <span class="text-[10px] font-black text-gray-400 group-hover:text-[#D4AF37] uppercase">Section 06</span>
-                    <h5 class="text-xs font-black mt-2 text-emerald-950">Battle Map</h5>
+                    <h5 class="text-xs font-black mt-2 text-emerald-950">Competition</h5>
                     <p class="text-[10px] text-gray-400 mt-2">Verification Gap Moat</p>
                 </div>
                 <div class="framework-node p-6 bg-white border border-gray-100 rounded-2xl group">
@@ -496,7 +496,7 @@
             <button class="w-full p-8 flex items-center justify-between text-left focus:outline-none accordion-trigger">
                 <div class="flex items-center gap-6">
                     <span class="text-3xl serif italic text-[#D4AF37]">06</span>
-                    <h2 class="serif text-2xl text-emerald-950">Battle Map</h2>
+                    <h2 class="serif text-2xl text-emerald-950">Competition</h2>
                 </div>
                 <div class="accordion-icon w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all">
                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
