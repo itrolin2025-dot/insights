@@ -633,36 +633,48 @@
               </div>
 
               <!-- Links -->
-              <div class="lg:col-span-2">
+              <!-- <div class="lg:col-span-2">
                   <h4 class="text-[10px] font-black text-[#D4AF37] uppercase tracking-[0.3em] mb-8">Navigation</h4>
                   <ul class="space-y-4 text-xs font-bold text-emerald-100/50">
                       <li><a href="#section-0" class="hover:text-white transition-colors">Methodology</a></li>
                       <li><a href="#penutup" class="hover:text-white transition-colors">Final Conclusion</a></li>
                       <li><a class="hover:text-white transition-colors">PKJ</a></li>
                   </ul>
-              </div>
+              </div> -->
 
               <!-- INTERACTIVE CARDS (HUB) -->
-              <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6 no-print">
+              <div class="lg:col-span-8 flex flex-row gap-6 no-print justify-between">
+
                   <!-- EVIDENCE HUB BUTTON -->
-                  <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow" onclick="openModal('source-modal')">
+                  <div class="flex-1 flex flex-col bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center" onclick="openModal('source-modal')">
                       <div class="absolute -top-3 -right-3 bg-[#D4AF37] w-12 h-12 rounded-full flex items-center justify-center text-[#0D2B2A] font-bold shadow-lg transform group-hover:scale-110 transition-transform">
                           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                       </div>
-                      <h4 class="text-[10px] font-black text-[#D4AF37] uppercase tracking-widest mb-3">Evidence Hub</h4>
+                      <h4 class="text-[10px] font-black text-[#D4AF37] uppercase tracking-widest mb-3 mt-4">Source Hub</h4>
                       <p class="text-[11px] text-emerald-100 mb-6 font-bold">100+ Verified Citations</p>
                       <span class="text-[10px] font-black bg-white/10 px-4 py-2 rounded-full uppercase tracking-widest group-hover:bg-[#D4AF37] group-hover:text-[#0D2B2A] transition-all">Show All Sources</span>
                   </div>
 
                   <!-- CLAIM LIBRARY BUTTON -->
-                  <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow">
+                  <div class="flex-1 flex flex-col bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center">
                   <!-- <div class="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow" onclick="openModal('claim-modal')"> -->
                       <div class="absolute -top-3 -right-3 bg-white w-12 h-12 rounded-full flex items-center justify-center text-[#0D2B2A] font-bold shadow-lg transform group-hover:scale-110 transition-transform">
                           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                       </div>
-                      <h4 class="text-[10px] font-black text-emerald-300 uppercase tracking-widest mb-3">Claim Library</h4>
+                      <h4 class="text-[10px] font-black text-emerald-300 uppercase tracking-widest mb-3 mt-4">Claim Library</h4>
                       <p class="text-[11px] text-emerald-100 mb-6 font-bold">Digital Certificates & Dossiers</p>
                       <span class="text-[10px] font-black bg-white/10 px-4 py-2 rounded-full uppercase tracking-widest group-hover:bg-white group-hover:text-[#0D2B2A] transition-all">Verify Certificates</span>
+                  </div>
+
+                  <!-- Glossary BUTTON -->
+                  <div class="flex-1 flex flex-col bg-white/5 p-10 rounded-[3rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center text-center" onclick="openModal('glossary-modal')">
+                      <div class="absolute -top-3 -right-3 bg-[#D4AF37] w-12 h-12 rounded-full flex items-center justify-center text-[#0D2B2A] font-bold shadow-2xl transform group-hover:scale-110 transition-transform">
+                          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5S19.832 5.477 21 6.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                      </div>
+                      
+                      <h4 class="text-[10px] font-black text-[#D4AF37] uppercase tracking-widest mb-3 mt-4">Glossary</h4>
+                      <p class="text-[11px] text-emerald-100 mb-6 font-bold">List of Terminology</p>
+                      <span class="text-[10px] font-black bg-white/10 px-4 py-2 rounded-full uppercase tracking-widest group-hover:bg-[#D4AF37] group-hover:text-[#0D2B2A] transition-all">View Glossary</span>
                   </div>
               </div>
           </div>
@@ -696,7 +708,7 @@
       <div class="bg-white w-full max-w-5xl h-[85vh] rounded-[3.5rem] shadow-2xl overflow-hidden flex flex-col">
           <div class="p-10 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
               <div>
-                  <h3 class="serif text-4xl text-emerald-950 italic">Strategic <span class="not-italic text-[#D4AF37]">Evidence</span> Hub</h3>
+                  <h3 class="serif text-4xl text-emerald-950 italic">Strategic <span class="not-italic text-[#D4AF37]">Source</span> Hub</h3>
                   <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mt-2">Comprehensive Research Registry (S1–S8)</p>
               </div>
               <button onclick="closeModal('source-modal')" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-600 transition-all">
@@ -793,7 +805,61 @@
       </div>
   </div>
 
+  <!-- MODAL: GLOSSARY -->
+  <div id="glossary-modal" class="modal-overlay fixed inset-0 z-[5000] flex items-center justify-center p-6 no-print">
+      <div class="bg-white w-full max-w-5xl h-[85vh] rounded-[4rem] shadow-2xl overflow-hidden flex flex-col">
+          <div class="p-10 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+              <div>
+                  <h3 class="serif text-4xl text-emerald-950 italic">Strategic <span class="not-italic text-[#D4AF37]">Glossary</span></h3>
+                  <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mt-2 uppercase">Terminology / Definitions</p>
+              </div>
+              <button onclick="closeModal('glossary-modal')" class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 hover:bg-red-50 hover:text-red-600 transition-all font-bold text-2xl">×</button>
+          </div>
+          <div class="flex-grow overflow-y-auto p-12 custom-scroll">
+              <div class="grid md:grid-cols-2 gap-x-16 gap-y-12" id="glossary-grid">
+                  <!-- JS Rendered -->
+              </div>
+          </div>
+      </div>
+  </div>
+
   <script>
+
+    // GLOSSARY DATA
+    const GLOSSARY_ITEMS = [
+        { term: "Biological Debt", def: "Accumulated micro-damage to the skin and scalp barrier caused by aggressive products, extreme environmental exposure, or prolonged trial-and-error experimentation. Strategically, this explains why consumers become risk-averse and seek products that do not add new biological burdens." },
+        { term: "Biological Security", def: "A care approach prioritizing the protection of fundamental biological functions (barrier stability, long-term tolerance) over instant aesthetic performance or trends." },
+        { term: "PM2.5 Peaks (164 μg/m³)", def: "Extreme levels of fine particulate matter (≤2.5 micrometers) that penetrate the barrier to trigger oxidative inflammation. This characterizes the environmental pressure of urban Indonesia." },
+        { term: "UV Index 11+", def: "The highest category of ultraviolet exposure risk. Chronic unprotected exposure accelerates barrier impairment and cutaneous sensitivity." },
+        { term: "Claim Inflation", def: "The market phenomenon where generic claims (e.g., 'natural', 'gentle') are used without structural verification depth, leading to market confusion and trust erosion." },
+        { term: "Pre-Market Vetting", def: "The rigorous evaluation process of claims, formulations, and proof nodes before commercial release to ensure regulatory and communication consistency." },
+        { term: "Risk Assessment Dossier (RAD)", def: "A comprehensive document consolidating safety, stability, and regulatory data to mitigate legal and reputational risks." },
+        { term: "Malassezia Overgrowth", def: "Excessive proliferation of Malassezia yeast on the scalp or body, triggered by incompatible formulations, causing irritation and inflammation." },
+        { term: "TEWL (Transepidermal Water Loss)", def: "A clinical measurement of water loss through the epidermis; high values indicate a compromised or unstable barrier." },
+        { term: "Non-Maleficence", def: "The ethical principle of 'Doing No Harm.' In cosmetics, ensuring performance claims do not compromise long-term skin health." },
+        { term: "Negative Social Ripple", def: "The chain of social consequences following product failure (e.g., severe breakouts) affecting a consumer's confidence and social interactions." },
+        { term: "Barrier Impairment", def: "Damage to the natural protective function of the skin or scalp due to over-exfoliation, harsh surfactants, or environmental hostility." },
+        { term: "Dermatology-Aligned", def: "An approach strictly consistent with clinical dermatological principles, transcending superficial marketing claims." },
+        { term: "Verification Depth", def: "The intensity of evidence supporting a claim, ranging from simple icons to specific test protocols and published summary results." },
+        { term: "Substitutability", def: "The level of structural equivalence between two brands regarding price, verification density, and risk profile." },
+        { term: "Risk-Averse Consumer", def: "A segment that avoids experimentation, prioritizing safety, consistency, and proven reliability over viral trends." },
+        { term: "Stability System", def: "A range of formulations and usage disciplines designed to maintain optimal skin conditions over the long term." },
+        { term: "Price–Proof Logic", def: "The strategic correlation between price points and the depth of verification/risk mitigation provided by the brand." },
+        { term: "Biological Minimalism", def: "A formulation philosophy that limits ingredient complexity to reduce the cumulative risk of irritation." },
+        { term: "Calm Stability Positioning", def: "A strategic direction prioritizing safety, long-term trust, and consistency over sensation or trend-chasing." }
+    ];
+
+    // INITIALIZATION
+    window.onload = () => {
+        const grid = document.getElementById('glossary-grid');
+        grid.innerHTML = GLOSSARY_ITEMS.map(item => `
+            <div class="space-y-3 p-6 rounded-3xl bg-gray-50 border border-gray-100 hover:bg-white transition-all group">
+                <h5 class="text-sm font-black text-[#0D2B2A] uppercase tracking-widest group-hover:text-[#D4AF37] transition-colors">${item.term}</h5>
+                <p class="text-xs text-gray-500 leading-relaxed font-medium">${item.def}</p>
+            </div>
+        `).join('');
+    };
+    
     // ---------- PASSWORD PROTECTION ----------
     function checkPassword() {
         const input = document.getElementById('access-password');
