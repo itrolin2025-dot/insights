@@ -667,7 +667,7 @@
                   </div>
 
                   <!-- Glossary BUTTON -->
-                  <div class="flex-1 flex flex-col bg-white/5 p-10 rounded-[3rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center text-center mt-0 lg:mt-0">
+                  <div class="flex-1 flex flex-col bg-white/5 p-10 rounded-[3rem] border border-white/10 relative hover-lift cursor-pointer group gold-glow items-center text-center mt-0 lg:mt-0" onclick="openModal('glossary-modal')">
                       <div class="absolute -top-3 -right-3 bg-[#D4AF37] w-12 h-12 rounded-full flex items-center justify-center text-[#0D2B2A] font-bold shadow-2xl transform group-hover:scale-110 transition-transform">
                           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5S19.832 5.477 21 6.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                       </div>
