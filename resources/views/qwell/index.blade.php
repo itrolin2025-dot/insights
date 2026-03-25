@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Q’well | Brand Research & Strategic Insights</title>
-  <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
-  <link rel="icon" href="{{ asset('images/logo/qwell-logo.png') }}" type="image/png">
+  <link rel="icon" type="image/png" href="{{ asset('images/logo/favicon.png') }}">
 
   <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
